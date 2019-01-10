@@ -106,9 +106,9 @@
         }
       }
     },
-    template: '<div class="form-group-wrapper clearfix">\n' +
+    template: '<div class="form-group-wrapper">\n' +
     '                <label v-on:click="expanded = !expanded">\n' +
-    '                    {{ title }}\n' +
+    '                 {{ title }}\n' +
     '                  <i v-if="expanded" class="fa fa-minus minus" aria-hidden="true"></i>\n' +
     '                  <i v-if="!expanded" class="fa fa-plus plus" aria-hidden="true"></i>\n' +
     '                </label>\n' +
@@ -137,7 +137,6 @@
     '                      <input v-if="checked.indexOf(getOption(checkbox2)) != -1 || (expanded && !collapseGroup(checkbox))" type="checkbox" v-model="checked" :value="getOption(checkbox2)" :id="\'checkbox-\' + id + \'-\' + getOption(checkbox2)">\n' +
     '                      <label v-if="checked.indexOf(getOption(checkbox2)) != -1 || (expanded && !collapseGroup(checkbox))" :for="\'checkbox-\' + id + \'-\' + getOption(checkbox2)">{{ getLabel(checkbox2) }}</label>\n' +
     '                    </div>\n' +
-
     '                  </div>\n' +
     '                </div>\n' +
     '              </div>'
@@ -314,7 +313,6 @@
         var query = [];
         query.push('log=' + encodeURIComponent(this.table[index].log_id));
         query.push('details=' + encodeURIComponent(this.table[index].name));
-        query.push('nid=' + encodeURIComponent(this.table[index].nid));
 
         query.push('program=' + encodeURIComponent(this.table[index].program_id));
         query.push('offering=' + encodeURIComponent(this.table[index].offering_id));

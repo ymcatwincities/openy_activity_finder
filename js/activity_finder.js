@@ -50,13 +50,7 @@
         this.updateStepsViewAll(s);
       },
       skip: function() {
-        if (this.step == 3) {
-          // Redirect to Search page.
-          window.location.pathname = this.afResultsRef;
-        }
-        else {
-          this.step++;
-        }
+        this.step++;
       },
       prev: function() {
         this.step--;
@@ -67,7 +61,6 @@
           window.location.pathname = this.afResultsRef;
         }
         this.step++;
-        this.updateStepsViewAll(this.step);
         this.runAjaxRequest();
       },
       startOver: function() {
@@ -122,36 +115,23 @@
               component.checkedProgramTypes.length > 0) {
 
               component.isStep1NextDisabled = false;
-
-              // Map ids to titles.
-              for (key in component.checkedAges) {
-                if (typeof(component.checkedAges[key]) !== 'function' && $('#af-age-filter-' + component.checkedAges[key])) {
-                  filters.push($('#af-age-filter-' + component.checkedAges[key]).next().text());
-                }
-              }
-
-              // Map ids to titles.
-              for (key in component.checkedDays) {
-                if (typeof(component.checkedDays[key]) !== 'function' && $('#af-day-filter-' + component.checkedDays[key])) {
-                  filters.push($('#af-day-filter-' + component.checkedDays[key]).next().text());
-                }
-              }
-
+              component.checkedAges.length > 0 ? filters.push(component.checkedAges.join(', ')) : '';
+              component.checkedDays.length > 0 ? filters.push(component.checkedDays.join(', ')) : '';
               component.checkedProgramTypes.length > 0 ? filters.push(component.checkedProgramTypes.join(', ')) : '';
               component.checkedStep1Filters = filters.join(', ');
             }
             break;
           case 2:
             component.checkedStep2Filters = '';
-            component.isStep2NextDisabled = true;
+            component.isStep1NextDisabled = true;
             if (
               component.checkedActivities.length > 0) {
 
-              component.isStep2NextDisabled = false;
+              component.checkedStep2Filters = false;
               // Map ids to titles.
               var checkedMapActivities = [];
               for (key in component.checkedActivities) {
-                if (typeof(component.checkedActivities[key]) !== 'function' && $('input[value="' + component.checkedActivities[key] + '"]')) {
+                if (parseInt(component.checkedActivities[key]) && $('input[value="' + component.checkedActivities[key] + '"]')) {
                   checkedMapActivities.push($('input[value="' + component.checkedActivities[key] + '"]').parent().find('label').text());
                 }
               }
@@ -161,16 +141,16 @@
             break;
           case 3:
             component.checkedStep3Filters = '';
-            component.isStep3NextDisabled = true;
+            component.isStep1NextDisabled = true;
             if (
               component.checkedLocations.length > 0) {
 
-              component.isStep3NextDisabled = false;
+              component.checkedStep3Filters = false;
 
               // Map ids to titles.
               var checkedMapLocations = [];
               for (key in component.checkedLocations) {
-                if (typeof(component.checkedLocations[key]) !== 'function' && $('input[value="' + component.checkedLocations[key] + '"]')) {
+                if (parseInt(component.checkedLocations[key]) && $('input[value="' + component.checkedLocations[key] + '"]')) {
                   checkedMapLocations.push($('input[value="' + component.checkedLocations[key]+'"]').parent().find('label span').text());
                 }
               }
