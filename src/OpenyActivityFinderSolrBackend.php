@@ -796,6 +796,8 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       'field_session_location__DESC' => t('Sort by Location (Z-A)'),
       'field_session_class__ASC' => t('Sort by Activity (A-Z)'),
       'field_session_class__DESC' => t('Sort by Activity (Z-A)'),
+      'af_time_of_day__ACS' => t('Sort by Start time (A-Z)'),
+      'af_time_of_day__DESC' => t('Sort by Start time (Z-A)'),
     ];
   }
 

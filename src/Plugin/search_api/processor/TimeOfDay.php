@@ -9,12 +9,12 @@ use Drupal\search_api\Processor\ProcessorPluginBase;
 use Drupal\search_api\Processor\ProcessorProperty;
 
 /**
- * Adds the parts of day to the indexed data.
+ * Adds the time of day to the indexed data.
  *
  * @SearchApiProcessor(
- *   id = "openy_af_parts_of_day",
- *   label = @Translation("Parts of day"),
- *   description = @Translation("Translates datetime values of session to an index of day's part"),
+ *   id = "openy_af_time_of_day",
+ *   label = @Translation("Time of day"),
+ *   description = @Translation("Translates datetime values of session to an index of day's time"),
  *   stages = {
  *     "add_properties" = 0,
  *   },
@@ -22,9 +22,11 @@ use Drupal\search_api\Processor\ProcessorProperty;
  *   hidden = false,
  * )
  */
-class PartsOfDay extends ProcessorPluginBase {
+class TimeOfDay extends ProcessorPluginBase {
 
-  const PROPERTY_NAME = 'search_api_af_parts_of_day';
+  const PROPERTY_NAME = 'search_api_af_time_of_day';
+
+  const BASE_DATE = '1970-01-01T';
 
   /**
    * {@inheritdoc}
@@ -34,11 +36,11 @@ class PartsOfDay extends ProcessorPluginBase {
 
     if (!$datasource) {
       $definition = [
-        'label' => $this->t('Parts of day'),
-        'description' => $this->t("Translates datetime values of session to an index of day's part"),
+        'label' => $this->t('Time of day'),
+        'description' => $this->t("Translates datetime values of session to an index of day's time"),
         'type' => 'string',
         'processor_id' => $this->getPluginId(),
-        'is_list' => TRUE,
+        'is_list' => FALSE,
       ];
       $properties[self::PROPERTY_NAME] = new ProcessorProperty($definition);
     }
@@ -53,8 +55,6 @@ class PartsOfDay extends ProcessorPluginBase {
     $object = $item->getOriginalObject();
     $entity = $object->getValue();
     $timezone = new \DateTimeZone(\Drupal::config('system.date')->get('timezone')['default']);
-    $time12pm = strtotime('12:00:00Z');
-    $time5pm = strtotime('17:00:00Z');
 
     if (!$entity->hasField('field_session_time')) {
       return;
@@ -65,30 +65,19 @@ class PartsOfDay extends ProcessorPluginBase {
       return;
     }
 
-    $values = [];
+    $value = self::BASE_DATE . '00:00:00Z';
     foreach ($paragraphs as $paragraph) {
       $_period = $paragraph->field_session_time_date->getValue()[0];
       $_from = DrupalDateTime::createFromTimestamp(strtotime($_period['value'] . 'Z'), $timezone);
-      $_to = DrupalDateTime::createFromTimestamp(strtotime($_period['end_value'] . 'Z'), $timezone);
-      $_from_time = strtotime($_from->format('H:i:s') . 'Z');
-      $_to_time = strtotime($_to->format('H:i:s') . 'Z');
-      if ($_from_time < $time12pm) {
-        $values[] = 1;
-      }
-      if ($_from_time <= $time5pm && $_to_time >= $time12pm) {
-        $values[] = 2;
-      }
-      if ($_to_time > $time5pm) {
-        $values[] = 3;
-      }
+      $value = self::BASE_DATE . $_from->format('H:i:s') . 'Z';
+
+      // We need just one value as we can sort only by single value fields.
+      break;
     }
-    $values = array_unique($values, SORT_NUMERIC);
     $fields = $this->getFieldsHelper()
       ->filterForPropertyPath($item->getFields(), NULL, self::PROPERTY_NAME);
     foreach ($fields as $field) {
-      foreach ($values as $value) {
-        $field->addValue($value);
-      }
+      $field->addValue($value);
     }
   }
 
