@@ -67,8 +67,19 @@ class TimeOfDay extends ProcessorPluginBase {
 
     $value = self::BASE_DATE . '00:00:00Z';
     foreach ($paragraphs as $paragraph) {
-      $_period = $paragraph->field_session_time_date->getValue()[0];
-      $_from = DrupalDateTime::createFromTimestamp(strtotime($_period['value'] . 'Z'), $timezone);
+      /** @var \Drupal\Core\Field\FieldItemListInterface $range */
+      $range = $paragraph->field_session_time_date;
+      if ($range->isEmpty()) {
+        continue;
+      }
+
+      /** @var \Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem $_period */
+      $_period = $range->get(0);
+      if ($_period->isEmpty()) {
+        continue;
+      }
+
+      $_from = DrupalDateTime::createFromTimestamp(strtotime($_period->get('value')->getValue() . 'Z'), $timezone);
       $value = self::BASE_DATE . $_from->format('H:i:s') . 'Z';
 
       // We need just one value as we can sort only by single value fields.
