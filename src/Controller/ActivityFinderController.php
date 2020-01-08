@@ -74,7 +74,6 @@ class ActivityFinderController extends ControllerBase {
       'category' => $request->get('categories'),
       'page' => $request->get('page'),
       'day' => $request->get('days'),
-      // TODO: make this change in Open Y.
       'times' => $request->get('times'),
       'age' => $request->get('ages'),
       'sort' => $request->get('sort'),
