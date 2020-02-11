@@ -19,10 +19,29 @@ interface OpenyActivityFinderBackendInterface {
    */
   public function getLocations();
 
-
   /**
    * Get list of all sort options.
    */
   public function getSortOptions();
+
+  /**
+   * Get ages from configuration.
+   */
+  public function getAges();
+
+  /**
+   * Get the days of week.
+   */
+  public function getDaysOfWeek();
+
+  /**
+   * Get list of parts of day.
+   */
+  public function getPartsOfDay();
+
+  /**
+   * Get list of days with parts of day.
+   */
+  public function getDaysTimes();
 
 }

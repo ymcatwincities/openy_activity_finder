@@ -190,6 +190,11 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       $query->addCondition('af_parts_of_day', $times, 'IN');
     }
 
+    if (!empty($parameters['daystimes'])) {
+      $daystimes = explode(',', rawurldecode($parameters['daystimes']));
+      $query->addCondition('af_weekdays_parts_of_day', $daystimes, 'IN');
+    }
+
     if (!empty($parameters['program_types'])) {
       $program_types = explode(',', rawurldecode($parameters['program_types']));
 
@@ -551,6 +556,13 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         'min_count' => 0,
         'missing' => TRUE,
       ],
+      'af_weekdays_parts_of_day' => [
+        'field' => 'af_weekdays_parts_of_day',
+        'limit' => 0,
+        'operator' => 'AND',
+        'min_count' => 0,
+        'missing' => TRUE,
+      ],
     ];
     return $filters;
   }
@@ -696,49 +708,6 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       $categories[$item['program']['nid']]['label'] = $item['program']['title'];
     }
     return array_values($categories);
-  }
-
-  /**
-   * Get the days of week.
-   */
-  public function getDaysOfWeek() {
-    return [
-      [
-        'label' => 'Mon',
-        'search_value' => 'monday',
-        'value' => '1',
-      ],
-      [
-        'label' => 'Tue',
-        'search_value' => 'tuesday',
-        'value' => '2',
-      ],
-      [
-        'label' => 'Wed',
-        'search_value' => 'wednesday',
-        'value' => '3',
-      ],
-      [
-        'label' => 'Thu',
-        'search_value' => 'thursday',
-        'value' => '4',
-      ],
-      [
-        'label' => 'Fri',
-        'search_value' => 'friday',
-        'value' => '5',
-      ],
-      [
-        'label' => 'Sat',
-        'search_value' => 'saturday',
-        'value' => '6',
-      ],
-      [
-        'label' => 'Sun',
-        'search_value' => 'sunday',
-        'value' => '7',
-      ],
-    ];
   }
 
   /**

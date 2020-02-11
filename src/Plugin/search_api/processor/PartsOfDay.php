@@ -52,10 +52,6 @@ class PartsOfDay extends ProcessorPluginBase {
   public function addFieldValues(ItemInterface $item) {
     $object = $item->getOriginalObject();
     $entity = $object->getValue();
-    $timezone = new \DateTimeZone(\Drupal::config('system.date')->get('timezone')['default']);
-    $time12pm = strtotime('12:00:00Z');
-    $time5pm = strtotime('17:00:00Z');
-
     if (!$entity->hasField('field_session_time')) {
       return;
     }
@@ -64,6 +60,10 @@ class PartsOfDay extends ProcessorPluginBase {
     if (empty($paragraphs)) {
       return;
     }
+
+    $timezone = new \DateTimeZone(\Drupal::config('system.date')->get('timezone')['default']);
+    $time12pm = strtotime('12:00:00Z');
+    $time5pm = strtotime('17:00:00Z');
 
     $values = [];
     foreach ($paragraphs as $paragraph) {

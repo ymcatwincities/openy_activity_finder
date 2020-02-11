@@ -54,7 +54,6 @@ class TimeOfDay extends ProcessorPluginBase {
   public function addFieldValues(ItemInterface $item) {
     $object = $item->getOriginalObject();
     $entity = $object->getValue();
-    $timezone = new \DateTimeZone(\Drupal::config('system.date')->get('timezone')['default']);
 
     if (!$entity->hasField('field_session_time')) {
       return;
@@ -64,6 +63,8 @@ class TimeOfDay extends ProcessorPluginBase {
     if (empty($paragraphs)) {
       return;
     }
+
+    $timezone = new \DateTimeZone(\Drupal::config('system.date')->get('timezone')['default']);
 
     $value = self::BASE_DATE . '00:00:00Z';
     foreach ($paragraphs as $paragraph) {

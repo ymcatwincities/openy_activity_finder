@@ -3,9 +3,11 @@
 namespace Drupal\openy_activity_finder;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Url;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendInterface {
+
+  use StringTranslationTrait;
 
   /**
    * Activity Finder configuration.
@@ -18,27 +20,22 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
   protected $timezone;
 
   /**
-   * Run Programs search.
-   *
-   * @param $parameters
-   *   GET parameters for the search.
-   * @param $log_id
-   *   Id of the Search Log needed for tracking Register / Details actions.
+   * {@inheritdoc}
    */
   abstract public function runProgramSearch($parameters, $log_id);
 
   /**
-   * Get list of all locations for filters.
+   * {@inheritdoc}
    */
   abstract public function getLocations();
 
   public function __construct(ConfigFactoryInterface $config_factory) {
     $this->config = $config_factory->get('openy_activity_finder.settings');
-    $this->timezone = new \DateTimeZone(\Drupal::config('system.date')->get('timezone')['default']);
+    $this->timezone = new \DateTimeZone($config_factory->get('system.date')->get('timezone')['default']);
   }
 
   /**
-   * Get ages from configuration.
+   * {@inheritdoc}
    */
   public function getAges() {
     $ages = [];
@@ -83,6 +80,99 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
     }
 
     return $weeks;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDaysOfWeek() {
+    return [
+      [
+        'label' => 'Mon',
+        'search_value' => 'monday',
+        'value' => '1',
+      ],
+      [
+        'label' => 'Tue',
+        'search_value' => 'tuesday',
+        'value' => '2',
+      ],
+      [
+        'label' => 'Wed',
+        'search_value' => 'wednesday',
+        'value' => '3',
+      ],
+      [
+        'label' => 'Thu',
+        'search_value' => 'thursday',
+        'value' => '4',
+      ],
+      [
+        'label' => 'Fri',
+        'search_value' => 'friday',
+        'value' => '5',
+      ],
+      [
+        'label' => 'Sat',
+        'search_value' => 'saturday',
+        'value' => '6',
+      ],
+      [
+        'label' => 'Sun',
+        'search_value' => 'sunday',
+        'value' => '7',
+      ],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPartsOfDay() {
+    return [
+      [
+        'label' => $this->t('Morning'),
+        'description' => $this->t('Open - 12 p.m.'),
+        'value' => '1',
+      ],
+      [
+        'label' => $this->t('Afternoon'),
+        'description' => $this->t('12 p.m. - 5 p.m.'),
+        'value' => '2',
+      ],
+      [
+        'label' => $this->t('Evening'),
+        'description' => $this->t('5 p.m. - Close'),
+        'value' => '3',
+      ],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDaysTimes() {
+    $weekdays = $this->getDaysOfWeek();
+    $parts_of_day = $this->getPartsOfDay();
+    array_unshift($parts_of_day, [
+      'label' => $this->t('Anytime'),
+      'description' => '',
+      'value' => '0',
+    ]);
+
+    $values = [];
+    foreach ($weekdays as $day) {
+      $value = $day;
+      $value['value'] = [];
+      foreach ($parts_of_day as $time) {
+        $time['value'] = $day['value'] . $time['value'];
+        $value['value'][] = $time;
+      }
+
+      $values[] = $value;
+    }
+
+    return $values;
   }
 
   public function getCategoriesType() {

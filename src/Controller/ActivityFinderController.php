@@ -75,6 +75,7 @@ class ActivityFinderController extends ControllerBase {
       'page' => $request->get('page'),
       'day' => $request->get('days'),
       'times' => $request->get('times'),
+      'daystimes' => $request->get('daystimes'),
       'age' => $request->get('ages'),
       'sort' => $request->get('sort'),
     ];
