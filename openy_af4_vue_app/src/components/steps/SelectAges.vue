@@ -7,7 +7,7 @@
       @next="onNext"
     >
       <template v-slot:title>
-        What ages are you searching for? <strong>Maximum of {{ maxAges }}.</strong>
+        What ages are you searching for? <strong v-if="maxAges">Maximum of {{ maxAges }}.</strong>
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
@@ -68,12 +68,12 @@ export default {
       type: Array,
       required: true
     },
-    facets: {
-      type: Array,
-      required: true
-    },
     maxAges: {
       type: Number,
+      required: true
+    },
+    facets: {
+      type: Array,
       required: true
     }
   },
@@ -123,13 +123,14 @@ export default {
       return facet && facet.count ? facet.count : 0
     },
     isDisabled(value) {
-      return (
+      return !!(
         this.facetCount(value) === 0 ||
-        (this.value.length >= this.maxAges && !this.value.includes(value))
+        (this.maxAges && this.value.length >= this.maxAges && !this.value.includes(value))
       )
     },
     isTooltipDisplay(value) {
-      return (
+      return !!(
+        this.maxAges &&
         this.value.length >= this.maxAges &&
         !this.value.includes(value) &&
         this.facetCount(value) > 0

@@ -79,7 +79,7 @@ export default {
       return facet ? facet.count : 0
     },
     isDisabled(value) {
-      return this.value.length >= this.maxAges && !this.value.includes(value)
+      return !!(this.maxAges && this.value.length >= this.maxAges && !this.value.includes(value))
     }
   }
 }

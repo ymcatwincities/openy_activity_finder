@@ -27,16 +27,14 @@
           :data="data"
           :ages="ages"
           :days="days"
-          :times="times"
           :locations="locations"
           :activities="activities"
           :initial-ages="selectedAges"
           :initial-days="selectedDays"
-          :initial-times="selectedTimes"
           :initial-locations="selectedLocations"
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
-          :is-loading-data="isLoadingData"
+          :legacy-mode="legacyMode"
           @filterChange="changeFilter($event)"
           @clearFilters="clearFilters()"
         />
@@ -102,6 +100,7 @@
       :selected-ages="selectedAges"
       :is-loading-data="isLoadingData"
       :cart-items="cartItems"
+      :legacy-mode="legacyMode"
       @startOver="startOver()"
       @addItem="addItem($event)"
       @removeItem="removeItem($event)"
@@ -114,15 +113,14 @@
           :data="data"
           :ages="ages"
           :days="days"
-          :times="times"
           :locations="locations"
           :activities="activities"
           :initial-ages="selectedAges"
           :initial-days="selectedDays"
-          :initial-times="selectedTimes"
           :initial-locations="selectedLocations"
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
+          :legacy-mode="legacyMode"
           @filterChange="changeFilter($event)"
           @clearFilters="clearFilters"
         />
@@ -229,10 +227,6 @@ export default {
     legacyMode: {
       type: Number,
       required: true
-    },
-    maxAges: {
-      type: Number,
-      default: 2
     }
   },
   data() {
@@ -248,8 +242,6 @@ export default {
         'selectPath',
         'selectAges',
         'selectActivities',
-        // 'selectTimes',
-        // 'selectDays',
         'selectDaysTimes',
         'selectLocations',
         'results'
@@ -269,8 +261,6 @@ export default {
           name: 'Find by Age'
         },
         {
-          // id: 'selectTimes',
-          // name: 'Find by Time and Day'
           id: 'selectDaysTimes',
           name: 'Find by Day and Time'
         },
@@ -284,6 +274,7 @@ export default {
         }
       ],
       selectedPath: '',
+      maxAges: 2,
       defaults: {
         step: 'selectPath',
         selectedAges: [],
@@ -299,6 +290,36 @@ export default {
       cartItems: [],
       cartItemsKey: 'activity_finder.cartItems',
       clearFiltersSkip: ['step', 'selectedSort']
+    }
+
+    if (this.legacyMode) {
+      data.steps = [
+        'selectPath',
+        'selectAges',
+        'selectActivities',
+        'selectDays',
+        'selectLocations',
+        'results'
+      ]
+      data.paths = [
+        {
+          id: 'selectAges',
+          name: 'Find by Age'
+        },
+        {
+          id: 'selectDays',
+          name: 'Find by Day'
+        },
+        {
+          id: 'selectLocations',
+          name: 'Find by Location'
+        },
+        {
+          id: 'selectActivities',
+          name: 'Find by Activity'
+        }
+      ]
+      data.maxAges = 0
     }
 
     // Initialize reactive properties for every default value.

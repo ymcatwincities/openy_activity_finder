@@ -22,16 +22,11 @@
             :facets="data.facets.static_age_filter"
           />
           <DaysFilter
+            v-if="legacyMode"
             v-model="selectedDays"
             :collapse-id="id + '-toggle-days'"
             :days="days"
             :facets="data.facets.days_of_week"
-          />
-          <TimesFilter
-            v-model="selectedTimes"
-            :collapse-id="id + '-toggle-times'"
-            :times="times"
-            :facets="data.facets.af_parts_of_day"
           />
         </div>
       </Fieldset>
@@ -79,7 +74,6 @@
 import Fieldset from '@/components/Fieldset.vue'
 import AgesFilter from '@/components/filters/Ages.vue'
 import DaysFilter from '@/components/filters/Days.vue'
-import TimesFilter from '@/components/filters/Times.vue'
 import LocationsFilter from '@/components/filters/Locations.vue'
 import ActivitiesFilter from '@/components/filters/Activities.vue'
 
@@ -89,7 +83,6 @@ export default {
     Fieldset,
     AgesFilter,
     DaysFilter,
-    TimesFilter,
     LocationsFilter,
     ActivitiesFilter
   },
@@ -110,10 +103,6 @@ export default {
       type: Array,
       required: true
     },
-    times: {
-      type: Array,
-      required: true
-    },
     locations: {
       type: Array,
       required: true
@@ -130,10 +119,6 @@ export default {
       type: Array,
       required: true
     },
-    initialTimes: {
-      type: Array,
-      required: true
-    },
     initialLocations: {
       type: Array,
       required: true
@@ -145,20 +130,23 @@ export default {
     maxAges: {
       type: Number,
       required: true
+    },
+    legacyMode: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       selectedAges: this.initialAges,
       selectedDays: this.initialDays,
-      selectedTimes: this.initialTimes,
       selectedLocations: this.initialLocations,
       selectedActivities: this.initialActivities
     }
   },
   computed: {
     scheduleFiltersCount() {
-      return this.selectedAges.length + this.selectedDays.length + this.selectedTimes.length
+      return this.selectedAges.length + this.selectedDays.length
     },
     activityFiltersCount() {
       return this.selectedActivities.length
@@ -174,9 +162,6 @@ export default {
     initialDays() {
       this.selectedDays = this.initialDays
     },
-    initialTimes() {
-      this.selectedTimes = this.initialTimes
-    },
     initialLocations() {
       this.selectedLocations = this.initialLocations
     },
@@ -188,9 +173,6 @@ export default {
     },
     selectedDays() {
       this.$emit('filterChange', { filter: 'selectedDays', value: this.selectedDays })
-    },
-    selectedTimes() {
-      this.$emit('filterChange', { filter: 'selectedTimes', value: this.selectedTimes })
     },
     selectedLocations() {
       this.$emit('filterChange', { filter: 'selectedLocations', value: this.selectedLocations })

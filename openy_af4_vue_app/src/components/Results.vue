@@ -49,7 +49,7 @@
               <div class="ages-spots">
                 <span class="ages">
                   <span class="age-label">{{ 'Ages' | t }}:</span>
-                  <span v-if="!selectedAges.length" class="info">
+                  <span v-if="!selectedAges.length || legacyMode" class="info">
                     {{ item.ages }}
                   </span>
                   <template v-for="age in selectedAges" v-else>
@@ -111,7 +111,7 @@
                 </span>
                 <span class="ages">
                   <span class="age-label">{{ 'Ages' | t }}:</span>
-                  <span v-if="!selectedAges.length" class="info">
+                  <span v-if="!selectedAges.length || legacyMode" class="info">
                     {{ item.ages }}
                   </span>
                   <template v-for="age in selectedAges" v-else>
@@ -189,10 +189,12 @@
             :cart-items="cartItems"
             :ages="ages"
             :selected-ages="selectedAges"
+            :legacy-mode="legacyMode"
             @bookmark="handleActivityDetailsBookmark($event)"
             @unbookmark="handleActivityDetailsUnbookmark($event)"
           />
           <BookmarkedItemsModal
+            v-if="!legacyMode"
             v-model="bookmarkedItemsModal.visible"
             :cart-items="cartItems"
             :ages="ages"
@@ -205,14 +207,14 @@
       </div>
     </div>
 
-    <div class="bookmark-toggle">
+    <div v-if="!legacyMode" class="bookmark-toggle">
       <a role="button" title="Bookmarked items" @click="showBookmarkedItemsModal">
         <span v-if="cartItems.length" class="counter">{{ cartItems.length }}</span>
         <i class="fa fa-bookmark"></i>
       </a>
     </div>
 
-    <BookmarkFeatureModal />
+    <BookmarkFeatureModal v-if="!legacyMode" />
   </div>
 </template>
 
@@ -253,6 +255,10 @@ export default {
     },
     cartItems: {
       type: Array,
+      required: true
+    },
+    legacyMode: {
+      type: Number,
       required: true
     }
   },

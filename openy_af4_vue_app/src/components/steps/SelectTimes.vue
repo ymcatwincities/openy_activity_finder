@@ -1,7 +1,7 @@
 <template>
   <div class="select-times-component">
     <Step
-      skip-label="Any day & time (Skip)"
+      skip-label="Any time (Skip)"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"

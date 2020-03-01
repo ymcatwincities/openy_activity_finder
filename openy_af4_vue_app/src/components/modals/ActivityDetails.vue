@@ -49,7 +49,7 @@
                 <span>{{ item.price }}</span>
               </div>
               <div v-for="(age, index) in availableAges" :key="age" class="action">
-                <span v-if="age" class="age-icons">
+                <span v-if="age && !legacyMode" class="age-icons">
                   <AgeIcon :age="parseInt(age)" :ages="ages" big />
                 </span>
                 <template v-if="buttonsState[index] === 'default'">
@@ -65,7 +65,7 @@
                     <i class="fa fa-external-link"></i>
                   </a>
                   <a
-                    v-if="!isBookmarked(age)"
+                    v-if="!isBookmarked(age) && !legacyMode"
                     key="bookmark"
                     role="button"
                     class="bookmark"
@@ -75,7 +75,7 @@
                     <i class="fa fa-bookmark-o"></i>
                   </a>
                   <a
-                    v-else
+                    v-else-if="!legacyMode"
                     key="bookmark"
                     role="button"
                     class="bookmark bookmarked"
@@ -157,6 +157,10 @@ export default {
     selectedAges: {
       type: Array,
       required: true
+    },
+    legacyMode: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -167,6 +171,10 @@ export default {
   },
   computed: {
     availableAges() {
+      if (this.legacyMode) {
+        return [null]
+      }
+
       const availableAges = this.selectedAges.filter(age => {
         return (
           parseInt(this.item.min_age) <= parseInt(age) &&
