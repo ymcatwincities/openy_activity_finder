@@ -69,9 +69,32 @@ export default {
 .af-modal {
   // Overriding YGTC customizations and Bootstrap 3/4 compatibilities.
   &.modal.show {
-    opacity: 1;
+    &.show {
+      opacity: 1;
 
-    .modal-dialog {
+      .af-modal-content {
+        border-radius: 0.3rem;
+      }
+
+      .af-modal-header {
+        padding: 1rem;
+        border-top-left-radius: calc(0.3rem - 1px);
+        border-top-right-radius: calc(0.3rem - 1px);
+
+        .close {
+          margin-top: -1rem;
+        }
+      }
+
+      .af-modal-body {
+        .row {
+          margin-left: -15px;
+          margin-right: -15px;
+        }
+      }
+    }
+
+    .af-modal-dialog {
       display: flex;
       transform: none;
       margin: $modal-dialog-margin;
@@ -82,60 +105,53 @@ export default {
         margin: $modal-dialog-margin-y-sm-up auto;
       }
     }
-
-    .modal-content {
-      border-radius: 0.3rem;
-    }
-
-    .modal-header {
-      padding: 1rem;
-      border-top-left-radius: calc(0.3rem - 1px);
-      border-top-right-radius: calc(0.3rem - 1px);
-
-      .close {
-        margin-top: -1rem;
-      }
-    }
-
-    .modal-body {
-      .row {
-        margin-left: -15px;
-        margin-right: -15px;
-      }
-    }
   }
 
   // Activity Finder general modal styles.
-  &.modal.show.af-flyout {
-    .modal-dialog {
+  &.modal.af-flyout {
+    .af-modal-dialog {
       padding: 0;
-      margin: 0;
+      margin: auto;
       height: 100%;
       max-height: 100%;
-      position: absolute;
+      position: fixed;
       right: 0;
       width: 100%;
       max-width: 360px;
     }
 
-    .modal-content {
+    .af-modal-content {
       height: 100%;
       max-height: 100%;
     }
-  }
 
-  &.modal.show.af-narrow {
-    .modal-content {
-      max-width: 340px;
+    &.fade {
+      .af-modal-dialog {
+        right: -360px;
+        transition: opacity 0.3s linear, right 0.3s ease-out;
+      }
+    }
+
+    &.show {
+      .af-modal-dialog {
+        right: 0;
+      }
     }
   }
 
-  .modal-dialog {
+  &.modal.af-narrow {
+    .af-modal-content {
+      max-width: 340px;
+      margin: 0 auto;
+    }
+  }
+
+  .af-modal-dialog {
     padding-left: 5px;
     padding-right: 5px;
   }
 
-  .modal-header {
+  .af-modal-header {
     background-color: $white;
     border-bottom: 1px solid $af-dark-gray;
     align-items: center;
@@ -148,14 +164,16 @@ export default {
     }
 
     .close {
+      padding: 0;
+      width: 50px;
       color: $white;
       background-color: $af-blue;
       opacity: 1;
-      padding: 14px 19px;
+      line-height: 50px;
     }
   }
 
-  .modal-body {
+  .af-modal-body {
     padding: 0;
   }
 }
