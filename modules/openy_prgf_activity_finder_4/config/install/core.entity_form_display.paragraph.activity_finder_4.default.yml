@@ -1,0 +1,24 @@
+uuid: 2fd78c5f-40c8-48a3-b360-22e66bb21fa6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.activity_finder_4.field_prgf_block
+    - paragraphs.paragraphs_type.activity_finder_4
+  module:
+    - plugin
+id: paragraph.activity_finder_4.default
+targetEntityType: paragraph
+bundle: activity_finder_4
+mode: default
+content:
+  field_prgf_block:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: 'plugin_selector:plugin_select_list'
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

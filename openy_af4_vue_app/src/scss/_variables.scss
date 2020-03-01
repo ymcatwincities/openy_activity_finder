@@ -1,0 +1,35 @@
+$af-red: #cc0000;
+$af-light-red: #ed1c24;
+$af-blue: #0060af;
+$af-dark-gray: #636466;
+$af-light-blue: #00aeef;
+$af-darker-gray: #707070;
+$af-light-gray: #f2f2f2;
+$af-lighter-gray: #b1b1b2;
+$af-black: #231f20;
+$af-violet: #92278f;
+$af-green: #006600;
+
+$af-ages: (
+  6: (background: $af-blue, color: $white),
+  12: (background: #A92B31, color: $white),
+  18: (background: #006B6B, color: $white),
+  24: (background: #DD5828, color: $af-black),
+  36: (background: #5C2E91, color: $white),
+  48: (background: #0089D0, color: $af-black),
+  60: (background: $af-light-red, color: $af-black),
+  72: (background: #01A490, color: $af-black),
+  84: (background: #F47920, color: $af-black),
+  96: (background: $af-violet, color: $white),
+  108: (background: $af-light-blue, color: $af-black),
+  120: (background: #F15922, color: $af-black),
+  132: (background: #20BDBE, color: $af-black),
+  144: (background: #FCAF17, color: $af-black),
+  156: (background: #C6168D, color: $white),
+  168: (background: $af-blue, color: $white),
+  180: (background: #A92B31, color: $white),
+  192: (background: #006B6B, color: $white),
+  204: (background: #DD5828, color: $af-black),
+  216: (background: #5C2E91, color: $white),
+  660: (background: #0089D0, color: $af-black),
+);

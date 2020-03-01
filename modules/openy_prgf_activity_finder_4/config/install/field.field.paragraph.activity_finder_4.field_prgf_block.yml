@@ -1,0 +1,34 @@
+uuid: bcbcd027-c276-4031-9741-df95cf80ec97
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_prgf_block
+    - paragraphs.paragraphs_type.activity_finder_4
+  module:
+    - datalayer
+    - plugin
+third_party_settings:
+  datalayer:
+    expose: 0
+    label: field_prgf_block
+id: paragraph.activity_finder_4.field_prgf_block
+field_name: field_prgf_block
+entity_type: paragraph
+bundle: activity_finder_4
+label: 'Activity Finder 4 Block'
+description: 'Select Activity Finder 4 block.'
+required: true
+translatable: true
+default_value:
+  -
+    plugin_id: activity_finder_4
+    plugin_configuration:
+      id: activity_finder_4
+      label: 'Activity Finder 4'
+      provider: openy_activity_finder
+      label_display: '0'
+    plugin_configuration_schema_id: block.settings.activity_finder_4
+default_value_callback: ''
+settings: {  }
+field_type: 'plugin:block'

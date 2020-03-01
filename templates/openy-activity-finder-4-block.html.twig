@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ *
+ * Available variables:
+ * - ages
+ * - days
+ * - times
+ * - days_times
+ * - categories
+ * - categories_type
+ * - activities
+ * - locations
+ * - is_search_box_disabled
+ * - is_spots_available_disabled
+ * - expanderSectionsConfig
+ * - sort_options
+ */
+ *
+#}
+
+<div id="activity-finder">
+  <div class="activity-finder__wrapper">
+    <activity-finder
+      :ages="{{ ages|json_encode }}"
+      :days="{{ days|json_encode }}"
+      :times="{{ times|json_encode }}"
+      :days-times="{{ days_times|json_encode }}"
+      :categories="{{ categories|json_encode }}"
+      :categories-type="{{ categories_type|json_encode }}"
+      :activities="{{ activities|json_encode }}"
+      :locations="{{ locations|json_encode }}"
+      :sort-options="{{ sort_options|json_encode }}"
+      :legacy-mode="{{ legacy_mode|json_encode }}"
+    ></activity-finder>
+  </div>
+</div>

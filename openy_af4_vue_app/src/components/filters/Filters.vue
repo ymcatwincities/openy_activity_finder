@@ -1,0 +1,251 @@
+<template>
+  <div class="filters-component">
+    <div class="filters-header hidden-xs hidden-sm">
+      <span class="text-uppercase">
+        <strong>{{ 'Filter' | t }}</strong>
+      </span>
+      <a role="button" @click="clearFilters()">{{ 'Clear Filters' | t }}</a>
+    </div>
+    <div class="filters">
+      <Fieldset
+        label="Schedules"
+        :collapse-id="id + '-toggle-schedules'"
+        :counter="scheduleFiltersCount"
+        :hide-counter="true"
+      >
+        <div class="schedules-filter-component">
+          <AgesFilter
+            v-model="selectedAges"
+            :collapse-id="id + '-toggle-ages'"
+            :ages="ages"
+            :max-ages="maxAges"
+            :facets="data.facets.static_age_filter"
+          />
+          <DaysFilter
+            v-model="selectedDays"
+            :collapse-id="id + '-toggle-days'"
+            :days="days"
+            :facets="data.facets.days_of_week"
+          />
+          <TimesFilter
+            v-model="selectedTimes"
+            :collapse-id="id + '-toggle-times'"
+            :times="times"
+            :facets="data.facets.af_parts_of_day"
+          />
+        </div>
+      </Fieldset>
+
+      <Fieldset
+        label="Activities"
+        :collapse-id="id + '-toggle-activities'"
+        :counter="activityFiltersCount"
+        :hide-counter="true"
+      >
+        <ActivitiesFilter
+          v-model="selectedActivities"
+          :collapse-id="id + '-toggle-activity'"
+          :activities="activities"
+          :facets="data.facets.field_activity_category"
+        />
+      </Fieldset>
+
+      <Fieldset
+        label="Locations"
+        :collapse-id="id + '-toggle-locations'"
+        :counter="locationFiltersCount"
+        :hide-counter="true"
+      >
+        <LocationsFilter
+          v-model="selectedLocations"
+          :collapse-id="id + '-toggle-location'"
+          :locations="locations"
+          :facets="data.facets.locations"
+        />
+      </Fieldset>
+    </div>
+    <div class="filters-footer hidden-md hidden-lg">
+      <div class="buttons">
+        <div class="separator"></div>
+        <button type="button" class="btn btn-lg btn-clear" @click="clearFilters">
+          {{ 'Clear filters' | t }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Fieldset from '@/components/Fieldset.vue'
+import AgesFilter from '@/components/filters/Ages.vue'
+import DaysFilter from '@/components/filters/Days.vue'
+import TimesFilter from '@/components/filters/Times.vue'
+import LocationsFilter from '@/components/filters/Locations.vue'
+import ActivitiesFilter from '@/components/filters/Activities.vue'
+
+export default {
+  name: 'Filters',
+  components: {
+    Fieldset,
+    AgesFilter,
+    DaysFilter,
+    TimesFilter,
+    LocationsFilter,
+    ActivitiesFilter
+  },
+  props: {
+    id: {
+      type: String,
+      default: 'desktop'
+    },
+    data: {
+      type: Object,
+      required: true
+    },
+    ages: {
+      type: Array,
+      required: true
+    },
+    days: {
+      type: Array,
+      required: true
+    },
+    times: {
+      type: Array,
+      required: true
+    },
+    locations: {
+      type: Array,
+      required: true
+    },
+    activities: {
+      type: Array,
+      required: true
+    },
+    initialAges: {
+      type: Array,
+      required: true
+    },
+    initialDays: {
+      type: Array,
+      required: true
+    },
+    initialTimes: {
+      type: Array,
+      required: true
+    },
+    initialLocations: {
+      type: Array,
+      required: true
+    },
+    initialActivities: {
+      type: Array,
+      required: true
+    },
+    maxAges: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      selectedAges: this.initialAges,
+      selectedDays: this.initialDays,
+      selectedTimes: this.initialTimes,
+      selectedLocations: this.initialLocations,
+      selectedActivities: this.initialActivities
+    }
+  },
+  computed: {
+    scheduleFiltersCount() {
+      return this.selectedAges.length + this.selectedDays.length + this.selectedTimes.length
+    },
+    activityFiltersCount() {
+      return this.selectedActivities.length
+    },
+    locationFiltersCount() {
+      return this.selectedLocations.length
+    }
+  },
+  watch: {
+    initialAges() {
+      this.selectedAges = this.initialAges
+    },
+    initialDays() {
+      this.selectedDays = this.initialDays
+    },
+    initialTimes() {
+      this.selectedTimes = this.initialTimes
+    },
+    initialLocations() {
+      this.selectedLocations = this.initialLocations
+    },
+    initialActivities() {
+      this.selectedActivities = this.initialActivities
+    },
+    selectedAges() {
+      this.$emit('filterChange', { filter: 'selectedAges', value: this.selectedAges })
+    },
+    selectedDays() {
+      this.$emit('filterChange', { filter: 'selectedDays', value: this.selectedDays })
+    },
+    selectedTimes() {
+      this.$emit('filterChange', { filter: 'selectedTimes', value: this.selectedTimes })
+    },
+    selectedLocations() {
+      this.$emit('filterChange', { filter: 'selectedLocations', value: this.selectedLocations })
+    },
+    selectedActivities() {
+      this.$emit('filterChange', { filter: 'selectedActivities', value: this.selectedActivities })
+    }
+  },
+  methods: {
+    clearFilters() {
+      this.$emit('clearFilters')
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.filters-component {
+  .filters-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .filters-footer {
+    height: 70px;
+
+    .buttons {
+      position: fixed;
+      bottom: 0;
+      margin-left: -10px;
+      margin-right: -10px;
+      width: calc(100% - 2px);
+      max-width: 358px;
+
+      .separator {
+        height: 5px;
+        background-color: $af-black;
+        opacity: 0.1;
+      }
+
+      .btn {
+        width: 100%;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 46px;
+        padding: 0;
+
+        &.btn-clear {
+          background-color: $white;
+          color: $af-blue;
+          border: 2px solid $af-blue;
+        }
+      }
+    }
+  }
+}
+</style>

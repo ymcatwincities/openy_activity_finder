@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: activity_finder_4
+label: 'Activity Finder 4'
+icon_uuid: null
+description: 'Paragraph for Activity Finder 4.'
+behavior_plugins: {  }

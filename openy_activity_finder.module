@@ -7,7 +7,9 @@
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeInterface;
 use Drupal\openy_activity_finder\OpenyActivityFinderSolrBackend;
+use Drupal\search_api\IndexInterface;
 
 /**
  * Implements hook_theme().
@@ -53,6 +55,23 @@ function openy_activity_finder_theme() {
         'sort_options' => [],
       ],
     ],
+    'openy_activity_finder_4_block' => [
+      'variables' => [
+        'ages' => [],
+        'days' => [],
+        'times' => [],
+        'days_times' => [],
+        'categories' => [],
+        'categories_type' => '',
+        'activities' => [],
+        'locations' => [],
+        'is_search_box_disabled' => '',
+        'is_spots_available_disabled' => '',
+        'expanderSectionsConfig' => [],
+        'sort_options' => [],
+        'legacy_mode' => '',
+      ],
+    ],
   ];
 }
 
@@ -79,6 +98,8 @@ function openy_activity_finder_entity_delete(EntityInterface $entity) {
 
 /**
  * Helper function for Activity Finder cache invalidation.
+ *
+ * @param $entity EntityInterface
  */
 function _openy_activity_finder_invalidate_cache($entity) {
   if ($entity->getEntityTypeId() != 'node') {
@@ -92,4 +113,25 @@ function _openy_activity_finder_invalidate_cache($entity) {
 
   // Invalidate activity finder cache.
   Cache::invalidateTags([OpenyActivityFinderSolrBackend::ACTIVITY_FINDER_CACHE_TAG]);
+}
+
+/**
+ * Implements hook_search_api_solr_field_mapping_alter().
+ */
+function openy_activity_finder_search_api_solr_field_mapping_alter(IndexInterface $index, array &$fields) {
+  if (isset($fields['af_time_of_day'])) {
+    // We can sort only by single value fields.
+    // @see https://www.drupal.org/project/search_api_solr/issues/2906905
+    $fields['af_time_of_day'] = 'ds_af_time_of_day';
+  }
+}
+
+/**
+ * Implements hook_activity_finder_program_process_results_alter().
+ */
+function openy_activity_finder_activity_finder_program_process_results_alter(array &$data, NodeInterface $entity) {
+  // Add min/max age values (in months).
+  $data['min_age'] = $entity->field_session_min_age->value;
+  $data['max_age'] = $entity->field_session_max_age->value;
+  $data['product_id'] = $entity->field_productid->value;
 }

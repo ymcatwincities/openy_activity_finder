@@ -1,0 +1,11 @@
+name: 'OpenY Paragraph Activity Finder 4'
+description: 'Feature with Activity Finder 4 paragraph.'
+type: module
+core: 8.x
+dependencies:
+  - field
+  - node
+  - openy_node_landing
+  - paragraphs
+  - plugin
+version: 8.x-1.0

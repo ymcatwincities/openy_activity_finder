@@ -1,0 +1,24 @@
+.DS_Store
+node_modules
+/dist/activity_finder_4.umd.min.js.map
+/dist/demo.html
+/public/favicon.ico
+/public/index.html
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
