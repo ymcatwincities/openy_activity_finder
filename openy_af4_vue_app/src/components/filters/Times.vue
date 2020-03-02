@@ -11,7 +11,6 @@
         v-model="selectedTimes"
         type="checkbox"
         :value="time.value"
-        @change="onChange"
       />
       <label :for="'time-' + time.value">{{ time.label }}</label>
     </div>
@@ -57,12 +56,12 @@ export default {
   watch: {
     value() {
       this.selectedTimes = this.value
+    },
+    selectedTimes() {
+      this.$emit('input', this.selectedTimes)
     }
   },
   methods: {
-    onChange() {
-      this.$emit('input', this.selectedTimes)
-    },
     facetCount(value) {
       let facet = this.facets.find(x => x.filter === value)
       return facet ? facet.count : 0

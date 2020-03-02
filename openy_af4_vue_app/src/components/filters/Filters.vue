@@ -28,6 +28,13 @@
             :days="days"
             :facets="data.facets.days_of_week"
           />
+          <DaysTimesFilter
+            v-else
+            v-model="selectedDaysTimes"
+            :collapse-id="id + '-toggle-days-times'"
+            :days-times="daysTimes"
+            :facets="data.facets.af_weekdays_parts_of_day"
+          />
         </div>
       </Fieldset>
 
@@ -74,6 +81,7 @@
 import Fieldset from '@/components/Fieldset.vue'
 import AgesFilter from '@/components/filters/Ages.vue'
 import DaysFilter from '@/components/filters/Days.vue'
+import DaysTimesFilter from '@/components/filters/DaysTimes.vue'
 import LocationsFilter from '@/components/filters/Locations.vue'
 import ActivitiesFilter from '@/components/filters/Activities.vue'
 
@@ -83,6 +91,7 @@ export default {
     Fieldset,
     AgesFilter,
     DaysFilter,
+    DaysTimesFilter,
     LocationsFilter,
     ActivitiesFilter
   },
@@ -103,6 +112,10 @@ export default {
       type: Array,
       required: true
     },
+    daysTimes: {
+      type: Array,
+      required: true
+    },
     locations: {
       type: Array,
       required: true
@@ -116,6 +129,10 @@ export default {
       required: true
     },
     initialDays: {
+      type: Array,
+      required: true
+    },
+    initialDaysTimes: {
       type: Array,
       required: true
     },
@@ -140,13 +157,14 @@ export default {
     return {
       selectedAges: this.initialAges,
       selectedDays: this.initialDays,
+      selectedDaysTimes: this.initialDaysTimes,
       selectedLocations: this.initialLocations,
       selectedActivities: this.initialActivities
     }
   },
   computed: {
     scheduleFiltersCount() {
-      return this.selectedAges.length + this.selectedDays.length
+      return this.selectedAges.length + this.selectedDays.length + this.selectedDaysTimes.length
     },
     activityFiltersCount() {
       return this.selectedActivities.length
@@ -162,6 +180,9 @@ export default {
     initialDays() {
       this.selectedDays = this.initialDays
     },
+    initialDaysTimes() {
+      this.selectedDaysTimes = this.initialDaysTimes
+    },
     initialLocations() {
       this.selectedLocations = this.initialLocations
     },
@@ -173,6 +194,9 @@ export default {
     },
     selectedDays() {
       this.$emit('filterChange', { filter: 'selectedDays', value: this.selectedDays })
+    },
+    selectedDaysTimes() {
+      this.$emit('filterChange', { filter: 'selectedDaysTimes', value: this.selectedDaysTimes })
     },
     selectedLocations() {
       this.$emit('filterChange', { filter: 'selectedLocations', value: this.selectedLocations })

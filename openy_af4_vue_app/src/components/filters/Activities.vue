@@ -13,7 +13,6 @@
           v-model="selectedActivities"
           type="checkbox"
           :value="item.value"
-          @change="onChange"
         />
         <label :for="'activity-' + item.value">
           {{ item.label }}
@@ -57,12 +56,12 @@ export default {
   watch: {
     value() {
       this.selectedActivities = this.value
+    },
+    selectedActivities() {
+      this.$emit('input', this.selectedActivities)
     }
   },
   methods: {
-    onChange() {
-      this.$emit('input', this.selectedActivities)
-    },
     subFiltersCount(index) {
       let result = 0
       this.selectedActivities.forEach(item => {

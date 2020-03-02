@@ -14,7 +14,6 @@
           type="checkbox"
           :value="age.value"
           :disabled="isDisabled(age.value)"
-          @change="onChange"
         />
         <label :id="'label-' + age.value" :for="'age' + age.value">{{ age.label }}</label>
         <b-tooltip v-if="isDisabled(age.value)" :target="'label-' + age.value">
@@ -68,12 +67,12 @@ export default {
   watch: {
     value() {
       this.selectedAges = this.value
+    },
+    selectedAges() {
+      this.$emit('input', this.selectedAges)
     }
   },
   methods: {
-    onChange() {
-      this.$emit('input', this.selectedAges)
-    },
     facetCount(value) {
       let facet = this.facets.find(x => x.value === value)
       return facet ? facet.count : 0
@@ -122,7 +121,7 @@ export default {
 
         &:disabled + label {
           background-color: $af-light-gray;
-          border-color: $af-dark-gray;
+          border-color: $af-light-gray;
           cursor: default;
           color: $af-dark-gray;
         }

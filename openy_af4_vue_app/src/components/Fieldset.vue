@@ -280,11 +280,6 @@ export default {
           label {
             &:before {
               color: $white;
-              line-height: 1;
-              text-align: center;
-              font-family: FontAwesome;
-              font-weight: 400;
-              font-size: 18px;
               border-radius: 3px;
               margin: 12px 16px 12px 6px;
               width: 18px;
@@ -295,10 +290,21 @@ export default {
 
           input[type='checkbox']:checked + label {
             &:before {
-              color: $af-blue;
-              content: '\f00c';
               border: none;
               background-color: $white;
+            }
+
+            &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              left: 31px;
+              top: 22px;
+              width: 12px;
+              height: 7px;
+              border-left: 2px solid $af-blue;
+              border-bottom: 2px solid $af-blue;
+              transform: rotate(-45deg);
             }
           }
 

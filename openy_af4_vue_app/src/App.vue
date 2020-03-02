@@ -27,16 +27,18 @@
           :data="data"
           :ages="ages"
           :days="days"
+          :days-times="daysTimes"
           :locations="locations"
           :activities="activities"
           :initial-ages="selectedAges"
           :initial-days="selectedDays"
+          :initial-days-times="selectedDaysTimes"
           :initial-locations="selectedLocations"
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
-          @filterChange="changeFilter($event)"
-          @clearFilters="clearFilters()"
+          @filterChange="onFilterChange($event)"
+          @clearFilters="clearFilters"
         />
       </template>
       <template v-slot:sort>
@@ -113,15 +115,17 @@
           :data="data"
           :ages="ages"
           :days="days"
+          :days-times="daysTimes"
           :locations="locations"
           :activities="activities"
           :initial-ages="selectedAges"
           :initial-days="selectedDays"
+          :initial-days-times="selectedDaysTimes"
           :initial-locations="selectedLocations"
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
-          @filterChange="changeFilter($event)"
+          @filterChange="onFilterChange($event)"
           @clearFilters="clearFilters"
         />
       </template>
@@ -324,7 +328,9 @@ export default {
 
     // Initialize reactive properties for every default value.
     for (let key in data.defaults) {
-      data[key] = data.defaults[key]
+      data[key] = Array.isArray(data.defaults[key])
+        ? data.defaults[key].slice()
+        : data.defaults[key]
     }
 
     return data
@@ -518,11 +524,13 @@ export default {
             // If completedSteps is empty then we should initialize it.
             if (key === 'step' && this.completedSteps.length === 0) {
               this.completedSteps.push(this.defaults.step)
-              this.selectedPath = query[key]
+              this.selectedPath = query['step']
             }
           }
         } else {
-          this[key] = this.defaults[key]
+          this[key] = Array.isArray(this.defaults[key])
+            ? this.defaults[key].slice()
+            : this.defaults[key]
         }
       }
     },
@@ -551,7 +559,7 @@ export default {
           err
         })
     },
-    changeFilter(event) {
+    onFilterChange(event) {
       this[event.filter] = event.value
     },
     clearFilters() {
@@ -559,12 +567,16 @@ export default {
         if (this.clearFiltersSkip.includes(key)) {
           continue
         }
-        this[key] = this.defaults[key]
+        this[key] = Array.isArray(this.defaults[key])
+          ? this.defaults[key].slice()
+          : this.defaults[key]
       }
     },
     startOver() {
       for (let key in this.defaults) {
-        this[key] = this.defaults[key]
+        this[key] = Array.isArray(this.defaults[key])
+          ? this.defaults[key].slice()
+          : this.defaults[key]
       }
 
       this.completedSteps = []
@@ -583,7 +595,9 @@ export default {
         if (skip.includes(key)) {
           continue
         }
-        this[key] = this.defaults[key]
+        this[key] = Array.isArray(this.defaults[key])
+          ? this.defaults[key].slice()
+          : this.defaults[key]
       }
     }
   }

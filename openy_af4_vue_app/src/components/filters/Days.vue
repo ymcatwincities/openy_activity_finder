@@ -6,13 +6,7 @@
     class="days-filter-component"
   >
     <div v-for="day in days" :key="day.value" class="option">
-      <input
-        :id="'day' + day.value"
-        v-model="selectedDays"
-        type="checkbox"
-        :value="day.value"
-        @change="onChange"
-      />
+      <input :id="'day' + day.value" v-model="selectedDays" type="checkbox" :value="day.value" />
       <label :for="'day' + day.value">{{ day.search_value | capitalize }}</label>
     </div>
   </Foldable>
@@ -57,12 +51,12 @@ export default {
   watch: {
     value() {
       this.selectedDays = this.value
+    },
+    selectedDays() {
+      this.$emit('input', this.selectedDays)
     }
   },
   methods: {
-    onChange() {
-      this.$emit('input', this.selectedDays)
-    },
     facetCount(value) {
       let facet = this.facets.find(x => x.filter === value)
       return facet ? facet.count : 0

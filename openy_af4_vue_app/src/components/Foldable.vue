@@ -101,16 +101,21 @@ export default {
     .option {
       display: flex;
       height: 50px;
+
       input[type='checkbox'] {
         display: none;
+
         + label {
           cursor: pointer;
           display: flex;
           position: relative;
-          font-family: 'Cachet', Verdana, Geneva, sans-serif;
           margin: auto 0;
           padding-left: 50px;
           color: $af-black;
+          font-size: 12px;
+          line-height: 18px;
+          font-weight: normal;
+
           &:before {
             content: '';
             display: block;
@@ -119,32 +124,36 @@ export default {
             height: 18px;
             width: 18px;
             margin: auto 16px;
-            border: 2px solid $af-black;
+            border: 2px solid $af-dark-gray;
             border-radius: 3px;
             align-self: center;
           }
         }
+
         &:checked + label {
           &:before {
             background: $af-blue;
             border-width: 0;
           }
+
           &:after {
             content: '';
             display: block;
             position: absolute;
-            left: 20px;
-            width: 10px;
-            height: 5px;
+            left: 19px;
+            top: 4px;
+            width: 12px;
+            height: 7px;
             border-left: 2px solid $white;
             border-bottom: 2px solid $white;
             transform: rotate(-45deg);
-            margin-top: -1px;
             align-self: center;
           }
         }
+
         &:disabled + label {
           color: $af-dark-gray;
+
           &:before {
             border-color: $af-dark-gray;
           }

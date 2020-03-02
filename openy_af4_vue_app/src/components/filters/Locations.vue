@@ -13,7 +13,6 @@
           v-model="selectedLocations"
           type="checkbox"
           :value="item.value"
-          @change="onChange"
         />
         <label :for="'location-' + item.value">
           {{ item.label }}
@@ -57,12 +56,12 @@ export default {
   watch: {
     value() {
       this.selectedLocations = this.value
+    },
+    selectedLocations() {
+      this.$emit('input', this.selectedLocations)
     }
   },
   methods: {
-    onChange() {
-      this.$emit('input', this.selectedLocations)
-    },
     subFiltersCount(index) {
       let result = 0
       this.selectedLocations.forEach(item => {
