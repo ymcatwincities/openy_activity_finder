@@ -71,6 +71,7 @@ activity_finder_4:
     - openy_activity_finder/axios
     - openy_activity_finder/bootstrap-vue
     - openy_activity_finder/popper
+    - openy_system/openy_system.ajax_spinner
 
 vue:
   version: 2.6.11
