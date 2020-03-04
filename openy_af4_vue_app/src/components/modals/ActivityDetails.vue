@@ -107,28 +107,6 @@
                     <i class="fa fa-times-circle-o"></i>
                   </a>
                 </template>
-                <template v-else-if="buttonsState[index] === 'itemUnbookmarked'">
-                  <a
-                    key="register"
-                    role="button"
-                    class="btn btn-lg register"
-                    :href="item.link"
-                    target="_blank"
-                    @click="register(index)"
-                  >
-                    {{ 'Register' | t }}
-                    <i class="fa fa-external-link"></i>
-                  </a>
-                  <a
-                    key="bookmark"
-                    role="button"
-                    class="bookmark"
-                    title="Add bookmark"
-                    @click="bookmarkItem(age, index)"
-                  >
-                    <i class="fa fa-bookmark-o"></i>
-                  </a>
-                </template>
               </div>
             </div>
           </div>
@@ -240,10 +218,6 @@ export default {
       this.$emit('bookmark', age)
     },
     unbookmarkItem(age, index) {
-      this.buttonsState = {
-        ...this.buttonsState,
-        ...{ [index]: 'itemUnbookmarked' }
-      }
       this.trackEvent('unbookmark', 'Click in activity details', this.item.product_id)
       this.$emit('unbookmark', age)
     },
