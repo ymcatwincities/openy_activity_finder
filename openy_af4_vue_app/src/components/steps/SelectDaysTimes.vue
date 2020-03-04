@@ -14,11 +14,9 @@
           v-for="(day, index) in daysTimes"
           :key="index"
           :label="day.search_value"
-          :collapse-id="'accordion-' + index"
           :counter="subFiltersCount(index)"
           :counter-options="optionsCount(index)"
-          accordion="accordion-days-times"
-          :collapsed="index != firstItemWithOptions"
+          :collapsible="false"
           :handle-sticky="handleSticky"
         >
           <div class="options">
