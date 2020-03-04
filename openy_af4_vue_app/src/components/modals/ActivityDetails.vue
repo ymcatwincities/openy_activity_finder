@@ -80,7 +80,7 @@
                     role="button"
                     class="bookmark bookmarked"
                     title="Remove bookmark"
-                    @click="unbookmarkItem(age, index)"
+                    @click="unbookmarkItem(age)"
                   >
                     <i class="fa fa-bookmark"></i>
                   </a>
@@ -217,7 +217,7 @@ export default {
       this.trackEvent('bookmark', 'Click in activity details', this.item.product_id)
       this.$emit('bookmark', age)
     },
-    unbookmarkItem(age, index) {
+    unbookmarkItem(age) {
       this.trackEvent('unbookmark', 'Click in activity details', this.item.product_id)
       this.$emit('unbookmark', age)
     },
