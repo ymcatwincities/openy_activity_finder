@@ -15,6 +15,8 @@
  * - is_spots_available_disabled
  * - expanderSectionsConfig
  * - sort_options
+ * - legacy_mode
+ * - background_image
  */
  *
 #}
@@ -32,6 +34,7 @@
       :locations="{{ locations|json_encode }}"
       :sort-options="{{ sort_options|json_encode }}"
       :legacy-mode="{{ legacy_mode|json_encode }}"
+      :background-image="{{ background_image|json_encode }}"
     ></activity-finder>
   </div>
 </div>

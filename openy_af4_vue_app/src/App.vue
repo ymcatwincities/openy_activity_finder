@@ -50,8 +50,13 @@
       v-else-if="step === 'selectPath'"
       v-model="selectedPath"
       :paths="paths"
+      :background-image="backgroundImage"
       @nextStep="nextStep('selectPath')"
-    />
+    >
+      <template v-slot:search>
+        <SearchForm :value="searchKeywords" @input="onSearchInput($event)" />
+      </template>
+    </SelectPath>
     <SelectAges
       v-else-if="step === 'selectAges'"
       v-model="selectedAges"
@@ -231,6 +236,10 @@ export default {
     legacyMode: {
       type: Number,
       required: true
+    },
+    backgroundImage: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -262,19 +271,23 @@ export default {
       paths: [
         {
           id: 'selectAges',
-          name: 'Find by Age'
+          name: this.t('Age'),
+          icon: 'fa-birthday-cake'
         },
         {
           id: 'selectDaysTimes',
-          name: 'Find by Day and Time'
+          name: this.t('Day & Time'),
+          icon: 'fa-calendar'
         },
         {
           id: 'selectLocations',
-          name: 'Find by Location'
+          name: this.t('Location'),
+          icon: 'fa-map-marker'
         },
         {
           id: 'selectActivities',
-          name: 'Find by Activity'
+          name: this.t('Activity'),
+          icon: 'fa-heartbeat'
         }
       ],
       selectedPath: '',
@@ -305,24 +318,11 @@ export default {
         'selectLocations',
         'results'
       ]
-      data.paths = [
-        {
-          id: 'selectAges',
-          name: 'Find by Age'
-        },
-        {
-          id: 'selectDays',
-          name: 'Find by Day'
-        },
-        {
-          id: 'selectLocations',
-          name: 'Find by Location'
-        },
-        {
-          id: 'selectActivities',
-          name: 'Find by Activity'
-        }
-      ]
+      data.paths[1] = {
+        id: 'selectDays',
+        name: this.t('Day'),
+        icon: 'fa-calendar'
+      }
       data.maxAges = 0
     }
 
@@ -599,6 +599,10 @@ export default {
           ? this.defaults[key].slice()
           : this.defaults[key]
       }
+    },
+    onSearchInput(keywords) {
+      this.searchKeywords = keywords
+      this.step = 'results'
     }
   }
 }

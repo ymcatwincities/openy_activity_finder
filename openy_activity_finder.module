@@ -70,6 +70,7 @@ function openy_activity_finder_theme() {
         'expanderSectionsConfig' => [],
         'sort_options' => [],
         'legacy_mode' => '',
+        'background_image' => [],
       ],
     ],
   ];

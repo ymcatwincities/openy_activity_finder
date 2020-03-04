@@ -45,10 +45,8 @@ export default {
   border: 1px solid $af-dark-gray;
   color: $af-dark-gray;
   display: flex;
-
-  @include media-breakpoint-up('lg') {
-    margin: 40px 0;
-  }
+  max-width: 340px;
+  margin: 0 auto;
 
   .form-control {
     border: none;

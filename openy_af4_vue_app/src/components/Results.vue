@@ -6,7 +6,9 @@
           <Loading />
         </div>
         <div v-else class="col-xs-12 col-md-3 hidden-xs hidden-sm">
-          <slot name="search" />
+          <div class="search">
+            <slot name="search" />
+          </div>
           <slot name="filters" />
         </div>
 
@@ -316,6 +318,10 @@ export default {
 
 <style lang="scss">
 .results-component {
+  .search {
+    margin: 40px 0;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
