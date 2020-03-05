@@ -226,6 +226,7 @@ export default {
           display: none;
 
           & + label {
+            position: relative;
             background-color: $white;
             border: 2px solid $af-blue;
             border-radius: 5px;
@@ -298,8 +299,8 @@ export default {
               content: '';
               display: block;
               position: absolute;
-              left: 31px;
-              top: 22px;
+              left: 19px;
+              top: 20px;
               width: 12px;
               height: 7px;
               border-left: 2px solid $af-blue;
