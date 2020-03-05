@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="content">
-              <p>{{ 'The following filters have been applied' | t }}:</p>
+              <div class="description">{{ 'The following filters have been applied' | t }}:</div>
               <ul>
                 <li v-for="(item, index) in filterList" :key="index">
                   {{ item }}
@@ -134,19 +134,30 @@ export default {
     color: $af-black;
     padding: 20px 10px;
 
+    .description {
+      margin-bottom: 20px;
+    }
+
     ul {
       padding-left: 25px;
+      margin-bottom: 20px;
 
       li {
-        padding-top: 10px;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
 
     .view-results {
       border-radius: 5px;
-      margin-top: 10px;
       width: 100%;
       background-color: $af-violet;
+      font-weight: bold;
+      line-height: 50px;
+      padding: 0;
     }
   }
 }
