@@ -1,5 +1,9 @@
 <template>
-  <Modal id="activity-finder-bookmarked-items" v-model="visible" title="Bookmarked items" flyout>
+  <Modal id="activity-finder-bookmarked-items" v-model="visible" flyout>
+    <template v-slot:modal-title>
+      <i class="fa fa-bookmark"></i>
+      <span>Bookmarked items</span>
+    </template>
     <template>
       <div class="bookmarked-items-modal-content">
         <div class="row">

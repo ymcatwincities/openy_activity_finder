@@ -15,14 +15,18 @@
     }"
     dialog-class="af-modal-dialog"
     header-class="af-modal-header"
+    title-class="af-modal-title"
     content-class="af-modal-content"
     body-class="af-modal-body"
   >
     <template v-slot:modal-header-close>
       &times;
     </template>
-    <template v-slot:default="{ ok, cancel, close, hide }">
-      <slot :ok="ok" :cancel="cancel" :close="close" :hide="hide" />
+    <template v-slot:modal-title>
+      <slot name="modal-title" />
+    </template>
+    <template v-slot:default>
+      <slot />
     </template>
   </b-modal>
 </template>
@@ -43,7 +47,7 @@ export default {
     },
     title: {
       type: String,
-      required: true
+      default: ''
     },
     flyout: {
       type: Boolean,
@@ -174,11 +178,17 @@ export default {
     border-bottom: 1px solid $af-dark-gray;
     align-items: center;
 
-    .modal-title {
+    .af-modal-title {
       color: $af-dark-gray;
       text-transform: uppercase;
       font-size: 18px;
       line-height: 27px;
+
+      .fa {
+        width: 50px;
+        margin-left: -10px;
+        text-align: center;
+      }
     }
 
     .close {
