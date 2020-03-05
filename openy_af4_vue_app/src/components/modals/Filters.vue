@@ -131,10 +131,21 @@ export default {
 <style lang="scss">
 .filters-modal-content {
   .content {
+    color: $af-black;
     padding: 20px 10px;
+
+    ul {
+      padding-left: 25px;
+
+      li {
+        padding-top: 10px;
+      }
+    }
 
     .view-results {
       border-radius: 5px;
+      margin-top: 10px;
+      width: 100%;
       background-color: $af-violet;
     }
   }
