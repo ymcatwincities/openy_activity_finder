@@ -45,7 +45,6 @@ export default {
   border: 1px solid $af-dark-gray;
   color: $af-dark-gray;
   display: flex;
-  max-width: 340px;
   margin: 0 auto;
 
   .form-control {

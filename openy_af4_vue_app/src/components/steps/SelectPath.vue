@@ -33,7 +33,9 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <slot name="search" />
+          <div class="search">
+            <slot name="search" />
+          </div>
         </div>
       </div>
     </div>
@@ -206,6 +208,11 @@ export default {
         padding: 30px 0;
       }
     }
+  }
+
+  .search {
+    max-width: 340px;
+    margin: 0 auto;
   }
 }
 </style>
