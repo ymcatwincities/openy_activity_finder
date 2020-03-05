@@ -7,7 +7,12 @@
     centered
     scrollable
     :hide-footer="true"
-    :modal-class="{ 'af-modal': true, 'af-flyout': flyout, 'af-narrow': narrow }"
+    :modal-class="{
+      'af-modal': true,
+      'af-flyout': flyout,
+      'af-narrow': narrow,
+      'af-responsive': responsive
+    }"
     dialog-class="af-modal-dialog"
     header-class="af-modal-header"
     content-class="af-modal-content"
@@ -45,6 +50,10 @@ export default {
       default: false
     },
     narrow: {
+      type: Boolean,
+      default: false
+    },
+    responsive: {
       type: Boolean,
       default: false
     }
@@ -143,6 +152,15 @@ export default {
     .af-modal-content {
       max-width: 340px;
       margin: 0 auto;
+    }
+
+    &.af-responsive {
+      @include media-breakpoint-up('lg') {
+        .af-modal-content {
+          max-width: 680px;
+          width: 680px;
+        }
+      }
     }
   }
 

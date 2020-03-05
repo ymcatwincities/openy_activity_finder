@@ -428,25 +428,25 @@ export default {
           }
         }
       }
-    }
 
-    .info {
-      font-size: 12px;
-      line-height: 18px;
-    }
+      .info {
+        font-size: 12px;
+        line-height: 18px;
+      }
 
-    .details {
-      font-size: 10px;
-      line-height: 15px;
-    }
+      .details {
+        font-size: 10px;
+        line-height: 15px;
+      }
 
-    .fa {
-      font-size: 20px;
-      color: $af-dark-gray;
-      margin-right: 10px;
-      width: 20px;
-      text-align: center;
-      flex-shrink: 0;
+      .fa {
+        font-size: 20px;
+        color: $af-dark-gray;
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
     }
   }
 

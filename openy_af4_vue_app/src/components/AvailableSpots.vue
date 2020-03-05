@@ -11,6 +11,10 @@ export default {
     spots: {
       type: Number,
       default: 0
+    },
+    big: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -24,13 +28,18 @@ export default {
       }
     },
     classes() {
+      const classes = []
       if (this.spots === 0) {
-        return ['full']
+        classes.push('full')
       } else if (this.spots <= 3) {
-        return ['low']
-      } else {
-        return []
+        classes.push('low')
       }
+
+      if (this.big) {
+        classes.push('big')
+      }
+
+      return classes
     }
   }
 }
@@ -48,6 +57,11 @@ export default {
   border-radius: 3px;
 
   @include media-breakpoint-up('lg') {
+    font-size: 12px;
+    line-height: 23px;
+  }
+
+  &.big {
     font-size: 12px;
     line-height: 23px;
   }

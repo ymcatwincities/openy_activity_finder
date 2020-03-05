@@ -1,52 +1,84 @@
 <template>
-  <Modal id="activity-finder-activity-details" v-model="visible" title="Activity details">
+  <Modal
+    id="activity-finder-activity-details"
+    v-model="visible"
+    title="Activity details"
+    narrow
+    responsive
+  >
     <template>
       <div class="activity-details-modal-content">
         <div class="row">
           <div class="col-xs-12 col-md-6 left-wrapper">
             <div class="left">
-              <span class="title">{{ item.name }}</span>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <div class="row">
+              <div class="title">{{ item.name }}</div>
+              <div class="description">{{ item.description }}</div>
+              <div class="row ages">
                 <div class="col-xs-3"><strong>Ages:</strong></div>
                 <div class="col-xs-9">{{ item.ages }}</div>
               </div>
-              <div class="row">
+              <div class="row gender">
                 <div class="col-xs-3"><strong>Gender:</strong></div>
-                <div class="col-xs-9">Girls</div>
+                <div class="col-xs-9">Girls [no info]</div>
               </div>
-              <a :href="item.link" target="_blank">Learn more about this program</a>
+              <a :href="item.link" target="_blank" class="learn-more">
+                Learn more about this program
+                <i class="fa fa-external-link"></i>
+              </a>
             </div>
           </div>
           <div class="col-xs-12 col-md-6 right-wrapper">
             <div class="right">
-              <div class="info">
-                <span>
-                  <strong>{{ item.dates }}</strong>
-                </span>
-                <br />
-                <span v-for="(schedule, index) in item.schedule" :key="index" class="schedule">
-                  {{ schedule.days }}<br />
-                  {{ schedule.time }}
-                </span>
-                <br />
-                <span>
-                  <strong>{{ item.location }}</strong>
-                </span>
-                <br />
-                <span>Room Name</span>
-                <br />
-                <span>
-                  <strong>Instructor Name</strong>
-                </span>
-                <br />
-                <span>SUB: Instructor Name</span>
-                <br />
-                <span>{{ item.price }}</span>
+              <div class="info-section">
+                <div class="item-detail dates">
+                  <i class="fa fa-calendar"></i>
+                  <span>
+                    <span class="info">{{ item.dates }}</span>
+                    <br />
+                    <span class="details">{{ item.days }}</span>
+                  </span>
+                </div>
+
+                <div class="item-detail schedule">
+                  <i class="fa fa-clock-o"></i>
+                  <span class="schedule-items">
+                    <span
+                      v-for="(schedule, index) in item.schedule"
+                      :key="index"
+                      class="schedule-item"
+                    >
+                      <span class="info">{{ schedule.time }}</span>
+                      <br />
+                      <span class="details">{{ schedule.days }}</span>
+                    </span>
+                  </span>
+                </div>
+
+                <div class="item-detail">
+                  <i class="fa fa-map-marker"></i>
+                  <span>
+                    <span class="info">{{ item.location }}</span>
+                    <br />
+                    <span class="details">Room Name [no info]</span>
+                  </span>
+                </div>
+
+                <div class="item-detail instructor">
+                  <i class="fa fa-user"></i>
+                  <span>
+                    <span class="info">Instructor Name [no info]</span>
+                    <br />
+                    <span class="details">SUB: Instructor Name [no info]</span>
+                  </span>
+                </div>
+
+                <div class="item-detail price">
+                  <i class="fa fa-money"></i>
+                  <span>
+                    <span class="info">{{ item.price }}</span>
+                  </span>
+                </div>
+                <AvailableSpots :spots="Number(item.spots_available)" big />
               </div>
               <div v-for="(age, index) in availableAges" :key="age" class="action">
                 <span v-if="age && !legacyMode" class="age-icons">
@@ -72,7 +104,7 @@
                     title="Add bookmark"
                     @click="bookmarkItem(age, index)"
                   >
-                    <i class="fa fa-bookmark-o"></i>
+                    <i class="fa fa-bookmark"></i>
                   </a>
                   <a
                     v-else-if="!legacyMode"
@@ -119,12 +151,14 @@
 <script>
 import Modal from '@/components/modals/Modal.vue'
 import AgeIcon from '@/components/AgeIcon.vue'
+import AvailableSpots from '@/components/AvailableSpots'
 
 export default {
   name: 'ActivityDetailsModal',
   components: {
     Modal,
-    AgeIcon
+    AgeIcon,
+    AvailableSpots
   },
   props: {
     value: {
@@ -238,110 +272,180 @@ export default {
   .row {
     margin-left: -10px !important;
     margin-right: -10px !important;
+
+    @include media-breakpoint-up('lg') {
+      display: flex;
+    }
   }
 
-  .left-wrapper,
-  .right-wrapper {
+  [class*='col-'] {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .right-wrapper {
+    display: flex;
+    background-color: $af-light-gray;
   }
 
   .left {
     margin: 20px 10px;
 
-    @include media-breakpoint-up('sm') {
-      margin-left: 20px;
+    @include media-breakpoint-up('lg') {
+      margin-right: 0;
     }
 
-    .row {
-      margin-left: -15px !important;
-      margin-right: -15px !important;
+    .title,
+    .description,
+    .ages,
+    .gender {
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: bold;
+    }
+
+    .description,
+    .ages,
+    .gender,
+    .learn-more {
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .learn-more {
+      color: $af-blue;
     }
   }
 
   .right {
     margin: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
 
-    @include media-breakpoint-up('sm') {
-      margin-right: 20px;
+    @include media-breakpoint-up('lg') {
+      margin-left: 0;
     }
-  }
 
-  .left {
-    .title {
-      font-size: 14px;
-      line-height: 21px;
-      font-weight: bold;
+    .info-section {
+      margin-bottom: 20px;
     }
-  }
 
-  .right-wrapper {
-    background-color: $af-light-gray;
+    .item-detail {
+      display: flex;
+      margin-bottom: 10px;
 
-    .right {
-      .info {
-        margin-bottom: 20px;
+      &:last-child {
+        margin-bottom: 0;
       }
 
-      .action {
-        padding: 10px;
-        background-color: $white;
-        border: 1px solid $af-darker-gray;
+      .schedule-items {
+        display: flex;
+
+        @include media-breakpoint-up('md') {
+          flex-direction: column;
+        }
+
+        .schedule-item {
+          margin-right: 10px;
+
+          @include media-breakpoint-up('md') {
+            margin-right: 0;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+
+      .info {
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      .details {
+        font-size: 10px;
+        line-height: 15px;
+      }
+
+      .fa {
+        font-size: 20px;
+        color: $af-dark-gray;
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+    }
+
+    .action {
+      padding: 10px;
+      background-color: $white;
+      border: 1px solid $af-darker-gray;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .register {
+        background-color: $af-violet;
+        flex-grow: 1;
         border-radius: 5px;
-        margin-bottom: 10px;
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: bolder;
+      }
+
+      .bookmark {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        text-align: center;
+        margin-left: 10px;
+        border: 2px solid $af-blue;
+
+        .fa {
+          color: $af-blue;
+          font-size: 18px;
+          line-height: 46px;
+        }
+      }
+
+      .bookmarked {
+        border: none;
+        background-color: $af-green;
+
+        .fa {
+          color: $white;
+          line-height: 50px;
+        }
+      }
+
+      .action-taken {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        background-color: $af-green;
+        flex-grow: 1;
+        border-radius: 5px;
+        font-size: 18px;
+        line-height: 50px;
+        font-weight: bolder;
+        padding: 0 15px 0 20px;
 
-        .register {
-          background-color: $af-violet;
-          flex-grow: 1;
-          border-radius: 5px;
-          font-size: 18px;
-          line-height: 27px;
-          font-weight: bolder;
-        }
-
-        .bookmark {
-          display: inline-block;
-          width: 50px;
-          height: 50px;
-          border-radius: 5px;
-          text-align: center;
-          margin-left: 10px;
-          border: 2px solid $af-blue;
-
-          .fa {
-            color: $af-blue;
-            font-size: 18px;
-            line-height: 46px;
-          }
-        }
-
-        .bookmarked {
-          border: none;
-          background-color: $af-green;
-
-          .fa {
-            color: $white;
-            line-height: 50px;
-          }
-        }
-
-        .action-taken {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background-color: $af-green;
-          flex-grow: 1;
-          border-radius: 5px;
-          font-size: 18px;
-          line-height: 50px;
-          font-weight: bolder;
-          padding: 0 15px 0 20px;
-
-          .fa {
-            font-size: 20px;
-          }
+        .fa {
+          font-size: 20px;
         }
       }
     }
