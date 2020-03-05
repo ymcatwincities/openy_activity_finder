@@ -271,8 +271,9 @@ export default {
           margin-right: 10px;
           border-radius: 5px;
           font-size: 18px;
-          line-height: 27px;
+          line-height: 50px;
           font-weight: bolder;
+          padding: 0;
         }
 
         .remove {

@@ -402,8 +402,9 @@ export default {
         flex-grow: 1;
         border-radius: 5px;
         font-size: 18px;
-        line-height: 27px;
+        line-height: 50px;
         font-weight: bolder;
+        padding: 0;
       }
 
       .bookmark {
