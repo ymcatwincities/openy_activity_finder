@@ -67,7 +67,7 @@
                       target="_blank"
                       @click="register(index)"
                     >
-                      {{ 'Register now' | t }}
+                      {{ getButtonTitle(index) }}
                       <i class="fa fa-external-link"></i>
                     </a>
                     <a
@@ -188,6 +188,16 @@ export default {
         ...this.buttonsState,
         ...{ [index]: 'default' }
       }
+    },
+    getButtonTitle(index) {
+      let title = this.t('Register now')
+      if (
+        Number(this.cartItems[index].item.spots_available) === 0 &&
+        Number(this.cartItems[index].item.wait_list_availability) > 0
+      ) {
+        title = this.t('Waiting list')
+      }
+      return title
     }
   }
 }

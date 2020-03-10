@@ -78,7 +78,11 @@
                     <span class="info">{{ item.price }}</span>
                   </span>
                 </div>
-                <AvailableSpots :spots="Number(item.spots_available)" big />
+                <AvailableSpots
+                  :spots="Number(item.spots_available)"
+                  :wait-list="Number(item.wait_list_availability)"
+                  big
+                />
               </div>
               <div v-for="(age, index) in availableAges" :key="age" class="action">
                 <span v-if="age && !legacyMode" class="age-icons">
@@ -93,7 +97,7 @@
                     target="_blank"
                     @click="register(index)"
                   >
-                    {{ 'Register' | t }}
+                    {{ getButtonTitle }}
                     <i class="fa fa-external-link"></i>
                   </a>
                   <a
@@ -206,6 +210,13 @@ export default {
       })
 
       return availableAges.length ? availableAges : [null]
+    },
+    getButtonTitle() {
+      let title = this.t('Register')
+      if (Number(this.item.spots_available) === 0 && Number(this.item.wait_list_availability) > 0) {
+        title = this.t('Waiting list')
+      }
+      return title
     }
   },
   watch: {

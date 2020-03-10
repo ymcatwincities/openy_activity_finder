@@ -15,11 +15,18 @@ export default {
     big: {
       type: Boolean,
       default: false
+    },
+    waitList: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
     value() {
       if (this.spots === 0) {
+        if (this.waitList > 0) {
+          return this.t('Waiting list')
+        }
         return this.t('Full')
       } else if (this.spots < 10) {
         return this.formatPlural(this.spots, '1 spot', '@count spots')
@@ -30,7 +37,11 @@ export default {
     classes() {
       const classes = []
       if (this.spots === 0) {
-        classes.push('full')
+        if (this.waitList > 0) {
+          classes.push('wait-list')
+        } else {
+          classes.push('full')
+        }
       } else if (this.spots <= 3) {
         classes.push('low')
       }
@@ -79,6 +90,14 @@ export default {
     background-color: $af-red;
     border-color: $af-red;
     font-weight: bold;
+  }
+
+  &.wait-list {
+    color: $white;
+    background-color: $af-dark-gray;
+    border-color: $af-dark-gray;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }
 </style>

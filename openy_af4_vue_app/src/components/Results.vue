@@ -60,7 +60,10 @@
                     </template>
                   </template>
                 </span>
-                <AvailableSpots :spots="Number(item.spots_available)" />
+                <AvailableSpots
+                  :spots="Number(item.spots_available)"
+                  :wait-list="Number(item.wait_list_availability)"
+                />
               </div>
 
               <div class="item-detail dates">
@@ -178,7 +181,10 @@
                       <span class="info">{{ item.price }}</span>
                     </span>
                   </div>
-                  <AvailableSpots :spots="Number(item.spots_available)" />
+                  <AvailableSpots
+                    :spots="Number(item.spots_available)"
+                    :wait-list="Number(item.wait_list_availability)"
+                  />
                 </div>
               </div>
             </div>
