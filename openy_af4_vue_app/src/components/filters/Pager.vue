@@ -5,7 +5,7 @@
         class="first-page"
         :class="{ disabled: value === 1 }"
         role="button"
-        title="First page"
+        :title="'First page' | t"
         @click="firstPage"
       >
         <span class="vertical-line">
@@ -16,7 +16,7 @@
         class="prev-page"
         :class="{ disabled: value === 1 }"
         role="button"
-        title="Previous page"
+        :title="'Previous page' | t"
         @click="prevPage"
       >
         <i class="fa fa-chevron-left"></i>
@@ -30,7 +30,7 @@
         class="next-page"
         :class="{ disabled: value === totalPages }"
         role="button"
-        title="Next page"
+        :title="'Next page' | t"
         @click="nextPage"
       >
         <i class="fa fa-chevron-right"></i>
@@ -39,7 +39,7 @@
         class="last-page"
         :class="{ disabled: value === totalPages }"
         role="button"
-        title="Last page"
+        :title="'Last page' | t"
         @click="lastPage"
       >
         <span class="vertical-line">

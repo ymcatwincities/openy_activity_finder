@@ -4,23 +4,31 @@
       <div class="col-sx-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4 text-center">
         <h2>{{ 'Oh no!' | t }}</h2>
         <p>{{ "We're sorry, but no results meet your search criteria." | t }}</p>
-        <p>
+        <p v-if="selectedDimensions >= 2">
           <strong>{{ 'What criteria is most important to you?' | t }}</strong>
         </p>
-        <div class="actions">
+        <div v-if="selectedDimensions >= 2" class="actions">
           <button
             v-if="selectedAges.length"
             type="button"
             class="btn btn-lg"
-            @click="handleChoice('selectedAges')"
+            @click="onChoice('selectedAges')"
           >
             {{ 'Age' | t }}
+          </button>
+          <button
+            v-if="selectedDays.length"
+            type="button"
+            class="btn btn-lg"
+            @click="onChoice('selectedDays')"
+          >
+            {{ 'Day' | t }}
           </button>
           <button
             v-if="selectedDaysTimes.length"
             type="button"
             class="btn btn-lg"
-            @click="handleChoice('selectedDaysTimes')"
+            @click="onChoice('selectedDaysTimes')"
           >
             {{ 'Day & time' | t }}
           </button>
@@ -28,7 +36,7 @@
             v-if="selectedLocations.length"
             type="button"
             class="btn btn-lg"
-            @click="handleChoice('selectedLocations')"
+            @click="onChoice('selectedLocations')"
           >
             {{ 'Location' | t }}
           </button>
@@ -36,7 +44,7 @@
             v-if="selectedActivities.length"
             type="button"
             class="btn btn-lg"
-            @click="handleChoice('selectedActivities')"
+            @click="onChoice('selectedActivities')"
           >
             {{ 'Activity' | t }}
           </button>
@@ -75,8 +83,19 @@ export default {
       required: true
     }
   },
+  computed: {
+    selectedDimensions() {
+      return (
+        (this.selectedAges.length ? 1 : 0) +
+        (this.selectedDays.length ? 1 : 0) +
+        (this.selectedTimes.length ? 1 : 0) +
+        (this.selectedLocations.length ? 1 : 0) +
+        (this.selectedActivities.length ? 1 : 0)
+      )
+    }
+  },
   methods: {
-    handleChoice(choice) {
+    onChoice(choice) {
       this.$emit('noResultsChoice', choice)
     }
   }

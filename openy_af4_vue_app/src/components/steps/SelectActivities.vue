@@ -1,24 +1,23 @@
 <template>
   <div class="select-activities-component">
     <Step
-      skip-label="Any activity (Skip)"
+      :skip-label="'Any activity (Skip)' | t"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"
     >
       <template v-slot:title>
-        What activities are you interested in?
+        {{ 'What activities are you interested in?' | t }}
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
-          v-for="(activity_type, index) in activities"
+          v-for="(activity_type, index) in filteredActivities"
           :key="index"
           :label="activity_type.label"
           :collapse-id="'accordion-' + index"
           :counter="subFiltersCount(index)"
           :counter-options="optionsCount(index)"
           accordion="accordion-activities"
-          :collapsed="index != firstItemWithOptions"
           :handle-sticky="handleSticky"
         >
           <div class="options">
@@ -75,6 +74,10 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    firstStep: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -83,6 +86,19 @@ export default {
     }
   },
   computed: {
+    filteredActivities() {
+      if (!this.firstStep) {
+        return this.activities
+      }
+
+      const filteredActivities = {}
+      for (let key in this.activities) {
+        if (this.optionsCount(key) > 0) {
+          filteredActivities[key] = this.activities[key]
+        }
+      }
+      return filteredActivities
+    },
     filtersSelected() {
       return this.value.length >= 1
     },
@@ -135,9 +151,7 @@ export default {
     optionsCount(index) {
       let count = 0
       for (let key in this.activities[index].value) {
-        if (this.facetCount(this.activities[index].value[key].value)) {
-          count++
-        }
+        count += this.facetCount(this.activities[index].value[key].value)
       }
       return count
     }

@@ -7,7 +7,7 @@
       :placeholder="'Keyword(s)' | t"
       @keyup.enter.prevent="runSearch"
     />
-    <button class="btn" :disabled="!searchKeywords" @click.stop.prevent="runSearch()">
+    <button class="btn" @click.stop.prevent="runSearch">
       <span class="fa fa-search" :aria-label="'Search' | t"></span>
     </button>
   </div>

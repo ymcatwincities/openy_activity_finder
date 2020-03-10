@@ -18,12 +18,11 @@
       @viewResults="viewResults()"
     />
     <ResultsBar v-if="step === 'results'" class="hidden-md hidden-lg">
-      <template v-slot:search>
-        <SearchForm v-model="searchKeywords" />
+      <template v-slot:search="{ hideModal }">
+        <SearchForm v-model="searchKeywords" @input="hideModal" />
       </template>
-      <template v-slot:filter>
+      <template v-slot:filter="{ hideModal }">
         <Filters
-          id="mobile"
           :data="data"
           :ages="ages"
           :days="days"
@@ -37,12 +36,12 @@
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
-          @filterChange="onFilterChange($event)"
-          @clearFilters="clearFilters"
+          @filterChange="onFilterChange($event, hideModal)"
+          @clearFilters="clearFilters(hideModal)"
         />
       </template>
-      <template v-slot:sort>
-        <SortRadios v-model="selectedSort" :sort-options="sortOptions" />
+      <template v-slot:sort="{ hideModal }">
+        <SortRadios v-model="selectedSort" :sort-options="sortOptions" @input="hideModal" />
       </template>
     </ResultsBar>
     <Loading v-if="step !== 'results' && isLoadingData" />
@@ -63,6 +62,7 @@
       :ages="ages"
       :max-ages="maxAges"
       :facets="data.facets.static_age_filter"
+      :first-step="selectedPath === 'selectAges'"
       @nextStep="nextStep('selectAges')"
     />
     <SelectDays
@@ -70,6 +70,7 @@
       v-model="selectedDays"
       :days="days"
       :facets="data.facets.days_of_week"
+      :first-step="selectedPath === 'selectDays'"
       @nextStep="nextStep('selectDays')"
     />
     <SelectTimes
@@ -77,6 +78,7 @@
       v-model="selectedTimes"
       :times="times"
       :facets="data.facets.af_parts_of_day"
+      :first-step="selectedPath === 'selectTimes'"
       @nextStep="nextStep('selectTimes')"
     />
     <SelectDaysTimes
@@ -84,6 +86,7 @@
       v-model="selectedDaysTimes"
       :days-times="daysTimes"
       :facets="data.facets.af_weekdays_parts_of_day"
+      :first-step="selectedPath === 'selectDaysTimes'"
       @nextStep="nextStep('selectDaysTimes')"
     />
     <SelectLocations
@@ -91,6 +94,7 @@
       v-model="selectedLocations"
       :locations="locations"
       :facets="data.facets.locations"
+      :first-step="selectedPath === 'selectLocations'"
       @nextStep="nextStep('selectLocations')"
     />
     <SelectActivities
@@ -98,6 +102,7 @@
       v-model="selectedActivities"
       :activities="activities"
       :facets="data.facets.field_activity_category"
+      :first-step="selectedPath === 'selectActivities'"
       @nextStep="nextStep('selectActivities')"
     />
     <Results
@@ -111,12 +116,14 @@
       @startOver="startOver()"
       @addItem="addItem($event)"
       @removeItem="removeItem($event)"
+      @removeItems="removeItems"
     >
       <template v-slot:search>
         <SearchForm v-model="searchKeywords" />
       </template>
       <template v-slot:filters>
         <Filters
+          id="desktop-filters"
           :data="data"
           :ages="ages"
           :days="days"
@@ -130,6 +137,7 @@
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
+          filters-mode="instant"
           @filterChange="onFilterChange($event)"
           @clearFilters="clearFilters"
         />
@@ -306,7 +314,8 @@ export default {
       },
       cartItems: [],
       cartItemsKey: 'activity_finder.cartItems',
-      clearFiltersSkip: ['step', 'selectedSort']
+      cartItemsTimeout: 5 * 24 * 3600 * 1000,
+      clearFiltersSkip: ['step', 'selectedSort', 'searchKeywords']
     }
 
     if (this.legacyMode) {
@@ -432,7 +441,11 @@ export default {
       ) {
         this.completedSteps.push(oldVal)
       }
+
       this.canLoadData = true
+
+      // Scroll to top.
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     canLoadData() {
       this.loadData()
@@ -456,7 +469,9 @@ export default {
   mounted() {
     if (localStorage.getItem(this.cartItemsKey)) {
       try {
-        this.cartItems = JSON.parse(localStorage.getItem(this.cartItemsKey))
+        this.cartItems = JSON.parse(localStorage.getItem(this.cartItemsKey)).filter(
+          item => item.timestamp > new Date().getTime() - this.cartItemsTimeout
+        )
       } catch (e) {
         localStorage.removeItem(this.cartItemsKey)
       }
@@ -559,10 +574,12 @@ export default {
           err
         })
     },
-    onFilterChange(event) {
+    onFilterChange(event, callback = () => {}) {
+      callback()
       this[event.filter] = event.value
     },
-    clearFilters() {
+    clearFilters(callback = () => {}) {
+      callback()
       for (let key in this.defaults) {
         if (this.clearFiltersSkip.includes(key)) {
           continue
@@ -584,10 +601,14 @@ export default {
       this.cartItems = []
     },
     addItem(item) {
+      item.timestamp = new Date().getTime()
       this.cartItems.push(item)
     },
     removeItem(index) {
       this.cartItems.splice(index, 1)
+    },
+    removeItems() {
+      this.cartItems = []
     },
     noResultsChoice(choice) {
       const skip = [...this.clearFiltersSkip, choice]
@@ -612,5 +633,13 @@ export default {
 // Overrides for external CSS rules.
 .landing-content {
   padding-top: 0 !important;
+}
+
+// Fix Safari grid issue.
+// @see https://stackoverflow.com/questions/49403391/bootstrap-4-safari-on-mac-grid-issue
+.row:before,
+.row:after {
+  height: 0;
+  width: 0;
 }
 </style>

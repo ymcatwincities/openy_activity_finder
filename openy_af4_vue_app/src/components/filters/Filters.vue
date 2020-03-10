@@ -4,34 +4,34 @@
       <span class="text-uppercase">
         <strong>{{ 'Filter' | t }}</strong>
       </span>
-      <a role="button" @click="clearFilters()">{{ 'Clear Filters' | t }}</a>
+      <a role="button" @click="clearFilters">{{ 'Clear Filters' | t }}</a>
     </div>
     <div class="filters">
       <Fieldset
-        label="Schedules"
+        :label="'Schedules' | t"
         :collapse-id="id + '-toggle-schedules'"
         :counter="scheduleFiltersCount"
         :hide-counter="true"
       >
         <div class="schedules-filter-component">
           <AgesFilter
+            :id="id + '-ages-filter'"
             v-model="selectedAges"
-            :collapse-id="id + '-toggle-ages'"
             :ages="ages"
             :max-ages="maxAges"
             :facets="data.facets.static_age_filter"
           />
           <DaysFilter
             v-if="legacyMode"
+            :id="id + '-days-filter'"
             v-model="selectedDays"
-            :collapse-id="id + '-toggle-days'"
             :days="days"
             :facets="data.facets.days_of_week"
           />
           <DaysTimesFilter
             v-else
+            :id="id + '-days-times-filter'"
             v-model="selectedDaysTimes"
-            :collapse-id="id + '-toggle-days-times'"
             :days-times="daysTimes"
             :facets="data.facets.af_weekdays_parts_of_day"
           />
@@ -39,28 +39,28 @@
       </Fieldset>
 
       <Fieldset
-        label="Activities"
+        :label="'Activities' | t"
         :collapse-id="id + '-toggle-activities'"
         :counter="activityFiltersCount"
         :hide-counter="true"
       >
         <ActivitiesFilter
+          :id="id + '-activities-filter'"
           v-model="selectedActivities"
-          :collapse-id="id + '-toggle-activity'"
           :activities="activities"
           :facets="data.facets.field_activity_category"
         />
       </Fieldset>
 
       <Fieldset
-        label="Locations"
+        :label="'Locations' | t"
         :collapse-id="id + '-toggle-locations'"
         :counter="locationFiltersCount"
         :hide-counter="true"
       >
         <LocationsFilter
+          :id="id + '-locations-filter'"
           v-model="selectedLocations"
-          :collapse-id="id + '-toggle-location'"
           :locations="locations"
           :facets="data.facets.locations"
         />
@@ -69,7 +69,10 @@
     <div class="filters-footer hidden-md hidden-lg">
       <div class="buttons">
         <div class="separator"></div>
-        <button type="button" class="btn btn-lg btn-clear" @click="clearFilters">
+        <button v-if="hasChanges" type="button" class="btn btn-lg btn-apply" @click="applyFilters">
+          {{ 'Apply' | t }}
+        </button>
+        <button v-else type="button" class="btn btn-lg btn-clear" @click="clearFilters">
           {{ 'Clear filters' | t }}
         </button>
       </div>
@@ -98,7 +101,7 @@ export default {
   props: {
     id: {
       type: String,
-      default: 'desktop'
+      default: 'mobile-filters'
     },
     data: {
       type: Object,
@@ -151,6 +154,10 @@ export default {
     legacyMode: {
       type: Number,
       required: true
+    },
+    filtersMode: {
+      type: String,
+      default: 'accumulative' // 'instant'
     }
   },
   data() {
@@ -171,6 +178,19 @@ export default {
     },
     locationFiltersCount() {
       return this.selectedLocations.length
+    },
+    hasChanges() {
+      if (this.filtersMode === 'instant') {
+        return false
+      }
+
+      return (
+        !this.isEqual(this.selectedAges, this.initialAges) ||
+        !this.isEqual(this.selectedDays, this.initialDays) ||
+        !this.isEqual(this.selectedDaysTimes, this.initialDaysTimes) ||
+        !this.isEqual(this.selectedLocations, this.initialLocations) ||
+        !this.isEqual(this.selectedActivities, this.initialActivities)
+      )
     }
   },
   watch: {
@@ -190,24 +210,39 @@ export default {
       this.selectedActivities = this.initialActivities
     },
     selectedAges() {
-      this.$emit('filterChange', { filter: 'selectedAges', value: this.selectedAges })
+      this.filterChange({ filter: 'selectedAges', value: this.selectedAges })
     },
     selectedDays() {
-      this.$emit('filterChange', { filter: 'selectedDays', value: this.selectedDays })
+      this.filterChange({ filter: 'selectedDays', value: this.selectedDays })
     },
     selectedDaysTimes() {
-      this.$emit('filterChange', { filter: 'selectedDaysTimes', value: this.selectedDaysTimes })
+      this.filterChange({ filter: 'selectedDaysTimes', value: this.selectedDaysTimes })
     },
     selectedLocations() {
-      this.$emit('filterChange', { filter: 'selectedLocations', value: this.selectedLocations })
+      this.filterChange({ filter: 'selectedLocations', value: this.selectedLocations })
     },
     selectedActivities() {
-      this.$emit('filterChange', { filter: 'selectedActivities', value: this.selectedActivities })
+      this.filterChange({ filter: 'selectedActivities', value: this.selectedActivities })
     }
   },
   methods: {
     clearFilters() {
       this.$emit('clearFilters')
+    },
+    filterChange(filter) {
+      if (this.filtersMode === 'instant') {
+        this.$emit('filterChange', filter)
+      }
+    },
+    applyFilters() {
+      for (let key of ['Ages', 'Days', 'DaysTimes', 'Locations', 'Activities']) {
+        if (!this.isEqual(this['selected' + key], this['initial' + key])) {
+          this.$emit('filterChange', { filter: 'selected' + key, value: this['selected' + key] })
+        }
+      }
+    },
+    isEqual(array1, array2) {
+      return array1.length === array2.length && array1.every(value => array2.includes(value))
     }
   }
 }
@@ -249,6 +284,13 @@ export default {
           background-color: $white;
           color: $af-blue;
           border: 2px solid $af-blue;
+        }
+
+        &.btn-apply {
+          background-color: $af-violet;
+          color: $white;
+          border: none;
+          line-height: 50px;
         }
       }
     }

@@ -1,13 +1,13 @@
 <template>
   <div class="select-days-component">
     <Step
-      skip-label="Any day (Skip)"
+      :skip-label="'Any day (Skip)' | t"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"
     >
       <template v-slot:title>
-        What days are you looking to fill?
+        {{ 'What days are you looking to fill?' | t }}
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
@@ -73,6 +73,10 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    firstStep: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -90,9 +94,7 @@ export default {
     optionsCount() {
       let count = 0
       for (let key in this.days) {
-        if (this.facetCount(this.days[key].search_value)) {
-          count++
-        }
+        count += this.facetCount(this.days[key].search_value)
       }
       return count
     }

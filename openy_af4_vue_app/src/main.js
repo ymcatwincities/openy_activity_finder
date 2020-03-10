@@ -12,10 +12,16 @@ Vue.filter('capitalize', function(str) {
   str = str.toString()
   return str[0].toUpperCase() + str.slice(1)
 })
-Vue.filter('t', function(value, args, options) {
+Vue.filter('t', function(value, args, options = { context: 'Activity finder' }) {
   return window.Drupal.t(value, args, options)
 })
-Vue.filter('formatPlural', function(value, singular, plural, args, options) {
+Vue.filter('formatPlural', function(
+  value,
+  singular,
+  plural,
+  args,
+  options = { context: 'Activity finder' }
+) {
   return window.Drupal.formatPlural(value, singular, plural, args, options)
 })
 
@@ -33,10 +39,10 @@ Vue.mixin({
         window.ga('send', 'event', category, action, label, value)
       }
     },
-    t(value, args, options) {
+    t(value, args, options = { context: 'Activity finder' }) {
       return window.Drupal.t(value, args, options)
     },
-    formatPlural(value, singular, plural, args, options) {
+    formatPlural(value, singular, plural, args, options = { context: 'Activity finder' }) {
       return window.Drupal.formatPlural(value, singular, plural, args, options)
     }
   }

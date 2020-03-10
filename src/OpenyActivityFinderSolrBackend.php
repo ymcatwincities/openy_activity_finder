@@ -358,11 +358,20 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       }
 
       $price = [];
-      if (!empty($entity->field_session_mbr_price->value)) {
-        $price[] = '$' . $entity->field_session_mbr_price->value . '(member)';
+      $nmbr_price = $entity->field_session_nmbr_price->value;
+      $mbr_price = $entity->field_session_mbr_price->value;
+      if (!empty($mbr_price) && $nmbr_price !== "-1.00" && $mbr_price !== "0.00") {
+        $price[] = '$' . $entity->field_session_mbr_price->value . ' (member)';
       }
-      if (!empty($entity->field_session_nmbr_price->value)) {
-        $price[] = '$' . $entity->field_session_nmbr_price->value . '(non-member)';
+
+      if (!empty($nmbr_price) && $nmbr_price !== "-1.00" && $mbr_price !== "0.00") {
+        $price[] = '$' . $entity->field_session_nmbr_price->value . ' (non-member)';
+      }
+
+      if ($nmbr_price == "-1.00") {
+        $price[] = '$' . $mbr_price . ' (Member Only)';
+      } elseif ($mbr_price == "0.00") {
+        $price[] = 'Fee ' . '$' . $nmbr_price;
       }
 
       $activity_type = '';

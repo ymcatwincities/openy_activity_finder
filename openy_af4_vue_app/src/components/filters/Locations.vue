@@ -2,19 +2,19 @@
   <div class="locations-filter-component">
     <Foldable
       v-for="(item_type, index) in locations"
-      :key="'location-type-' + index"
+      :key="id + '-location-type-' + index"
       :label="item_type.label"
-      :collapse-id="collapseId + '-' + index"
+      :collapse-id="id + '-toggle-' + index"
       :counter="subFiltersCount(index)"
     >
-      <div v-for="item in item_type.value" :key="item.value" class="option">
+      <div v-for="item in item_type.value" :key="id + '-location-' + item.value" class="option">
         <input
-          :id="'location-' + item.value"
+          :id="id + '-location-' + item.value"
           v-model="selectedLocations"
           type="checkbox"
           :value="item.value"
         />
-        <label :for="'location-' + item.value">
+        <label :for="id + '-location-' + item.value">
           {{ item.label }}
         </label>
       </div>
@@ -35,7 +35,7 @@ export default {
       type: Array,
       required: true
     },
-    collapseId: {
+    id: {
       type: String,
       required: true
     },

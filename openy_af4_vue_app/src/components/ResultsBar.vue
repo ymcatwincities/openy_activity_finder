@@ -27,17 +27,17 @@
       </div>
       <Modal id="activity-finder-search" v-model="searchModal.visible" title="Search" flyout>
         <div class="results-bar-modal-content">
-          <slot name="search" />
+          <slot name="search" :hide-modal="hideSearchModal" />
         </div>
       </Modal>
       <Modal id="activity-finder-filter" v-model="filterModal.visible" title="Filter" flyout>
         <div class="results-bar-modal-content">
-          <slot name="filter" />
+          <slot name="filter" :hide-modal="hideFilterModal" />
         </div>
       </Modal>
       <Modal id="activity-finder-sort" v-model="sortModal.visible" title="Sort" flyout>
         <div class="results-bar-modal-content">
-          <slot name="sort" />
+          <slot name="sort" :hide-modal="hideSortModal" />
         </div>
       </Modal>
     </div>
@@ -63,6 +63,17 @@ export default {
       sortModal: {
         visible: false
       }
+    }
+  },
+  methods: {
+    hideSearchModal() {
+      this.searchModal.visible = false
+    },
+    hideFilterModal() {
+      this.filterModal.visible = false
+    },
+    hideSortModal() {
+      this.sortModal.visible = false
     }
   }
 }

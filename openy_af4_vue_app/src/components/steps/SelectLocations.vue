@@ -1,17 +1,17 @@
 <template>
   <div class="select-locations-component">
     <Step
-      skip-label="All locations (Skip)"
+      :skip-label="'All locations (Skip)' | t"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"
     >
       <template v-slot:title>
-        Do you have any location preferences?
+        {{ 'Do you have any location preferences?' | t }}
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
-          v-for="(location_type, index) in locations"
+          v-for="(location_type, index) in filteredLocations"
           :key="index"
           :label="location_type.label"
           :collapse-id="'accordion-' + index"
@@ -75,6 +75,10 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    firstStep: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -83,6 +87,19 @@ export default {
     }
   },
   computed: {
+    filteredLocations() {
+      if (!this.firstStep) {
+        return this.locations
+      }
+
+      const filteredLocations = {}
+      for (let key in this.locations) {
+        if (this.optionsCount(key) > 0) {
+          filteredLocations[key] = this.locations[key]
+        }
+      }
+      return filteredLocations
+    },
     filtersSelected() {
       return this.value.length >= 1
     }
@@ -125,9 +142,7 @@ export default {
     optionsCount(index) {
       let count = 0
       for (let key in this.locations[index].value) {
-        if (this.facetCount(this.locations[index].value[key].value)) {
-          count++
-        }
+        count += this.facetCount(this.locations[index].value[key].value)
       }
       return count
     }

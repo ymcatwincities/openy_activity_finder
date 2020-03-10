@@ -2,7 +2,7 @@
   <Modal
     id="activity-finder-activity-details"
     v-model="visible"
-    title="Activity details"
+    :title="'Activity details' | t"
     narrow
     responsive
   >
@@ -14,15 +14,19 @@
               <div class="title">{{ item.name }}</div>
               <div class="description">{{ item.description }}</div>
               <div class="row ages">
-                <div class="col-xs-3"><strong>Ages:</strong></div>
+                <div class="col-xs-3">
+                  <strong>{{ 'Ages:' | t }}</strong>
+                </div>
                 <div class="col-xs-9">{{ item.ages }}</div>
               </div>
-              <div class="row gender">
-                <div class="col-xs-3"><strong>Gender:</strong></div>
-                <div class="col-xs-9">Girls [no info]</div>
+              <div v-if="item.gender" class="row gender">
+                <div class="col-xs-3">
+                  <strong>{{ 'Gender:' | t }}</strong>
+                </div>
+                <div class="col-xs-9">{{ item.gender }}</div>
               </div>
               <a :href="item.link" target="_blank" class="learn-more">
-                Learn more about this program
+                {{ 'Learn more about this program' | t }}
                 <i class="fa fa-external-link"></i>
               </a>
             </div>
@@ -30,12 +34,12 @@
           <div class="col-xs-12 col-md-6 right-wrapper">
             <div class="right">
               <div class="info-section">
-                <div class="item-detail dates">
+                <div v-if="item.dates" class="item-detail dates">
                   <i class="fa fa-calendar"></i>
                   <span>
                     <span class="info">{{ item.dates }}</span>
                     <br />
-                    <span class="details">{{ item.days }}</span>
+                    <span v-if="item.days" class="details">{{ item.days }}</span>
                   </span>
                 </div>
 
@@ -54,25 +58,25 @@
                   </span>
                 </div>
 
-                <div class="item-detail">
+                <div v-if="item.location" class="item-detail">
                   <i class="fa fa-map-marker"></i>
                   <span>
                     <span class="info">{{ item.location }}</span>
                     <br />
-                    <span class="details">Room Name [no info]</span>
+                    <span v-if="item.roomName" class="details">{{ item.roomName }}</span>
                   </span>
                 </div>
 
-                <div class="item-detail instructor">
+                <div v-if="item.instructor" class="item-detail instructor">
                   <i class="fa fa-user"></i>
                   <span>
-                    <span class="info">Instructor Name [no info]</span>
+                    <span class="info">{{ item.instructor }}</span>
                     <br />
-                    <span class="details">SUB: Instructor Name [no info]</span>
+                    <span v-if="item.substitute" class="details">{{ item.substitute }}</span>
                   </span>
                 </div>
 
-                <div class="item-detail price">
+                <div v-if="item.price" class="item-detail price">
                   <i class="fa fa-money"></i>
                   <span>
                     <span class="info">{{ item.price }}</span>

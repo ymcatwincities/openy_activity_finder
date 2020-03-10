@@ -20,7 +20,8 @@
     body-class="af-modal-body"
   >
     <template v-slot:modal-header-close>
-      &times;
+      <div class="left"></div>
+      <div class="right"></div>
     </template>
     <template v-slot:modal-title>
       <slot name="modal-title" />
@@ -174,9 +175,15 @@ export default {
   }
 
   .af-modal-header {
+    padding: 0 0 0 1rem !important;
     background-color: $white;
     border-bottom: 1px solid $af-dark-gray;
     align-items: center;
+
+    &:after {
+      width: 0;
+      height: 0;
+    }
 
     .af-modal-title {
       color: $af-dark-gray;
@@ -192,12 +199,34 @@ export default {
     }
 
     .close {
+      position: relative;
       padding: 0;
+      margin: 0 0 0 auto !important;
       width: 50px;
-      color: $white;
+      height: 50px;
       background-color: $af-blue;
       opacity: 1;
-      line-height: 50px;
+
+      .left,
+      .right {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid $white;
+        border-right: 2px solid $white;
+      }
+
+      .left {
+        left: 15px;
+        top: 20px;
+        transform: rotate(-45deg);
+      }
+
+      .right {
+        left: 26px;
+        top: 20px;
+        transform: rotate(135deg);
+      }
     }
   }
 

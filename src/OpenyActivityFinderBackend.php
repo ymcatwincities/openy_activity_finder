@@ -137,7 +137,7 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
       ],
       [
         'label' => $this->t('Afternoon'),
-        'description' => $this->t('12 p.m. - 5 p.m.'),
+        'description' => $this->t('12 - 5 p.m.'),
         'value' => '2',
       ],
       [

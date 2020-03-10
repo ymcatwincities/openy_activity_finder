@@ -2,19 +2,19 @@
   <div class="activities-filter-component">
     <Foldable
       v-for="(item_type, index) in activities"
-      :key="'activity-type-' + index"
+      :key="id + '-activity-type-' + index"
       :label="item_type.label"
-      :collapse-id="collapseId + '-' + index"
+      :collapse-id="id + '-toggle-' + index"
       :counter="subFiltersCount(index)"
     >
-      <div v-for="item in item_type.value" :key="item.value" class="option">
+      <div v-for="item in item_type.value" :key="id + '-activity-' + item.value" class="option">
         <input
-          :id="'activity-' + item.value"
+          :id="id + '-activity-' + item.value"
           v-model="selectedActivities"
           type="checkbox"
           :value="item.value"
         />
-        <label :for="'activity-' + item.value">
+        <label :for="id + '-activity-' + item.value">
           {{ item.label }}
         </label>
       </div>
@@ -35,7 +35,7 @@ export default {
       type: Array,
       required: true
     },
-    collapseId: {
+    id: {
       type: String,
       required: true
     },

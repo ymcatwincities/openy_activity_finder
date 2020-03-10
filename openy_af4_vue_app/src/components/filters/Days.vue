@@ -1,13 +1,18 @@
 <template>
   <Foldable
-    label="Day(s)"
-    :collapse-id="collapseId"
+    :label="'Day(s)' | t"
+    :collapse-id="id + '-toggle'"
     :counter="filtersCount"
     class="days-filter-component"
   >
-    <div v-for="day in days" :key="day.value" class="option">
-      <input :id="'day' + day.value" v-model="selectedDays" type="checkbox" :value="day.value" />
-      <label :for="'day' + day.value">{{ day.search_value | capitalize }}</label>
+    <div v-for="day in days" :key="id + '-day-' + day.value" class="option">
+      <input
+        :id="id + '-day-' + day.value"
+        v-model="selectedDays"
+        type="checkbox"
+        :value="day.value"
+      />
+      <label :for="id + '-day-' + day.value">{{ day.search_value | capitalize }}</label>
     </div>
   </Foldable>
 </template>
@@ -25,7 +30,7 @@ export default {
       type: Array,
       required: true
     },
-    collapseId: {
+    id: {
       type: String,
       required: true
     },

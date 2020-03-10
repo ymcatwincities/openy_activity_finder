@@ -1,22 +1,24 @@
 <template>
   <Foldable
-    label="Age(s)"
-    :collapse-id="collapseId"
+    :label="'Age(s)' | t"
+    :collapse-id="id + '-toggle'"
     :counter="filtersCount"
     :counter-max="maxAges"
     class="ages-filter-component"
   >
     <div class="row">
-      <div v-for="age in ages" :key="age.value" class="age-option col-xs-4">
+      <div v-for="age in ages" :key="id + '-age-' + age.value" class="age-option col-xs-4">
         <input
-          :id="'age' + age.value"
+          :id="id + '-age-' + age.value"
           v-model="selectedAges"
           type="checkbox"
           :value="age.value"
           :disabled="isDisabled(age.value)"
         />
-        <label :id="'label-' + age.value" :for="'age' + age.value">{{ age.label }}</label>
-        <b-tooltip v-if="isDisabled(age.value)" :target="'label-' + age.value">
+        <label :id="id + '-label-' + age.value" :for="id + '-age-' + age.value">
+          {{ age.label }}
+        </label>
+        <b-tooltip v-if="isDisabled(age.value)" :target="id + '-label-' + age.value">
           {{ 'Please unselect any of the selected options first' | t }}
         </b-tooltip>
       </div>
@@ -37,7 +39,7 @@ export default {
       type: Array,
       required: true
     },
-    collapseId: {
+    id: {
       type: String,
       required: true
     },

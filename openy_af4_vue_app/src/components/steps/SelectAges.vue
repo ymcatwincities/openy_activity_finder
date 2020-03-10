@@ -1,13 +1,14 @@
 <template>
   <div class="select-ages-component">
     <Step
-      skip-label="All ages (Skip)"
+      :skip-label="'All ages (Skip)' | t"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"
     >
       <template v-slot:title>
-        What ages are you searching for? <strong v-if="maxAges">Maximum of {{ maxAges }}.</strong>
+        {{ 'What ages are you searching for?' | t }}
+        <strong v-if="maxAges">{{ 'Maximum of !maxAges.' | t({ '!maxAges': maxAges }) }} </strong>
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
@@ -75,6 +76,10 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    firstStep: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -92,9 +97,7 @@ export default {
     optionsCount() {
       let count = 0
       for (let key in this.ages) {
-        if (this.facetCount(this.ages[key].value)) {
-          count++
-        }
+        count += this.facetCount(this.ages[key].value)
       }
       return count
     }

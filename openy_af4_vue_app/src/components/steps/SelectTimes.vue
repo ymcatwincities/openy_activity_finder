@@ -1,17 +1,17 @@
 <template>
   <div class="select-times-component">
     <Step
-      skip-label="Any time (Skip)"
+      :skip-label="'Any time (Skip)' | t"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"
     >
       <template v-slot:title>
-        What times are you looking to fill?
+        {{ 'What times are you looking to fill?' | t }}
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
-          label="Time(s)"
+          :label="'Time(s)' | t"
           :collapsible="false"
           :counter="filtersCount"
           :counter-options="optionsCount"
@@ -67,6 +67,10 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    firstStep: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -84,9 +88,7 @@ export default {
     optionsCount() {
       let count = 0
       for (let key in this.times) {
-        if (this.facetCount(this.times[key].value)) {
-          count++
-        }
+        count += this.facetCount(this.times[key].value)
       }
       return count
     }

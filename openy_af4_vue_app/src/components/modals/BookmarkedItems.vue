@@ -2,95 +2,107 @@
   <Modal id="activity-finder-bookmarked-items" v-model="visible" flyout>
     <template v-slot:modal-title>
       <i class="fa fa-bookmark"></i>
-      <span>Bookmarked items</span>
+      <span>{{ 'Bookmarked items' | t }}</span>
     </template>
     <template>
       <div class="bookmarked-items-modal-content">
-        <div class="row">
-          <div v-if="!cartItems.length" class="col-xs-12">
-            <BookmarkFeatureDescription />
+        <div v-if="!cartItems.length">
+          <BookmarkFeatureDescription />
+        </div>
+        <div v-else>
+          <div class="message">
+            <p>
+              <strong>{{ 'The following items are NOT reserved.' | t }}</strong>
+              {{ 'Others may still register for them.' | t }}
+            </p>
           </div>
-          <div v-else class="col-xs-12">
-            <div class="message">
-              <p>
-                <strong>The following items are NOT reserved.</strong> Others may still register for
-                them.
-              </p>
-            </div>
 
-            <div class="cart-items">
-              <div
-                v-for="(item, index) in cartItems"
-                :key="item.item.nid + '_' + index"
-                class="item"
-              >
-                <div class="title">{{ item.item.name }}</div>
+          <div class="cart-items">
+            <div v-for="(item, index) in cartItems" :key="item.item.nid + '-' + index" class="item">
+              <div class="title">{{ item.item.name }}</div>
 
-                <div class="row">
-                  <div class="col-xs-8">
-                    <div class="dates">
-                      <i class="fa fa-calendar"></i>
-                      <span>{{ item.item.dates }}</span>
-                    </div>
-
-                    <div class="schedule">
-                      <i class="fa fa-clock-o"></i>
-                      <span>
-                        <span
-                          v-for="(schedule, schedule_index) in item.item.schedule"
-                          :key="schedule_index"
-                        >
-                          <span class="time">{{ schedule.time }}</span>
-                          <br />
-                          <span class="days">{{ schedule.days }}</span>
-                        </span>
-                      </span>
-                    </div>
+              <div class="row">
+                <div class="col-xs-8">
+                  <div class="item-detail dates">
+                    <i class="fa fa-calendar"></i>
+                    <span>
+                      <span class="info">{{ item.item.dates }}</span>
+                      <br />
+                      <span class="details">{{ item.item.days }}</span>
+                    </span>
                   </div>
-                  <div class="col-xs-4">
-                    <span class="age">
-                      <span class="age-label">Age:</span>
-                      <AgeIcon v-if="item.age" :age="parseInt(item.age)" :ages="ages" big />
-                      <span v-else>
-                        {{ item.item.ages }}
+
+                  <div class="item-detail schedule">
+                    <i class="fa fa-clock-o"></i>
+                    <span class="schedule-items">
+                      <span
+                        v-for="(schedule, schedule_index) in item.item.schedule"
+                        :key="schedule_index"
+                        class="schedule-item"
+                      >
+                        <span class="info">{{ schedule.time }}</span>
+                        <br />
+                        <span class="details">{{ schedule.days }}</span>
                       </span>
                     </span>
                   </div>
                 </div>
-                <div class="actions">
-                  <template v-if="buttonsState[index] === 'default'">
-                    <a
-                      key="register"
-                      role="button"
-                      class="btn btn-lg register"
-                      :href="item.item.link"
-                      target="_blank"
-                      @click="register(index)"
-                    >
-                      {{ getButtonTitle(index) }}
-                      <i class="fa fa-external-link"></i>
-                    </a>
-                    <a
-                      key="remove"
-                      role="button"
-                      class="remove"
-                      title="Remove"
-                      @click="removeItem(index)"
-                    >
-                      <i class="fa fa-trash"></i>
-                    </a>
-                  </template>
-                  <template v-else-if="buttonsState[index] === 'sentToRegister'">
-                    <a
-                      key="reset"
-                      role="button"
-                      class="btn btn-lg action-taken"
-                      @click="resetAction(index)"
-                    >
-                      <span>{{ 'Sent to register' | t }}</span>
-                      <i class="fa fa-times-circle-o"></i>
-                    </a>
-                  </template>
+                <div class="col-xs-4">
+                  <span class="age">
+                    <span class="age-label">Age:</span>
+                    <AgeIcon v-if="item.age" :age="parseInt(item.age)" :ages="ages" big />
+                    <span v-else class="info">
+                      {{ item.item.ages }}
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div class="actions">
+                <template v-if="buttonsState[index] === 'default'">
+                  <a
+                    key="register"
+                    role="button"
+                    class="btn btn-lg register"
+                    :href="item.item.link"
+                    target="_blank"
+                    @click="register(index)"
+                  >
+                    {{ getButtonTitle(index) }}
+                    <i class="fa fa-external-link"></i>
+                  </a>
+                  <a
+                    key="remove"
+                    role="button"
+                    class="remove"
+                    title="Remove"
+                    @click="removeItem(index)"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </template>
+                <template v-else-if="buttonsState[index] === 'sentToRegister'">
+                  <a
+                    key="reset"
+                    role="button"
+                    class="btn btn-lg action-taken"
+                    @click="resetAction(index)"
+                  >
+                    <span>{{ 'Sent to register' | t }}</span>
+                    <i class="fa fa-times-circle-o"></i>
+                  </a>
+                </template>
+              </div>
+            </div>
+
+            <div class="bookmarked-items-footer">
+              <div class="footer-content">
+                <div class="left">
+                  {{ 'Bookmarks are automatically cleared after 5 days.' | t }}
+                </div>
+                <div class="right">
+                  <a role="button" class="clear-all" @click="removeItems">
+                    {{ 'Clear All' | t }}
+                  </a>
                 </div>
               </div>
             </div>
@@ -183,6 +195,10 @@ export default {
       )
       this.$emit('removeItem', index)
     },
+    removeItems() {
+      this.trackEvent('unbookmark', 'Click in bookmarked items')
+      this.$emit('removeItems')
+    },
     resetAction(index) {
       this.buttonsState = {
         ...this.buttonsState,
@@ -208,6 +224,16 @@ export default {
   padding: 20px 10px;
   color: $af-black;
 
+  .row {
+    margin-left: -5px !important;
+    margin-right: -5px !important;
+  }
+
+  [class*='col-'] {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
   .message {
     padding: 0 10px;
   }
@@ -217,8 +243,12 @@ export default {
       padding: 10px;
       border: 1px solid $af-light-gray;
       border-top: 5px solid $af-light-blue;
-      margin: 10px 0;
+      margin-bottom: 10px;
       position: relative;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       .title {
         color: $af-blue;
@@ -228,37 +258,33 @@ export default {
         margin-bottom: 10px;
       }
 
-      .dates {
-        font-size: 12px;
-        line-height: 18px;
+      .item-detail {
+        display: flex;
         margin-bottom: 10px;
+
+        .schedule-items {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .details {
+          font-size: 10px;
+          line-height: 15px;
+        }
 
         .fa {
           font-size: 20px;
           color: $af-dark-gray;
           margin-right: 10px;
+          width: 20px;
+          text-align: center;
+          flex-shrink: 0;
         }
       }
 
-      .schedule {
-        display: flex;
-        margin-bottom: 10px;
-
-        .fa {
-          font-size: 22px;
-          color: $af-dark-gray;
-          margin-right: 10px;
-        }
-
-        .time {
-          font-size: 12px;
-          line-height: 18px;
-        }
-
-        .days {
-          font-size: 10px;
-          line-height: 15px;
-        }
+      .info {
+        font-size: 12px;
+        line-height: 18px;
       }
 
       .age {
@@ -267,6 +293,10 @@ export default {
 
         .age-label {
           font-size: 12px;
+          line-height: 30px;
+        }
+
+        .info {
           line-height: 30px;
         }
       }
@@ -316,6 +346,40 @@ export default {
             font-size: 20px;
           }
         }
+      }
+    }
+  }
+
+  .bookmarked-items-footer {
+    height: 56px;
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      position: fixed;
+      bottom: 0;
+      margin-left: -10px;
+      margin-right: -10px;
+      padding: 10px 20px;
+      background-color: $af-light-gray;
+      width: calc(100% - 2px);
+      max-width: 358px;
+      font-size: 12px;
+      line-height: 18px;
+
+      .left {
+        max-width: 220px;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .clear-all {
+        color: $af-blue;
+        font-weight: bold;
       }
     }
   }

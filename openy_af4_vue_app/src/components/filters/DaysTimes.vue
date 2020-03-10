@@ -1,15 +1,15 @@
 <template>
   <Foldable
     :label="'Day(s) & Time(s)' | t"
-    :collapse-id="collapseId"
+    :collapse-id="id + '-toggle'"
     :counter="filtersCount"
     class="days-times-filter-component"
   >
     <FoldableInput
       v-for="(day, index) in daysTimes"
-      :key="'day-' + index"
+      :key="id + '-day-' + index"
       :label="day.search_value"
-      :collapse-id="collapseId + '-' + index"
+      :collapse-id="id + '-toggle-' + index"
       :counter="subFiltersCount(day.value)"
       :class="{
         checked: includesAll(day.value),
@@ -17,14 +17,14 @@
       }"
       @input-click="onInputClick(day.value)"
     >
-      <div v-for="time in day.value" :key="'time-' + time.value" class="option">
+      <div v-for="time in day.value" :key="id + '-time-' + time.value" class="option">
         <input
-          :id="'time-' + time.value"
+          :id="id + '-time-' + time.value"
           v-model="selectedDaysTimes"
           type="checkbox"
           :value="time.value"
         />
-        <label :for="'time-' + time.value">
+        <label :for="id + '-time-' + time.value">
           <span>
             {{ time.label }} <span v-if="time.description">({{ time.description }})</span>
           </span>
@@ -49,7 +49,7 @@ export default {
       type: Array,
       required: true
     },
-    collapseId: {
+    id: {
       type: String,
       required: true
     },
@@ -100,6 +100,8 @@ export default {
         this.selectedDaysTimes = this.selectedDaysTimes.filter(x => !values.includes(x))
       } else {
         const values = times.map(x => x.value).filter(x => !this.selectedDaysTimes.includes(x))
+        // We need to work with new array here.
+        this.selectedDaysTimes = this.selectedDaysTimes.slice()
         this.selectedDaysTimes.push(...values)
       }
     },

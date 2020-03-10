@@ -2,20 +2,18 @@
   <div class="fieldset-component">
     <div v-b-toggle="collapseId" class="fieldset-title">
       <span class="left">
-        <span class="title text-uppercase">
-          <strong>{{ label }}</strong>
-        </span>
+        <span class="title text-uppercase">{{ label }}</span>
       </span>
       <span class="right">
         <span v-if="counterMax > 0 && counter >= counterMax" class="max text-uppercase">
-          <strong>Max</strong>
+          {{ 'Max' | t }}
         </span>
         <span
           v-else-if="counterOptions >= 0"
           class="options"
           :class="{ 'no-options': counterOptions === 0 }"
         >
-          {{ counterOptions | formatPlural('1 Option', '@count Options') }}
+          {{ counterOptions | formatPlural('1 Result', '@count Results') }}
         </span>
         <span v-if="collapsible && !counter" class="icon">
           <i class="fa fa-minus" aria-hidden="true" />
@@ -102,6 +100,7 @@ export default {
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
+    min-height: 50px;
 
     .left,
     .right {
@@ -111,7 +110,8 @@ export default {
 
     .title {
       font-size: 12px;
-      line-height: 50px;
+      line-height: 18px;
+      font-weight: bold;
 
       @include media-breakpoint-up('lg') {
         font-size: 14px;

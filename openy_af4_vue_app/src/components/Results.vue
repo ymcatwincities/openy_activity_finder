@@ -66,12 +66,12 @@
                 />
               </div>
 
-              <div class="item-detail dates">
+              <div v-if="item.dates" class="item-detail dates">
                 <i class="fa fa-calendar"></i>
                 <span>
                   <span class="info">{{ item.dates }}</span>
                   <br />
-                  <span class="details">{{ item.days }}</span>
+                  <span v-if="item.days" class="details">{{ item.days }}</span>
                 </span>
               </div>
 
@@ -90,21 +90,21 @@
                 </span>
               </div>
 
-              <div class="item-detail">
+              <div v-if="item.location" class="item-detail">
                 <i class="fa fa-map-marker"></i>
                 <span>
                   <span class="info">{{ item.location }}</span>
                   <br />
-                  <span class="details">Room Name</span>
+                  <span v-if="item.roomName" class="details">{{ item.roomName }}</span>
                 </span>
               </div>
 
-              <div class="item-detail instructor">
+              <div v-if="item.instructor" class="item-detail instructor">
                 <i class="fa fa-user"></i>
                 <span>
-                  <span class="info">Instructor Name</span>
+                  <span class="info">{{ item.instructor }}</span>
                   <br />
-                  <span class="details">SUB: Instructor Name</span>
+                  <span v-if="item.substitute" class="details">{{ item.substitute }}</span>
                 </span>
               </div>
             </div>
@@ -129,12 +129,12 @@
 
               <div class="row">
                 <div class="col-sm-4">
-                  <div class="item-detail dates">
+                  <div v-if="item.dates" class="item-detail dates">
                     <i class="fa fa-calendar"></i>
                     <span>
                       <span class="info">{{ item.dates }}</span>
                       <br />
-                      <span class="details">{{ item.days }}</span>
+                      <span v-if="item.days" class="details">{{ item.days }}</span>
                     </span>
                   </div>
 
@@ -155,27 +155,27 @@
                 </div>
 
                 <div class="col-sm-4">
-                  <div class="item-detail">
+                  <div v-if="item.location" class="item-detail">
                     <i class="fa fa-map-marker"></i>
                     <span>
                       <span class="info">{{ item.location }}</span>
                       <br />
-                      <span class="details">Room Name</span>
+                      <span v-if="item.roomName" class="details">{{ item.roomName }}</span>
                     </span>
                   </div>
 
-                  <div class="item-detail instructor">
+                  <div v-if="item.instructor" class="item-detail instructor">
                     <i class="fa fa-user"></i>
                     <span>
-                      <span class="info">Instructor Name</span>
+                      <span class="info">{{ item.instructor }}</span>
                       <br />
-                      <span class="details">SUB: Instructor Name</span>
+                      <span v-if="item.substitute" class="details">{{ item.substitute }}</span>
                     </span>
                   </div>
                 </div>
 
                 <div class="col-sm-4">
-                  <div class="item-detail price">
+                  <div v-if="item.price" class="item-detail price">
                     <i class="fa fa-money"></i>
                     <span>
                       <span class="info">{{ item.price }}</span>
@@ -208,6 +208,7 @@
             :ages="ages"
             :selected-ages="selectedAges"
             @removeItem="removeItem($event)"
+            @removeItems="removeItems"
           />
 
           <slot v-if="data.table.length" name="pager" />
@@ -317,6 +318,9 @@ export default {
     },
     removeItem(index) {
       this.$emit('removeItem', index)
+    },
+    removeItems() {
+      this.$emit('removeItems')
     }
   }
 }
@@ -435,11 +439,6 @@ export default {
         }
       }
 
-      .info {
-        font-size: 12px;
-        line-height: 18px;
-      }
-
       .details {
         font-size: 10px;
         line-height: 15px;
@@ -453,6 +452,11 @@ export default {
         text-align: center;
         flex-shrink: 0;
       }
+    }
+
+    .info {
+      font-size: 12px;
+      line-height: 18px;
     }
   }
 

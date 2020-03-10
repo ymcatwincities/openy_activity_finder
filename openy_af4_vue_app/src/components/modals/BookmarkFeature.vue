@@ -1,5 +1,10 @@
 <template>
-  <Modal id="activity-finder-bookmark-feature" title="New feature!" :value="visibility" narrow>
+  <Modal
+    id="activity-finder-bookmark-feature"
+    :title="'New feature!' | t"
+    :value="visibility"
+    narrow
+  >
     <div class="bookmark-feature-modal-content">
       <BookmarkFeatureDescription />
     </div>

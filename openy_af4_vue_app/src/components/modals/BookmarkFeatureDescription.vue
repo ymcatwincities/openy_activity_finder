@@ -4,11 +4,17 @@
       <span class="bookmark-icon">
         <i class="fa fa-bookmark"></i>
       </span>
-      <p class="title">Now you can bookmark activities!</p>
-      <p>Build up a list of activities, manage the items within it, and register when ready.</p>
+      <p class="title">{{ 'Now you can bookmark activities!' | t }}</p>
+      <p>
+        {{
+          'Build up a list of activities, manage the items within it, and register when ready.' | t
+        }}
+      </p>
     </div>
     <div class="bottom">
-      <p>When you find an activity you're interested in, just click the bookmark icon.</p>
+      <p>
+        {{ "When you find an activity you're interested in, just click the bookmark icon." | t }}
+      </p>
     </div>
   </div>
 </template>

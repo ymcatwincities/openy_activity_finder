@@ -1,18 +1,18 @@
 <template>
   <Foldable
-    label="Time(s)"
-    :collapse-id="collapseId"
+    :label="'Time(s)' | t"
+    :collapse-id="id + '-toggle'"
     :counter="filtersCount"
     class="times-filter-component"
   >
-    <div v-for="time in times" :key="time.value" class="option">
+    <div v-for="time in times" :key="id + '-time-' + time.value" class="option">
       <input
-        :id="'time-' + time.value"
+        :id="id + '-time-' + time.value"
         v-model="selectedTimes"
         type="checkbox"
         :value="time.value"
       />
-      <label :for="'time-' + time.value">{{ time.label }}</label>
+      <label :for="id + '-time-' + time.value">{{ time.label }}</label>
     </div>
   </Foldable>
 </template>
@@ -30,7 +30,7 @@ export default {
       type: Array,
       required: true
     },
-    collapseId: {
+    id: {
       type: String,
       required: true
     },

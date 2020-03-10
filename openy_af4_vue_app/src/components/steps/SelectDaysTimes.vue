@@ -1,17 +1,17 @@
 <template>
   <div class="select-days-times-component">
     <Step
-      skip-label="Any day & time (Skip)"
+      :skip-label="'Any day & time (Skip)' | t"
       :filters-selected="filtersSelected"
       @skip="onSkip"
       @next="onNext"
     >
       <template v-slot:title>
-        What day(s) & time(s) are you looking to fill?
+        {{ 'What day(s) & time(s) are you looking to fill?' | t }}
       </template>
       <template v-slot:default="{ handleSticky }">
         <Fieldset
-          v-for="(day, index) in daysTimes"
+          v-for="(day, index) in filteredDaysTimes"
           :key="index"
           :label="day.search_value"
           :counter="subFiltersCount(index)"
@@ -78,6 +78,10 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    firstStep: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -86,6 +90,19 @@ export default {
     }
   },
   computed: {
+    filteredDaysTimes() {
+      if (!this.firstStep) {
+        return this.daysTimes
+      }
+
+      const filteredDaysTimes = {}
+      for (let key in this.daysTimes) {
+        if (this.optionsCount(key) > 0) {
+          filteredDaysTimes[key] = this.daysTimes[key]
+        }
+      }
+      return filteredDaysTimes
+    },
     filtersSelected() {
       return this.value.length >= 1
     },
@@ -140,9 +157,7 @@ export default {
     optionsCount(index) {
       let count = 0
       for (let key in this.daysTimes[index].value) {
-        if (this.facetCount(this.daysTimes[index].value[key].value)) {
-          count++
-        }
+        count += this.facetCount(this.daysTimes[index].value[key].value)
       }
       return count
     }

@@ -188,6 +188,10 @@ export default {
     width: 100%;
     padding: 0;
 
+    &:hover {
+      background-color: $af-blue;
+    }
+
     @include media-breakpoint-up('lg') {
       text-align: center;
       font-size: 24px;
