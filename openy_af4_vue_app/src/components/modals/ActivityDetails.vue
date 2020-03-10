@@ -217,7 +217,7 @@ export default {
     },
     getButtonTitle() {
       let title = this.t('Register')
-      if (Number(this.item.spots_available) === 0 && Number(this.item.wait_list_availability) > 0) {
+      if (!this.item.spots_available && this.item.wait_list_availability > 0) {
         title = this.t('Waiting list')
       }
       return title
