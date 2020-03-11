@@ -222,6 +222,7 @@ export default {
 
   .buttons {
     width: 100%;
+    border-bottom: 20px solid $black;
 
     &.sticky {
       position: fixed;
@@ -244,7 +245,6 @@ export default {
         background-color: $white;
         color: $af-blue;
         border: 2px solid $af-blue;
-        border-bottom: 20px solid black;
       }
 
       &.btn-next {
