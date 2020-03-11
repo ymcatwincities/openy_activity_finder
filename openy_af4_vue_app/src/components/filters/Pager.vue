@@ -102,6 +102,8 @@ export default {
     },
     updateParent() {
       this.$emit('input', this.selectedPage)
+      // Scroll to top.
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 }
