@@ -216,13 +216,11 @@
       </div>
     </div>
 
-    <div v-if="!legacyMode" class="bookmark-toggle">
-      <a role="button" title="Bookmarked items" @click="showBookmarkedItemsModal">
-        <span v-if="cartItems.length" class="counter">{{ cartItems.length }}</span>
-        <i class="fa fa-bookmark"></i>
-      </a>
-    </div>
-
+    <BookmarkIcon
+      v-if="!legacyMode"
+      :length="cartItems.length"
+      @showBookmarkedItemsModal="showBookmarkedItemsModal()"
+    />
     <BookmarkFeatureModal v-if="!legacyMode" />
   </div>
 </template>
@@ -234,6 +232,7 @@ import BookmarkedItemsModal from '@/components/modals/BookmarkedItems.vue'
 import BookmarkFeatureModal from '@/components/modals/BookmarkFeature.vue'
 import AvailableSpots from '@/components/AvailableSpots'
 import AgeIcon from '@/components/AgeIcon.vue'
+import BookmarkIcon from '@/components/BookmarkIcon'
 
 export default {
   name: 'Results',
@@ -243,7 +242,8 @@ export default {
     BookmarkedItemsModal,
     BookmarkFeatureModal,
     AvailableSpots,
-    AgeIcon
+    AgeIcon,
+    BookmarkIcon
   },
   props: {
     data: {
@@ -457,49 +457,6 @@ export default {
     .info {
       font-size: 12px;
       line-height: 18px;
-    }
-  }
-
-  .bookmark-toggle {
-    position: fixed;
-    top: 50%;
-    margin-top: -25px;
-    right: 0;
-    background-color: $af-blue;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border: 2px solid $white;
-    border-right: none;
-
-    a {
-      display: block;
-      width: 50px;
-      height: 50px;
-      text-align: center;
-    }
-
-    .counter {
-      color: $white;
-      background-color: $af-violet;
-      padding: 0 6px;
-      display: inline-block;
-      height: 24px;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translate(-50%, -50%);
-      border: 2px solid $white;
-      border-radius: 2em;
-      font-size: 10px;
-      line-height: 20px;
-      font-weight: bold;
-      min-width: 24px;
-    }
-
-    .fa {
-      color: $white;
-      font-size: 18px;
-      line-height: 50px;
     }
   }
 }

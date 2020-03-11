@@ -109,6 +109,10 @@
           </div>
         </div>
       </div>
+      <BookmarkIcon
+        :length="cartItems.length"
+        @showBookmarkedItemsModal="showBookmarkedItemsModal()"
+      />
     </template>
   </Modal>
 </template>
@@ -117,13 +121,15 @@
 import Modal from '@/components/modals/Modal.vue'
 import BookmarkFeatureDescription from '@/components/modals/BookmarkFeatureDescription.vue'
 import AgeIcon from '@/components/AgeIcon.vue'
+import BookmarkIcon from '@/components/BookmarkIcon'
 
 export default {
   name: 'BookmarkedItemsModal',
   components: {
     Modal,
     BookmarkFeatureDescription,
-    AgeIcon
+    AgeIcon,
+    BookmarkIcon
   },
   props: {
     value: {
@@ -214,6 +220,9 @@ export default {
         title = this.t('Waiting list')
       }
       return title
+    },
+    showBookmarkedItemsModal() {
+      this.visible = false
     }
   }
 }
