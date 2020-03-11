@@ -45,6 +45,20 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   protected $database;
 
   /**
+   * The entity query factory.
+   *
+   * @var \Drupal\Core\Entity\Query\QueryFactory
+   */
+  protected $entityQuery;
+
+  /**
+   * The EntityTypeManager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected $entityTypeManager;
+
+  /**
    * The date formatter service.
    *
    * @var \Drupal\Core\Datetime\DateFormatterInterface
@@ -71,11 +85,6 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
-
-  /**
-   * @var EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
 
   /**
    * Creates a new RepeatController.
@@ -733,7 +742,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
     foreach ($locationsInfo as $key => $item) {
       $locations[$item['type']]['value'][] = [
         'value' => $item['nid'],
-        'label' => $key
+        'label' => $key,
       ];
       $locations[$item['type']]['label'] = ucfirst($item['type']);
     }
@@ -801,7 +810,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
           $ages_y[$i] = number_format($ages[$i] / 12, 1, '.', '');
         }
         else {
-          $ages_y[$i] = number_format($ages[$i] / 12, 0, '.', '');;
+          $ages_y[$i] = number_format($ages[$i] / 12, 0, '.', '');
         }
         if (isset($ages[$i + 1]) && $ages[$i + 1] == 0) {
           $ages_y[$i] .= t('+ years');
@@ -845,9 +854,9 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
     $interval = new \DateInterval('P1D');
     $period = new \DatePeriod($start, $interval, $end);
 
-    foreach($period as $day){
-      if($day->format('D') === ucfirst(substr($dayName, 0, 3))){
-        $count ++;
+    foreach ($period as $day) {
+      if ($day->format('D') === ucfirst(substr($dayName, 0, 3))) {
+        $count++;
       }
     }
     return $count;
