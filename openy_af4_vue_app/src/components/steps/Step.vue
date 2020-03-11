@@ -63,8 +63,8 @@
       </div>
     </div>
 
-    <div class="full-width hidden-md hidden-lg">
-      <div class="buttons-mobile">
+    <div ref="bottomMobile" class="full-width hidden-md hidden-lg">
+      <div class="buttons-mobile" :class="{ sticky: stickyMobile }">
         <div class="separator"></div>
         <button v-if="filtersSelected" type="button" class="btn btn-lg btn-next" @click="onNext">
           {{ nextLabel }}
@@ -97,7 +97,9 @@ export default {
   data() {
     return {
       sticky: false,
-      stickyHeight: 95
+      stickyMobile: false,
+      stickyHeight: 95,
+      stickyMobileHeight: 60
     }
   },
   mounted() {
@@ -119,7 +121,9 @@ export default {
     handleSticky() {
       const clientHeight = window.document.documentElement.clientHeight
       const rect = this.$refs.bottom.getBoundingClientRect()
+      const rectMobile = this.$refs.bottomMobile.getBoundingClientRect()
       this.sticky = rect.top + this.stickyHeight >= clientHeight ? true : false
+      this.stickyMobile = rectMobile.top + this.stickyMobileHeight >= clientHeight ? true : false
     }
   }
 }
@@ -212,10 +216,13 @@ export default {
   }
 
   .buttons-mobile {
-    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+
+    &.sticky {
+      position: fixed;
+    }
 
     .separator {
       opacity: 0.1;
