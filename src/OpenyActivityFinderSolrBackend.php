@@ -723,7 +723,12 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
    * @inheritdoc
    */
   public function getLocations() {
-    $locations = [];
+    // Array with predefined keys for sorting in application location filters.
+    $locations = [
+      'branch' => [],
+      'facility' => [],
+      'camp' => [],
+    ];
     $locationsInfo = $this->getLocationsInfo();
     foreach ($locationsInfo as $key => $item) {
       $locations[$item['type']]['value'][] = [
