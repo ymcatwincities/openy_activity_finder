@@ -108,7 +108,7 @@ export default {
           display: block;
           font-family: 'Cachet', Verdana, Geneva, sans-serif;
           height: 50px;
-          line-height: 50px;
+          line-height: 46px;
           text-align: center;
           color: $af-blue;
           background: $white;
