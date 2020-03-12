@@ -8,7 +8,7 @@
               <span class="title">
                 <slot name="title" />
               </span>
-              <span class="buttons hidden-xs hidden-sm">
+              <span class="buttons-desktop hidden-xs hidden-sm">
                 <button
                   v-if="filtersSelected"
                   type="button"
@@ -35,8 +35,20 @@
       </div>
     </div>
 
-    <div ref="bottom" class="bottom hidden-xs hidden-sm">
-      <div class="container" :class="{ sticky: sticky }">
+    <div ref="bottom" class="bottom hidden-md hidden-lg">
+      <div class="buttons" :class="{ sticky: sticky }">
+        <div class="separator"></div>
+        <button v-if="filtersSelected" type="button" class="btn btn-lg btn-next" @click="onNext">
+          {{ nextLabel }}
+        </button>
+        <button v-else type="button" class="btn btn-lg btn-skip" @click="onSkip">
+          {{ skipLabel }}
+        </button>
+      </div>
+    </div>
+
+    <div ref="bottomDesktop" class="bottom-desktop hidden-xs hidden-sm">
+      <div class="container" :class="{ sticky: stickyDesktop }">
         <div class="row">
           <div class="col-xs-12">
             <div class="full-width separator"></div>
@@ -44,7 +56,7 @@
               <span class="title">
                 <slot name="title" />
               </span>
-              <span class="buttons">
+              <span class="buttons-desktop">
                 <button
                   v-if="filtersSelected"
                   type="button"
@@ -60,18 +72,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div ref="bottomMobile" class="full-width hidden-md hidden-lg">
-      <div class="buttons-mobile" :class="{ sticky: stickyMobile }">
-        <div class="separator"></div>
-        <button v-if="filtersSelected" type="button" class="btn btn-lg btn-next" @click="onNext">
-          {{ nextLabel }}
-        </button>
-        <button v-else type="button" class="btn btn-lg btn-skip" @click="onSkip">
-          {{ skipLabel }}
-        </button>
       </div>
     </div>
   </div>
@@ -97,9 +97,9 @@ export default {
   data() {
     return {
       sticky: false,
-      stickyMobile: false,
-      stickyHeight: 95,
-      stickyMobileHeight: 60
+      stickyHeight: 55,
+      stickyDesktop: false,
+      stickyDesktopHeight: 95
     }
   },
   mounted() {
@@ -121,9 +121,9 @@ export default {
     handleSticky() {
       const clientHeight = window.document.documentElement.clientHeight
       const rect = this.$refs.bottom.getBoundingClientRect()
-      const rectMobile = this.$refs.bottomMobile.getBoundingClientRect()
       this.sticky = rect.top + this.stickyHeight >= clientHeight ? true : false
-      this.stickyMobile = rectMobile.top + this.stickyMobileHeight >= clientHeight ? true : false
+      const rectDesktop = this.$refs.bottomDesktop.getBoundingClientRect()
+      this.stickyDesktop = rectDesktop.top + this.stickyDesktopHeight >= clientHeight ? true : false
     }
   }
 }
@@ -141,7 +141,7 @@ export default {
     }
   }
 
-  .bottom {
+  .bottom-desktop {
     height: 95px;
 
     @include media-breakpoint-up('lg') {
@@ -178,7 +178,7 @@ export default {
       }
     }
 
-    .buttons {
+    .buttons-desktop {
       .btn {
         border-radius: 5px;
         font-weight: bolder;
@@ -215,13 +215,18 @@ export default {
     opacity: 0.2;
   }
 
-  .buttons-mobile {
-    bottom: 0;
-    left: 0;
+  .bottom {
+    height: 55px;
+    margin-top: 20px;
+  }
+
+  .buttons {
     width: 100%;
 
     &.sticky {
       position: fixed;
+      bottom: 0;
+      left: 0;
     }
 
     .separator {
