@@ -1,6 +1,6 @@
 <template>
   <div class="bookmark-toggle">
-    <a role="button" title="Bookmarked items" @click="showBookmarkedItemsModal">
+    <a role="button" title="Bookmarked items" @click="onClick">
       <span v-if="length > 0" class="counter">{{ length }}</span>
       <i class="fa fa-bookmark"></i>
     </a>
@@ -17,8 +17,8 @@ export default {
     }
   },
   methods: {
-    showBookmarkedItemsModal() {
-      this.$emit('showBookmarkedItemsModal')
+    onClick() {
+      this.$emit('click')
     }
   }
 }
@@ -29,9 +29,10 @@ export default {
   .bookmark-toggle {
     right: auto;
     margin-left: -52px;
+    display: none;
 
-    @include media-breakpoint-down('md') {
-      display: none;
+    @include media-breakpoint-up('sm') {
+      display: block;
     }
   }
 }

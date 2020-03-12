@@ -216,11 +216,7 @@
       </div>
     </div>
 
-    <BookmarkIcon
-      v-if="!legacyMode"
-      :length="cartItems.length"
-      @showBookmarkedItemsModal="showBookmarkedItemsModal()"
-    />
+    <BookmarkIcon v-if="!legacyMode" :length="cartItems.length" @click="onBookmarkIconClick()" />
     <BookmarkFeatureModal v-if="!legacyMode" />
   </div>
 </template>
@@ -313,7 +309,7 @@ export default {
         }
       })
     },
-    showBookmarkedItemsModal() {
+    onBookmarkIconClick() {
       this.bookmarkedItemsModal.visible = true
     },
     removeItem(index) {

@@ -109,10 +109,7 @@
           </div>
         </div>
       </div>
-      <BookmarkIcon
-        :length="cartItems.length"
-        @showBookmarkedItemsModal="showBookmarkedItemsModal()"
-      />
+      <BookmarkIcon :length="cartItems.length" @click="hideBookmarkedItemsModal()" />
     </template>
   </Modal>
 </template>
@@ -221,7 +218,7 @@ export default {
       }
       return title
     },
-    showBookmarkedItemsModal() {
+    hideBookmarkedItemsModal() {
       this.visible = false
     }
   }
