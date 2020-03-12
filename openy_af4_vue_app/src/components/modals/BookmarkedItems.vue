@@ -109,7 +109,7 @@
           </div>
         </div>
       </div>
-      <BookmarkIcon :length="cartItems.length" @click="hideBookmarkedItemsModal()" />
+      <BookmarkIcon :counter="cartItems.length" @click="hideModal()" />
     </template>
   </Modal>
 </template>
@@ -218,7 +218,7 @@ export default {
       }
       return title
     },
-    hideBookmarkedItemsModal() {
+    hideModal() {
       this.visible = false
     }
   }

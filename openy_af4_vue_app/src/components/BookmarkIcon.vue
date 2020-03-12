@@ -1,7 +1,7 @@
 <template>
   <div class="bookmark-toggle">
     <a role="button" title="Bookmarked items" @click="onClick">
-      <span v-if="length > 0" class="counter">{{ length }}</span>
+      <span v-if="counter > 0" class="counter">{{ counter }}</span>
       <i class="fa fa-bookmark"></i>
     </a>
   </div>
@@ -11,7 +11,7 @@
 export default {
   name: 'BookmarkIcon',
   props: {
-    length: {
+    counter: {
       type: Number,
       default: 0
     }

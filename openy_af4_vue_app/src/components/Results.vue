@@ -216,7 +216,7 @@
       </div>
     </div>
 
-    <BookmarkIcon v-if="!legacyMode" :length="cartItems.length" @click="onBookmarkIconClick()" />
+    <BookmarkIcon v-if="!legacyMode" :counter="cartItems.length" @click="onBookmarkIconClick()" />
     <BookmarkFeatureModal v-if="!legacyMode" />
   </div>
 </template>
