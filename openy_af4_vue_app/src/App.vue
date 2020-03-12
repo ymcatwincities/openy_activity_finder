@@ -447,6 +447,10 @@ export default {
       // Scroll to top.
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },
+    selectedPage() {
+      // Scroll to top.
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
     canLoadData() {
       this.loadData()
     },
