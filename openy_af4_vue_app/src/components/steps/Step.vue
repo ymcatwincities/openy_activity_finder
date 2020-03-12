@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       sticky: false,
-      stickyHeight: 55,
+      stickyHeight: 125,
       stickyDesktop: false,
       stickyDesktopHeight: 95
     }
@@ -222,12 +222,12 @@ export default {
 
   .buttons {
     width: 100%;
-    border-bottom: 20px solid $black;
 
     &.sticky {
       position: fixed;
       bottom: 0;
       left: 0;
+      border-bottom: 70px solid $af-black;
     }
 
     .separator {
