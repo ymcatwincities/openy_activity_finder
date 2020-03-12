@@ -97,6 +97,7 @@
                     key="register"
                     role="button"
                     class="btn btn-lg register"
+                    :class="{ disabled: isRegisterDisabled }"
                     :href="item.link"
                     target="_blank"
                     @click="register(index)"
@@ -217,10 +218,13 @@ export default {
     },
     getButtonTitle() {
       let title = this.t('Register')
-      if (!this.item.spots_available && this.item.wait_list_availability > 0) {
-        title = this.t('Waiting list')
+      if (!this.item.spots_available) {
+        title = this.item.wait_list_availability > 0 ? this.t('Waiting list') : this.t('Full')
       }
       return title
+    },
+    isRegisterDisabled() {
+      return !this.item.spots_available && !this.item.wait_list_availability
     }
   },
   watch: {
