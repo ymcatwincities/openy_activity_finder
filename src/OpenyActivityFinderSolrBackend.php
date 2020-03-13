@@ -336,7 +336,11 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
           'days' => implode(', ', $days),
           'time' => $_from->format('g:ia') . '-' . $_to->format('g:ia'),
         ];
-        $full_dates = $_from->format('M d') . '-' . $_to->format('M d');
+        $from_md = $_from->format('M d');
+        $to_md = $_to->format('M d');
+        // For equal starting and ending dates show only starting date.
+        $full_dates = $from_md == $to_md ? $from_md : $from_md . '-' . $to_md;
+
         // It is necessary to calculate not the number of full weeks,
         // but the number of sessions that takes place in the specified period.
         // I.e. we calculate the amount of the last day of the week
