@@ -1,8 +1,8 @@
 <template>
   <div class="sort-select-component">
     <select v-model="selectedSort" @change="onChange">
-      <option v-for="option in sortOptions" :key="option.value" :value="option.value">
-        {{ option.label }}
+      <option v-for="(option, key) in sortOptions" :key="key" :value="key">
+        {{ option }}
       </option>
     </select>
   </div>
@@ -17,7 +17,7 @@ export default {
       required: true
     },
     sortOptions: {
-      type: Array,
+      type: Object,
       required: true
     }
   },

@@ -238,7 +238,7 @@ export default {
       required: true
     },
     sortOptions: {
-      type: Array,
+      type: Object,
       required: true
     },
     legacyMode: {
@@ -572,7 +572,7 @@ export default {
         .push({
           query
         })
-        // TODO: is there any good way to detect if we are already at this router location?
+        // TODO: is there any good way to detect if we are already at this router location? - MPR-164
         // Catch to avoid "NavigationDuplicated" error.
         .catch(err => {
           err

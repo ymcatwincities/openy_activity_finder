@@ -81,7 +81,8 @@ export default {
 
 <style lang="scss">
 .af-modal {
-  // Overriding YGTC customizations and Bootstrap 3/4 compatibilities.
+  // TODO: Move out to another place - MPR-163.
+  // Overriding Open Y Lily customizations and Bootstrap 3/4 compatibilities.
   &.modal.show {
     &.show {
       opacity: 1;

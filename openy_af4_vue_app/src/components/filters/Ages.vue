@@ -106,7 +106,6 @@ export default {
         + label {
           cursor: pointer;
           display: block;
-          font-family: 'Cachet', Verdana, Geneva, sans-serif;
           height: 50px;
           line-height: 46px;
           text-align: center;

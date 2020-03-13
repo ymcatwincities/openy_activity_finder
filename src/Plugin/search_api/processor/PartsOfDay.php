@@ -26,6 +26,12 @@ class PartsOfDay extends ProcessorPluginBase {
 
   const PROPERTY_NAME = 'search_api_af_parts_of_day';
 
+  const MORNING = 1;
+
+  const AFTERNOON = 2;
+
+  const EVENING = 3;
+
   /**
    * {@inheritdoc}
    */
@@ -84,13 +90,13 @@ class PartsOfDay extends ProcessorPluginBase {
       $_from_time = strtotime($_from->format('H:i:s') . 'Z');
       $_to_time = strtotime($_to->format('H:i:s') . 'Z');
       if ($_from_time < $time12pm) {
-        $values[] = 1;
+        $values[] = self::MORNING;
       }
       if ($_from_time <= $time5pm && $_to_time >= $time12pm) {
-        $values[] = 2;
+        $values[] = self::AFTERNOON;
       }
       if ($_to_time > $time5pm) {
-        $values[] = 3;
+        $values[] = self::EVENING;
       }
     }
     $values = array_unique($values, SORT_NUMERIC);

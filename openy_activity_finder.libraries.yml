@@ -78,9 +78,7 @@ activity_finder_4:
 vue:
   version: 2.6.11
   js:
-#    TODO: change to production version after development is finished.
-#    'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js': { type: external, minified: true }
-    'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js': { type: external, minified: false }
+    'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js': { type: external, minified: true }
   dependencies:
     - openy_system/polyfill
 

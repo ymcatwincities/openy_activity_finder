@@ -1,14 +1,8 @@
 <template>
   <div class="sort-radios-component">
-    <div v-for="option in sortOptions" :key="option.value" class="option">
-      <input
-        :id="option.value"
-        v-model="selectedSort"
-        type="radio"
-        :value="option.value"
-        @change="onChange"
-      />
-      <label :for="option.value">{{ option.label }}</label>
+    <div v-for="(option, key) in sortOptions" :key="key" class="option">
+      <input :id="key" v-model="selectedSort" type="radio" :value="key" @change="onChange" />
+      <label :for="key">{{ option }}</label>
     </div>
   </div>
 </template>
@@ -22,7 +16,7 @@ export default {
       required: true
     },
     sortOptions: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
