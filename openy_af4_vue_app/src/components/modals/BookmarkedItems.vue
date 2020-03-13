@@ -63,6 +63,7 @@
                     key="register"
                     role="button"
                     class="btn btn-lg register"
+                    :class="{ disabled: isRegisterDisabled(index) }"
                     :href="item.item.link"
                     target="_blank"
                     @click="register(index)"
@@ -210,13 +211,19 @@ export default {
     },
     getButtonTitle(index) {
       let title = this.t('Register now')
-      if (
-        !this.cartItems[index].item.spots_available &&
-        this.cartItems[index].item.wait_list_availability > 0
-      ) {
-        title = this.t('Waiting list')
+      if (!this.cartItems[index].item.spots_available) {
+        title =
+          this.cartItems[index].item.wait_list_availability > 0
+            ? this.t('Waiting list')
+            : this.t('Full')
       }
       return title
+    },
+    isRegisterDisabled(index) {
+      return (
+        !this.cartItems[index].item.spots_available &&
+        !this.cartItems[index].item.wait_list_availability
+      )
     },
     hideModal() {
       this.visible = false
