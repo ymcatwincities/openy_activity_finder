@@ -155,8 +155,8 @@ export default {
       }
       return count
     },
-    sortArray(a) {
-      return a.sort(this.compareItems)
+    sortArray(array) {
+      return array.sort(this.compareItems)
     },
     compareItems(a, b) {
       if (a.label < b.label) return -1
