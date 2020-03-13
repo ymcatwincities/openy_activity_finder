@@ -18,6 +18,7 @@
           :counter-options="optionsCount(index)"
           :collapsible="false"
           :handle-sticky="handleSticky"
+          :show-options="false"
         >
           <div class="options">
             <div class="row">

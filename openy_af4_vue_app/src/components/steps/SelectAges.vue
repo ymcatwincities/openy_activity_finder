@@ -18,6 +18,7 @@
           :counter-max="maxAges"
           :counter-options="optionsCount"
           :handle-sticky="handleSticky"
+          :show-options="false"
         >
           <div class="options">
             <div class="row">
