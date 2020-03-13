@@ -93,6 +93,11 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       $image_desktop = $storage->load('prgf_gallery')->buildUrl($image->getFileUri());
     }
 
+    $activities = $backend->getCategories();
+    usort($activities, function ($a, $b) {
+      return $a['label'] > $b['label'];
+    });
+
     return [
       '#theme' => 'openy_activity_finder_4_block',
       '#ages' => $backend->getAges(),
@@ -101,7 +106,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#days_times' => $backend->getDaysTimes(),
       '#categories' => $backend->getCategories(),
       '#categories_type' => $backend->getCategoriesType(),
-      '#activities' => $backend->getCategories(),
+      '#activities' => $activities,
       '#locations' => $backend->getLocations(),
       '#is_search_box_disabled' => $activity_finder_settings->get('disable_search_box'),
       '#is_spots_available_disabled' => $activity_finder_settings->get('disable_spots_available'),
