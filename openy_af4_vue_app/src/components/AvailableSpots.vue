@@ -61,6 +61,7 @@ export default {
   display: inline-block;
   font-size: 10px;
   line-height: 18px;
+  height: 18px;
   padding: 0 4px;
   color: $af-dark-gray;
   background-color: $white;
@@ -70,6 +71,7 @@ export default {
   @include media-breakpoint-up('lg') {
     font-size: 12px;
     line-height: 23px;
+    height: 23px;
   }
 
   &.big {

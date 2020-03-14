@@ -59,62 +59,29 @@ export default {
   border-radius: 2em;
   display: inline-block;
   text-align: center;
-  font-size: 12px;
-  line-height: 20px;
-  height: 20px;
+  font-size: 14px;
+  line-height: 30px;
+  height: 30px;
   margin-right: 5px;
 
   &:last-child {
     margin-right: 0;
   }
 
-  &.age-icon-big {
-    font-size: 14px;
-    line-height: 30px;
-    height: 30px;
-  }
-
   @include media-breakpoint-up('lg') {
-    font-size: 14px;
-    line-height: 30px;
-    height: 30px;
     margin-right: 10px;
   }
 
   &.age-icon-width-narrow {
-    width: 20px;
-
-    &.age-icon-big {
-      width: 30px;
-    }
-
-    @include media-breakpoint-up('lg') {
-      width: 30px;
-    }
+    width: 30px;
   }
 
   &.age-icon-width-middle {
-    width: 25px;
-
-    &.age-icon-big {
-      width: 35px;
-    }
-
-    @include media-breakpoint-up('lg') {
-      width: 35px;
-    }
+    width: 35px;
   }
 
   &.age-icon-width-wide {
-    width: 30px;
-
-    &.age-icon-big {
-      width: 40px;
-    }
-
-    @include media-breakpoint-up('lg') {
-      width: 40px;
-    }
+    width: 40px;
   }
 
   @each $age, $colors in $af-ages {
