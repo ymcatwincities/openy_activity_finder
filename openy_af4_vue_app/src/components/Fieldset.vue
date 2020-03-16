@@ -9,7 +9,7 @@
           {{ 'Max' | t }}
         </span>
         <span
-          v-else-if="showOptions && counterOptions >= 0"
+          v-else-if="counterOptions >= 0"
           class="options"
           :class="{ 'no-options': counterOptions === 0 }"
         >
@@ -88,10 +88,6 @@ export default {
     handleSticky: {
       type: Function,
       default: () => {}
-    },
-    showOptions: {
-      type: Boolean,
-      default: true
     }
   }
 }

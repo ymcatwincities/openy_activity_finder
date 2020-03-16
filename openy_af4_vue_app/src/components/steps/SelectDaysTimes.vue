@@ -15,10 +15,8 @@
           :key="index"
           :label="day.search_value"
           :counter="subFiltersCount(index)"
-          :counter-options="optionsCount(index)"
           :collapsible="false"
           :handle-sticky="handleSticky"
-          :show-options="false"
         >
           <div class="options">
             <div class="row">

@@ -14,7 +14,6 @@
           label="Day(s)"
           :collapsible="false"
           :counter="filtersCount"
-          :counter-options="optionsCount"
           :handle-sticky="handleSticky"
         >
           <div class="options">

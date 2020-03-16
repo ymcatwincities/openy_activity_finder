@@ -14,7 +14,6 @@
           :label="'Time(s)' | t"
           :collapsible="false"
           :counter="filtersCount"
-          :counter-options="optionsCount"
           :handle-sticky="handleSticky"
         >
           <div class="options">
