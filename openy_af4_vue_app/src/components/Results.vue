@@ -56,7 +56,7 @@
                   </span>
                   <template v-for="age in selectedAges" v-else>
                     <template v-if="parseInt(item.min_age) <= age && parseInt(item.max_age) >= age">
-                      <AgeIcon :key="age" :age="parseInt(age)" :ages="ages" />
+                      <AgeIcon :key="age" :age="parseInt(age)" :ages="ages" big />
                     </template>
                   </template>
                 </span>
@@ -121,7 +121,7 @@
                   </span>
                   <template v-for="age in selectedAges" v-else>
                     <template v-if="parseInt(item.min_age) <= age && parseInt(item.max_age) >= age">
-                      <AgeIcon :key="age" :age="parseInt(age)" :ages="ages" />
+                      <AgeIcon :key="age" :age="parseInt(age)" :ages="ages" big />
                     </template>
                   </template>
                 </span>
