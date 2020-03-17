@@ -93,10 +93,16 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       $image_desktop = $storage->load('prgf_gallery')->buildUrl($image->getFileUri());
     }
 
+    // Sort activity groups and activities in alphabetical order.
     $activities = $backend->getCategories();
     usort($activities, function ($a, $b) {
       return $a['label'] > $b['label'];
     });
+    foreach ($activities as &$activity) {
+      usort($activity['value'], function ($a, $b) {
+        return $a['label'] > $b['label'];
+      });
+    }
 
     return [
       '#theme' => 'openy_activity_finder_4_block',

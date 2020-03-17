@@ -23,7 +23,7 @@
           <div class="options">
             <div class="row">
               <div
-                v-for="activity in sortArray(activity_type.value)"
+                v-for="activity in activity_type.value"
                 :key="activity.value"
                 class="option check col-xs-12 col-sm-3"
               >
@@ -154,14 +154,6 @@ export default {
         count += this.facetCount(this.activities[index].value[key].value)
       }
       return count
-    },
-    sortArray(array) {
-      return array.sort(this.compareItems)
-    },
-    compareItems(a, b) {
-      if (a.label < b.label) return -1
-      if (a.label > b.label) return 1
-      return 0
     }
   }
 }
