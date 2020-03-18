@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     filterList() {
-      return [
+      let filters = [
         ...activitiesList(this.selectedActivities, this.activities),
         ...agesList(this.selectedAges, this.ages),
         ...locationsList(this.selectedLocations, this.locations),
@@ -109,6 +109,7 @@ export default {
         ...timesList(this.selectedTimes, this.times),
         ...daysTimesList(this.selectedDaysTimes, this.daysTimes)
       ]
+      return filters.sort(this.compareItems)
     }
   },
   watch: {
@@ -123,6 +124,11 @@ export default {
     viewResults() {
       this.visible = false
       this.$emit('viewResults')
+    },
+    compareItems(a, b) {
+      if (a < b) return -1
+      if (a > b) return 1
+      return 0
     }
   }
 }
