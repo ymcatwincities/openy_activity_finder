@@ -5,6 +5,7 @@
         {{ option }}
       </option>
     </select>
+    <i class="fa fa-chevron-down"></i>
   </div>
 </template>
 
@@ -41,8 +42,34 @@ export default {
 
 <style lang="scss">
 .sort-select-component {
+  position: relative;
+  display: flex;
+  align-items: center;
+
   select {
     height: 40px;
+    border-radius: 5px;
+    color: $af-black;
+    min-width: 260px;
+    width: auto;
+    padding: 6px 12px;
+    appearance: none;
+    z-index: 1;
+    background: transparent;
+    outline: none;
+
+    &::-ms-expand {
+      display: none;
+    }
+
+    option {
+      padding: 10px;
+    }
+  }
+  .fa {
+    position: absolute;
+    right: 8px;
+    font-size: 16px;
   }
 }
 </style>
