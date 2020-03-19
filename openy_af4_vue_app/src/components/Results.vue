@@ -52,7 +52,7 @@
               </div>
 
               <div class="ages-spots">
-                <span class="ages">
+                <span v-if="item.ages" class="ages">
                   <span class="age-label">{{ 'Ages' | t }}:</span>
                   <span v-if="!selectedAges.length || legacyMode" class="info">
                     {{ item.ages }}
@@ -117,7 +117,7 @@
                 <span class="title">
                   {{ item.name }}
                 </span>
-                <span class="ages">
+                <span v-if="item.ages" class="ages">
                   <span class="age-label">{{ 'Ages' | t }}:</span>
                   <span v-if="!selectedAges.length || legacyMode" class="info">
                     {{ item.ages }}
