@@ -48,15 +48,18 @@ export default {
 
   select {
     height: 40px;
+    border: 1px solid $af-dark-gray;
     border-radius: 5px;
     color: $af-black;
     min-width: 260px;
     width: auto;
-    padding: 6px 12px;
+    padding: 0 10px;
     appearance: none;
     z-index: 1;
     background: transparent;
     outline: none;
+    font-size: 12px;
+    line-height: 18px;
 
     &::-ms-expand {
       display: none;
@@ -66,10 +69,12 @@ export default {
       padding: 10px;
     }
   }
+
   .fa {
     position: absolute;
-    right: 8px;
-    font-size: 16px;
+    right: 0;
+    font-size: 12px;
+    padding: 0 14px;
   }
 }
 </style>
