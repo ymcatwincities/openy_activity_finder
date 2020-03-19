@@ -257,7 +257,7 @@ export default {
   }
 
   .filters-footer {
-    height: 70px;
+    height: 140px;
 
     .buttons {
       position: fixed;
@@ -266,6 +266,7 @@ export default {
       margin-right: -10px;
       width: calc(100% - 2px);
       max-width: 358px;
+      border-bottom: 70px solid $af-black;
 
       .separator {
         height: 5px;
