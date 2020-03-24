@@ -321,6 +321,7 @@ export default {
         display: flex;
         justify-content: space-around;
         margin-bottom: 10px;
+
         .age-label {
           font-size: 12px;
           line-height: 30px;

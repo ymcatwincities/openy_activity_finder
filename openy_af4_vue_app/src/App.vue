@@ -543,6 +543,22 @@ export default {
         this.cartItems = JSON.parse(localStorage.getItem(this.cartItemsKey)).filter(
           item => item.timestamp > new Date().getTime() - this.cartItemsTimeout
         )
+
+        const itemIds = this.cartItems.map(item => item.item.nid)
+        if (itemIds.length) {
+          client('rest')
+            .request({ params: { _format: 'json', session_ids: itemIds.join(',') } })
+            .then(response => {
+              this.cartItems = this.cartItems
+                .map(cartItem => {
+                  cartItem.item = response.data.sessions.find(
+                    responseItem => responseItem.nid === cartItem.item.nid
+                  )
+                  return cartItem
+                })
+                .filter(cartItem => cartItem.item)
+            })
+        }
       } catch (e) {
         localStorage.removeItem(this.cartItemsKey)
       }
@@ -593,13 +609,14 @@ export default {
       this.lastRequestParamsString = this.searchParamsString
 
       this.isLoadingData = true
-      client.request({ params: this.searchParams }).then(response => {
-        this.data = response.data
-        this.isLoadingData = false
-
-        // If there were other changes while the request was in progress - we should load data again.
-        this.loadData()
-      })
+      client()
+        .request({ params: this.searchParams })
+        .then(response => {
+          this.data = response.data
+          this.isLoadingData = false
+          // If there were other changes while the request was in progress - we should load data again.
+          this.loadData()
+        })
     },
     getDataFromUrl() {
       const query = this.$route.query
