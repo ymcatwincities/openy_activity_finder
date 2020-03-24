@@ -296,7 +296,15 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   }
 
   /**
-   * {@inheritdoc}
+   * Process results function.
+   *
+   * @param $results
+   *    Search results to process.
+   * @param $log_id
+   *    Id of the Search Log needed for tracking Register / Details actions.
+   *
+   * @return array
+   * @throws \Exception
    */
   public function processResults($results, $log_id) {
     $data = [];
@@ -419,13 +427,10 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         'log_id' => $log_id,
         'name' => $fields['title']->getValues()[0]->getText(),
         'price' => implode(', ', $price),
-        'link' => Url::fromRoute('openy_activity_finder.register_redirect', [
-            'log' => $log_id,
-          ],
-          ['query' => [
-            'url' => $entity->field_session_reg_link->uri,
-          ],
-        ])->toString(),
+        'link' => Url::fromRoute('openy_activity_finder.register_redirect',
+          ['log' => $log_id],
+          ['query' => ['url' => $entity->field_session_reg_link->uri]])
+          ->toString(TRUE)->getGeneratedUrl(),
         'description' => html_entity_decode(strip_tags(text_summary($entity->field_session_description->value, $entity->field_session_description->format, 600))),
         'ages' => $this->convertData([$entity->field_session_min_age->value, isset($entity->field_session_max_age->value) ? $entity->field_session_max_age->value : '0']),
         'gender' => !empty($entity->field_session_gender->value) ? $entity->field_session_gender->value : '',
@@ -867,6 +872,50 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       }
     }
     return $count;
+  }
+
+  /**
+   * Get session data.
+   *
+   * @param array $session_ids
+   *   Array session nids to get data.
+   *
+   * @return array
+   *   Data array with structure similar to search results.
+   *
+   * @throws \Drupal\search_api\SearchApiException
+   */
+  public function getSessions($session_ids) {
+    // Make a request to Search API to get sessions data.
+    $results = $this->doSessionsSearchRequest($session_ids);
+    // Set log_id to default value because user not run any search here.
+    $log_id = 0;
+    // Process results.
+    return $this->processResults($results, $log_id);
+  }
+
+  /**
+   * Get results forr session search request.
+   *
+   * @param array $session_ids
+   *   Array session nids to get data.
+   *
+   * @return \Drupal\search_api\Query\ResultSet
+   *   Search results set.
+   *
+   * @throws \Drupal\search_api\SearchApiException
+   */
+  private function doSessionsSearchRequest($session_ids) {
+    $index_id = $this->config->get('index') ? $this->config->get('index') : 'default';
+    $index = Index::load($index_id);
+    /** @var \Drupal\search_api\Query\Query $query */
+    $query = $index->query();
+    $parse_mode = \Drupal::service('plugin.manager.search_api.parse_mode')->createInstance('direct');
+    $query->getParseMode()->setConjunction('OR');
+    $query->setParseMode($parse_mode);
+    $query->addCondition('status', 1);
+    $query->addCondition('nid', $session_ids, 'IN');
+    return $query->execute();
   }
 
 }

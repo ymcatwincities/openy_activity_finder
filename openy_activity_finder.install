@@ -5,6 +5,29 @@
  * Contains install and update routines.
  */
 
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_install().
+ */
+function openy_activity_finder_install() {
+  // Add permissions to anonymous and authenticated roles.
+  $permissions = [
+    'restful get openy_activity_finder_session_data',
+  ];
+  $roles = Role::loadMultiple([
+    RoleInterface::ANONYMOUS_ID,
+    RoleInterface::AUTHENTICATED_ID
+  ]);
+  foreach ($roles as $role) {
+    foreach ($permissions as $permission) {
+      $role->grantPermission($permission);
+    }
+    $role->save();
+  }
+}
+
 /**
 * Update configs.
 */
@@ -134,5 +157,29 @@ function openy_activity_finder_update_8009() {
   if (!$config->isNew()) {
     // Import config only in case it already exist.
     $cim->importConfigs(['search_api.index.default']);
+  }
+}
+
+/**
+ * Add Session Data rest endpoint config and permission.
+ */
+function openy_activity_finder_update_8006() {
+  //Import config for rest endpoint.
+  $cim = \Drupal::service('config_import.importer');
+  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/install');
+  $cim->importConfigs(['rest.resource.openy_activity_finder_session_data']);
+  // Add permissions to anonymous and authenticated roles.
+  $permissions = [
+    'restful get openy_activity_finder_session_data',
+  ];
+  $roles = Role::loadMultiple([
+    RoleInterface::ANONYMOUS_ID,
+    RoleInterface::AUTHENTICATED_ID
+  ]);
+  foreach ($roles as $role) {
+    foreach ($permissions as $permission) {
+      $role->grantPermission($permission);
+    }
+    $role->save();
   }
 }

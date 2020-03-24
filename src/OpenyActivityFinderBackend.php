@@ -11,11 +11,15 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
 
   /**
    * Activity Finder configuration.
+   *
+   * @var \Drupal\Core\Config\Config
    */
   protected $config;
 
   /**
    * Site's default timezone.
+   *
+   * @var \DateTimeZone
    */
   protected $timezone;
 
@@ -29,6 +33,12 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
    */
   abstract public function getLocations();
 
+  /**
+   * OpenyActivityFinderBackend constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   */
   public function __construct(ConfigFactoryInterface $config_factory) {
     $this->config = $config_factory->get('openy_activity_finder.settings');
     $this->timezone = new \DateTimeZone($config_factory->get('system.date')->get('timezone')['default']);
@@ -175,6 +185,9 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
     return $values;
   }
 
+  /**
+   * Get categories type.
+   */
   public function getCategoriesType() {
     return 'multiple';
   }

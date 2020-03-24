@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - openy_activity_finder
+    - serialization
+    - user
+id: openy_activity_finder_session_data
+plugin_id: openy_activity_finder_session_data
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie
