@@ -55,6 +55,12 @@
                       {{ item.item.ages }}
                     </span>
                   </span>
+                  <span class="spots">
+                    <AvailableSpots
+                      :spots="Number(item.item.spots_available)"
+                      :wait-list="Number(item.item.wait_list_availability)"
+                    />
+                  </span>
                 </div>
               </div>
               <div class="actions">
@@ -128,6 +134,7 @@
 import Modal from '@/components/modals/Modal.vue'
 import BookmarkFeatureDescription from '@/components/modals/BookmarkFeatureDescription.vue'
 import AgeIcon from '@/components/AgeIcon.vue'
+import AvailableSpots from '@/components/AvailableSpots'
 import BookmarkIcon from '@/components/BookmarkIcon'
 
 export default {
@@ -136,6 +143,7 @@ export default {
     Modal,
     BookmarkFeatureDescription,
     AgeIcon,
+    AvailableSpots,
     BookmarkIcon
   },
   props: {
@@ -312,7 +320,7 @@ export default {
       .age {
         display: flex;
         justify-content: space-around;
-
+        margin-bottom: 10px;
         .age-label {
           font-size: 12px;
           line-height: 30px;
@@ -321,6 +329,11 @@ export default {
         .info {
           line-height: 30px;
         }
+      }
+
+      .spots {
+        display: flex;
+        justify-content: space-around;
       }
 
       .actions {
