@@ -317,7 +317,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       try {
         $entity = $result_item->getOriginalObject()->getValue();
         if (!$entity) {
-          $this->loggerChannel->error('Failed to load original object ' . $this->itemId);
+          $this->loggerChannel->error('Failed to load original object ' . $result_item->getId());
           continue;
         }
       }
