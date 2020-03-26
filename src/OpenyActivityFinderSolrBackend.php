@@ -14,6 +14,7 @@ use Drupal\search_api\Entity\Index;
 use Drupal\Core\Url;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\search_api\Query\ResultSet;
 use Drupal\search_api\SearchApiException;
 
 /**
@@ -298,15 +299,17 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   /**
    * Process results function.
    *
-   * @param $results
-   *    Search results to process.
-   * @param $log_id
-   *    Id of the Search Log needed for tracking Register / Details actions.
+   * @param \Drupal\search_api\Query\ResultSet $results
+   *   Search results to process.
+   * @param string $log_id
+   *   Id of the Search Log needed for tracking Register / Details actions.
    *
    * @return array
+   *   Processed search results.
+   *
    * @throws \Exception
    */
-  public function processResults($results, $log_id) {
+  public function processResults(ResultSet $results, $log_id) {
     $data = [];
     $locations_info = $this->getLocationsInfo();
     /** @var \Drupal\search_api\Item\Item $result_item */
@@ -461,7 +464,13 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   }
 
   /**
-   * {@inheritdoc}
+   * Get facets.
+   *
+   * @param \Drupal\search_api\Query\ResultSet $results
+   *   Search results.
+   *
+   * @return mixed
+   *   Facet data.
    */
   public function getFacets($results) {
     $facets = $results->getExtraData('search_api_facets', []);
@@ -658,16 +667,16 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         if (!empty($locations)) {
           foreach ($locations as $location) {
             $address = [];
-            if (!empty($location->field_location_address->address_line1))  {
+            if (!empty($location->field_location_address->address_line1)) {
               array_push($address, $location->field_location_address->address_line1);
             }
-            if (!empty($location->field_location_address->locality))  {
+            if (!empty($location->field_location_address->locality)) {
               array_push($address, $location->field_location_address->locality);
             }
-            if (!empty($location->field_location_address->administrative_area))  {
+            if (!empty($location->field_location_address->administrative_area)) {
               array_push($address, $location->field_location_address->administrative_area);
             }
-            if (!empty($location->field_location_address->postal_code))  {
+            if (!empty($location->field_location_address->postal_code)) {
               array_push($address, $location->field_location_address->postal_code);
             }
             $address = implode(', ', $address);
@@ -678,11 +687,11 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
                 $days = [
                   [
                     0 => "Mon - Fri:",
-                    1 => $sub_hours['hours_mon']
+                    1 => $sub_hours['hours_mon'],
                   ],
                   [
                     0 => "Sat - Sun:",
-                    1 => $sub_hours['hours_sat']
+                    1 => $sub_hours['hours_sat'],
                   ]
                 ];
               }
@@ -731,7 +740,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       }
       $categories[$item['program']['nid']]['value'][] = [
         'value' => $key,
-        'label' => $item['title']
+        'label' => $item['title'],
       ];
       $categories[$item['program']['nid']]['label'] = $item['program']['title'];
     }
@@ -809,7 +818,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
    * Date months to years transformation.
    *
    * @param array $ages
-   *   Array with min and max age values,
+   *   Array with min and max age values.
    *
    * @return string
    *   String with month or year.
@@ -854,7 +863,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   /**
    * Helper function to calculate weekday quantity in period.
    *
-   * @param String $dayName eg 'Mon', 'Tue' etc
+   * @param string $dayName eg 'Mon', 'Tue' etc
    * @param DateTimeInterface $start
    * @param DateTimeInterface $end
    *
