@@ -309,7 +309,7 @@ export default {
         selectedLocations: [],
         selectedActivities: [],
         selectedPage: 1,
-        selectedSort: 'af_time_of_day__ACS',
+        selectedSort: 'title__ASC',
         searchKeywords: ''
       },
       cartItems: [],
