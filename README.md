@@ -1,8 +1,9 @@
 # Examples
 
-### How to override processResults in ActivityFinder
+## How to override processResults in ActivityFinder
 
 See `openy_activity_finder.api.php`
+
 ```php
 /**
  * Implements hook_activity_finder_program_process_results_alter().
@@ -34,3 +35,4 @@ function custom_module_activity_finder_program_process_results_alter(&$data, Nod
   }
 }
 ```
+
