@@ -56,7 +56,7 @@ export default {
     filteredActivities() {
       const filteredActivities = {}
       for (let key in this.activities) {
-        if (this.isNotEmptyProgramm(key)) {
+        if (this.optionsCount(key)) {
           filteredActivities[key] = this.activities[key]
         }
       }
@@ -87,16 +87,13 @@ export default {
       let facet = this.facets.find(x => x.id === value)
       return facet ? facet.count : 0
     },
-    isNotEmptyProgramm(index) {
+    optionsCount(index) {
       for (let key in this.activities[index].value) {
-        if (this.facetsFind(this.activities[index].value[key].value)) {
+        if (this.facets.find(x => x.id === this.activities[index].value[key].value)) {
           return true
         }
       }
       return false
-    },
-    facetsFind(value) {
-      return this.facets.find(x => x.id === value)
     }
   }
 }
