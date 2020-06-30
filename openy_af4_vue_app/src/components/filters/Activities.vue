@@ -1,7 +1,7 @@
 <template>
   <div class="activities-filter-component">
     <Foldable
-      v-for="(item_type, index) in filteredActivities"
+      v-for="(item_type, index) in activities"
       :key="id + '-activity-type-' + index"
       :label="item_type.label"
       :collapse-id="id + '-toggle-' + index"
@@ -13,9 +13,10 @@
           v-model="selectedActivities"
           type="checkbox"
           :value="item.value"
-          @change="onChange()"
         />
-        <label :for="id + '-activity-' + item.value">{{ item.label }}</label>
+        <label :for="id + '-activity-' + item.value">
+          {{ item.label }}
+        </label>
       </div>
     </Foldable>
   </div>
@@ -52,29 +53,18 @@ export default {
       selectedActivities: this.value
     }
   },
-  computed: {
-    filteredActivities() {
-      const filteredActivities = {}
-      for (let key in this.activities) {
-        if (this.optionsCount(key)) {
-          filteredActivities[key] = this.activities[key]
-        }
-      }
-      return filteredActivities
-    }
-  },
   watch: {
     value() {
       this.selectedActivities = this.value
+    },
+    selectedActivities() {
+      this.$emit('input', this.selectedActivities)
     }
   },
   methods: {
-    onChange() {
-      this.$emit('input', this.selectedActivities)
-    },
     subFiltersCount(index) {
       let result = 0
-      this.value.forEach(item => {
+      this.selectedActivities.forEach(item => {
         if (
           this.activities[index].value.find(activity => parseInt(activity.value) === parseInt(item))
         ) {
@@ -86,14 +76,6 @@ export default {
     facetCount(value) {
       let facet = this.facets.find(x => x.id === value)
       return facet ? facet.count : 0
-    },
-    optionsCount(index) {
-      for (let key in this.activities[index].value) {
-        if (this.facets.find(x => x.id === this.activities[index].value[key].value)) {
-          return true
-        }
-      }
-      return false
     }
   }
 }
