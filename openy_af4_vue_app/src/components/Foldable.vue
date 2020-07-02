@@ -1,6 +1,6 @@
 <template>
   <div class="foldable-component">
-    <div v-b-toggle="collapseId" class="foldable-title">
+    <div v-if="label.length > 0" v-b-toggle="collapseId" class="foldable-title">
       <span class="left">
         <i class="fa fa-chevron-down" aria-hidden="true" />
         <i class="fa fa-chevron-up" aria-hidden="true" />
@@ -29,7 +29,7 @@ export default {
   props: {
     label: {
       type: String,
-      default: 'Foldable'
+      default: ''
     },
     collapseId: {
       type: String,
