@@ -141,7 +141,7 @@ export default {
             display: block;
             position: absolute;
             left: 19px;
-            top: 4px;
+            margin-top: -2px;
             width: 12px;
             height: 7px;
             border-left: 2px solid $white;
