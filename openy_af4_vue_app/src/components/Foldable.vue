@@ -137,6 +137,11 @@ export default {
           }
 
           &:after {
+            @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+              /* IE10+ CSS styles go here */
+              top: 4px;
+              margin-top: 0;
+            }
             content: '';
             display: block;
             position: absolute;
