@@ -581,6 +581,7 @@ export default {
     onFilterChange(event, callback = () => {}) {
       callback()
       this[event.filter] = event.value
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     clearFilters(callback = () => {}) {
       callback()
