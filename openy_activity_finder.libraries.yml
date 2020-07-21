@@ -60,7 +60,7 @@ openy_activity_finder_search:
     - core/jquery.cookie
 
 activity_finder_4:
-  version: 4.0.4
+  version: 4.0.5
   js:
     openy_af4_vue_app/dist/activity_finder_4.umd.min.js: { minified: true }
   css:
