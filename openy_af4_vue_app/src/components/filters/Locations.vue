@@ -24,7 +24,6 @@
 
 <script>
 import Foldable from '@/components/Foldable'
-
 export default {
   name: 'LocationsFilter',
   components: {
@@ -53,6 +52,7 @@ export default {
       selectedLocations: this.value
     }
   },
+
   watch: {
     value() {
       this.selectedLocations = this.value
@@ -62,19 +62,28 @@ export default {
     }
   },
   methods: {
+
+    isObject(obj) {
+      return obj !== null && obj.constructor.name === "Object"
+    },
     subFiltersCount(index) {
+
+      if (this.locations.length > 0 && !this.isObject(this.locations[index])) {
+         return 0
+      }
       let result = 0
-      this.selectedLocations.forEach(item => {
-        if (this.locations[index].value.find(location => location.value === item)) {
-          result++
-        }
-      })
+      for(const item of this.selectedLocations) {
+          if (this.locations[index].value.find(location => {
+            return parseInt(location.value) === parseInt(item)})) {
+            result++
+          }
+      }
       return result
     },
     facetCount(value) {
       let facet = this.facets.find(x => x.id === value)
       return facet ? facet.count : 0
     }
-  }
+  },
 }
 </script>
