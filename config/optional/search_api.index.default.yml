@@ -37,6 +37,10 @@ field_settings:
     label: 'Time of day'
     property_path: search_api_af_time_of_day
     type: date
+  af_date_of_day:
+    label: 'Date of day'
+    property_path: search_api_af_date_of_day
+    type: date
   af_weekdays_parts_of_day:
     label: 'Weekdays and Parts of day'
     property_path: search_api_af_weekdays_parts_of_day
@@ -215,6 +219,7 @@ processor_settings:
   openy_af_ages_min_max: {  }
   openy_af_parts_of_day: {  }
   openy_af_time_of_day: {  }
+  openy_af_date_of_day: {  }
   openy_af_weekdays_parts_of_day: {  }
   rendered_item: {  }
 tracker_settings:

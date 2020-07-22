@@ -125,6 +125,11 @@ function openy_activity_finder_search_api_solr_field_mapping_alter(IndexInterfac
     // @see https://www.drupal.org/project/search_api_solr/issues/2906905
     $fields['af_time_of_day'] = 'ds_af_time_of_day';
   }
+  if (isset($fields['af_date_of_day'])) {
+    // We can sort only by single value fields.
+    // @see https://www.drupal.org/project/search_api_solr/issues/2906905
+    $fields['af_date_of_day'] = 'ds_af_date_of_day';
+  }
 }
 
 /**
