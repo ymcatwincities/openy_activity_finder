@@ -1,7 +1,7 @@
 <template>
   <div>
     <a v-if="visible == 1" class="pdf-component" href="#" @click.stop.prevent="downloadPdf">
-      Download PDF <span class="fa fa-file" />
+      Download Weekly PDF <span class="fa fa-file" />
     </a>
   </div>
 </template>
