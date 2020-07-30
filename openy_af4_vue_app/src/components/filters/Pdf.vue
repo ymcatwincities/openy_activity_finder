@@ -1,5 +1,5 @@
 <template>
-  <button v-if="visible == 1" class="pdf-component" @click.stop.prevent="runSearch">
+  <button v-if="visible == 1" class="pdf-component" @click.stop.prevent="downloadPdf">
     Download PDF
   </button>
 </template>
@@ -54,7 +54,7 @@ export default {
     }
   },
   methods: {
-    runSearch() {
+    downloadPdf() {
       let pdfActivities = []
       for (const program of this.activities) {
         for (const subprogram of program.value) {
