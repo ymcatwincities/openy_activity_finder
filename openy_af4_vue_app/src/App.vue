@@ -321,7 +321,7 @@ export default {
         selectedLocations: [],
         selectedActivities: [],
         selectedPage: 1,
-        selectedSort: 'title__ASC',
+        selectedSort: 'af_date_of_day__ACS',
         searchKeywords: '',
         pdf: 0
       },
