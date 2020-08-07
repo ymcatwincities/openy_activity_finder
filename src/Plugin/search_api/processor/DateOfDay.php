@@ -81,7 +81,7 @@ class DateOfDay extends ProcessorPluginBase {
       }
 
       $_from = DrupalDateTime::createFromTimestamp(strtotime($_period->get('value')->getValue() . 'Z'), $timezone);
-      $value = $_from->format('M d');
+      $value = $_from->format('M d Y');
 
       // We need just one value as we can sort only by single value fields.
       break;
