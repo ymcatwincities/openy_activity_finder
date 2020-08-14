@@ -96,8 +96,7 @@ export default {
           locations: locationsLabelsString,
           categories: pdfActivitiesString,
           limit: pdfActivitiesString,
-          ['hide-programs']: 1,
-          ['hide-instructor']: 1
+          ['hide-programs']: 1
         }
       })
       window.open(routeData.href, '_blank')
