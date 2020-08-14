@@ -379,6 +379,12 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         $price[] = '$' . $entity->field_session_mbr_price->value . ' (member)';
       }
 
+      $instructor = '';
+
+      if (!empty($entity->field_session_instructor->value)) {
+        $instructor = $entity->field_session_instructor->value;
+      }
+
       if (!empty($nmbr_price) && $nmbr_price !== "-1.00" && $mbr_price !== "0.00") {
         $price[] = '$' . $entity->field_session_nmbr_price->value . ' (non-member)';
       }
@@ -416,6 +422,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         'location' => $fields['field_session_location']->getValues()[0],
         'location_id' => $locations_info[$fields['field_session_location']->getValues()[0]]['nid'],
         'location_info' => $locations_info[$fields['field_session_location']->getValues()[0]],
+        'instructor' => $instructor,
         'log_id' => $log_id,
         'name' => $fields['title']->getValues()[0]->getText(),
         'price' => implode(', ', $price),
