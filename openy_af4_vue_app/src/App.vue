@@ -498,6 +498,14 @@ export default {
     }
   },
   methods: {
+    scrollToElement() {
+      document.getElementById('activity-finder-app').scrollIntoView()
+      const scrollFix = () =>
+        setTimeout(() => {
+          window.scrollBy(0, -25)
+        }, 100)
+      scrollFix()
+    },
     nextStep(step) {
       // First step should be the one chosen by the user - selectedPath.
       if (!this.completedSteps.includes(this.selectedPath) && this.step !== this.selectedPath) {
@@ -597,7 +605,7 @@ export default {
     onFilterChange(event, callback = () => {}) {
       callback()
       this[event.filter] = event.value
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      this.scrollToElement()
     },
     clearFilters(callback = () => {}) {
       callback()

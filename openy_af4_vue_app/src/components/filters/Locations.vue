@@ -62,21 +62,22 @@ export default {
     }
   },
   methods: {
-
     isObject(obj) {
-      return obj !== null && obj.constructor.name === "Object"
+      return obj !== null && obj.constructor.name === 'Object'
     },
     subFiltersCount(index) {
-
       if (this.locations.length > 0 && !this.isObject(this.locations[index])) {
-         return 0
+        return 0
       }
       let result = 0
-      for(const item of this.selectedLocations) {
-          if (this.locations[index].value.find(location => {
-            return parseInt(location.value) === parseInt(item)})) {
-            result++
-          }
+      for (const item of this.selectedLocations) {
+        if (
+          this.locations[index].value.find(location => {
+            return parseInt(location.value) === parseInt(item)
+          })
+        ) {
+          result++
+        }
       }
       return result
     },
@@ -84,6 +85,6 @@ export default {
       let facet = this.facets.find(x => x.id === value)
       return facet ? facet.count : 0
     }
-  },
+  }
 }
 </script>

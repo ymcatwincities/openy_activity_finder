@@ -167,6 +167,8 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
     $query->setParseMode($parse_mode);
     $keys = !empty($parameters['keywords']) ? $parameters['keywords'] : '';
     if ($keys) {
+      $keys = explode(' ', trim($keys));
+      $keys['#conjunction'] = 'AND';
       $query->keys($keys);
     }
     $query->setFulltextFields(['title']);
