@@ -134,7 +134,27 @@
                     @click="resetAction(index)"
                   >
                     <span>{{ 'Sent to register' | t }}</span>
-                    <i class="fa fa-times-circle-o"></i>
+                    <i class="fa fa-repeat"></i>
+                  </a>
+                  <a
+                    v-if="!isBookmarked(age) && !legacyMode"
+                    key="bookmark"
+                    role="button"
+                    class="bookmark"
+                    title="Add bookmark"
+                    @click="bookmarkItem(age, index)"
+                  >
+                    <i class="fa fa-bookmark"></i>
+                  </a>
+                  <a
+                    v-else-if="!legacyMode"
+                    key="bookmark"
+                    role="button"
+                    class="bookmark bookmarked"
+                    title="Remove bookmark"
+                    @click="unbookmarkItem(age)"
+                  >
+                    <i class="fa fa-bookmark"></i>
                   </a>
                 </template>
                 <template v-else-if="buttonsState[index] === 'itemBookmarked'">
@@ -265,7 +285,7 @@ export default {
     bookmarkItem(age, index) {
       this.buttonsState = {
         ...this.buttonsState,
-        ...{ [index]: 'itemBookmarked' }
+        ...{ [index]: 'default' }
       }
       this.trackEvent('bookmark', 'Click in activity details', this.item.product_id)
       this.$emit('bookmark', age)

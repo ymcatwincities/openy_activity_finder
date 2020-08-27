@@ -89,7 +89,16 @@
                     @click="resetAction(index)"
                   >
                     <span>{{ 'Sent to register' | t }}</span>
-                    <i class="fa fa-times-circle-o"></i>
+                    <i class="fa fa-repeat"></i>
+                  </a>
+                  <a
+                    key="remove"
+                    role="button"
+                    class="remove"
+                    title="Remove"
+                    @click="removeItem(index)"
+                  >
+                    <i class="fa fa-trash"></i>
                   </a>
                 </template>
               </div>
@@ -321,7 +330,6 @@ export default {
         .register {
           background-color: $af-violet;
           flex-grow: 1;
-          margin-right: 10px;
           border-radius: 5px;
           font-size: 18px;
           line-height: 50px;
@@ -336,6 +344,7 @@ export default {
           border: 2px solid $af-blue;
           border-radius: 5px;
           text-align: center;
+          margin-left: 10px;
 
           .fa {
             font-size: 18px;
