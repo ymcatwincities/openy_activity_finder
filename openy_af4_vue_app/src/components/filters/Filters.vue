@@ -266,11 +266,11 @@ export default {
       margin-right: -10px;
       width: calc(100% - 2px);
       max-width: 358px;
-      border-bottom: 70px solid $af-black;
+      border-bottom: 70px solid $white;
 
       .separator {
         height: 5px;
-        background-color: $af-black;
+        background-color: $white;
         opacity: 0.1;
       }
 

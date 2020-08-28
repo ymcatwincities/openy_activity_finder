@@ -205,7 +205,7 @@ export default {
       margin: 0 0 0 auto !important;
       width: 50px;
       height: 50px;
-      background-color: $af-blue;
+      background-color: $white;
       opacity: 1;
 
       .left,
@@ -213,8 +213,8 @@ export default {
         position: absolute;
         width: 10px;
         height: 10px;
-        border-bottom: 2px solid $white;
-        border-right: 2px solid $white;
+        border-bottom: 2px solid $af-dark-gray;
+        border-right: 2px solid $af-dark-gray;
       }
 
       .left {

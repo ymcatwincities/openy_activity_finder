@@ -373,7 +373,7 @@ export default {
   }
 
   .bookmarked-items-footer {
-    height: 56px;
+    height: 126px;
 
     .footer-content {
       display: flex;
@@ -388,6 +388,7 @@ export default {
       max-width: 358px;
       font-size: 12px;
       line-height: 18px;
+      border-bottom: 70px solid $white;
 
       .left {
         max-width: 220px;
