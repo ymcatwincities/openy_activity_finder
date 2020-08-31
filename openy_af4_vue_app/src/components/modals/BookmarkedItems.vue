@@ -356,7 +356,8 @@ export default {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background-color: $af-green;
+          background-color: $af-light-gray;
+          color: $af-darker-gray;
           flex-grow: 1;
           border-radius: 5px;
           font-size: 18px;
