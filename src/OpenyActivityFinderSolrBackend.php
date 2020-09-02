@@ -209,7 +209,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       $categories_nids = explode(',', rawurldecode($parameters['categories']));
       // Map nids to titles.
       foreach ($categories_nids as $nid) {
-        $categories[] = !empty($category_program_info[$nid]['title']) ? $category_program_info[$nid]['title'] : '';
+        $categories[] = !empty($category_program_info[$nid]['title']) ? $nid : '';
 
         // Subcategories with the same title could belong to different categories.
         // Additional category filter is essential.
@@ -245,7 +245,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       if (empty($category_program_info[$nid]['title'])) {
         continue;
       }
-      $exclude_categories[] = $category_program_info[$nid]['title'];
+      $exclude_categories[] = $nid;
     }
     if ($exclude_categories) {
       $query->addCondition('field_activity_category', $exclude_categories, 'NOT IN');
@@ -485,9 +485,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         }
         if ($f == 'field_activity_category') {
           foreach ($category_program_info as $nid => $info) {
-            if ('"' . $info['title'] . '"' == $item['filter']) {
-              $facets_m[$f][$i]['id'] = $nid;
-            }
+            $facets_m[$f][$i]['id'] = (int) $facets_m[$f][$i]['filter'];
           }
         }
         // Pass counters to static ages filter.

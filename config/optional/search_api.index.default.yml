@@ -48,7 +48,7 @@ field_settings:
   field_activity_category:
     label: 'Program Subcategory'
     datasource_id: 'entity:node'
-    property_path: 'field_session_class:entity:field_class_activity:entity:field_activity_category:entity:title'
+    property_path: 'field_session_class:entity:field_class_activity:entity:field_activity_category:entity:nid'
     type: string
     dependencies:
       config:
