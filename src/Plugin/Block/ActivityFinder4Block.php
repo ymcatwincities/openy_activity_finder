@@ -80,6 +80,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   public function build() {
     $activity_finder_settings = $this->configFactory->get('openy_activity_finder.settings');
     $backend_service_id = $activity_finder_settings->get('backend');
+    /** @var \Drupal\openy_activity_finder\OpenyActivityFinderSolrBackend $backend */
     $backend = \Drupal::service($backend_service_id);
     $conf = $this->getConfiguration();
 
@@ -95,6 +96,31 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
     // Sort activity groups and activities in alphabetical order.
     $activities = $backend->getCategories();
+
+    // Remove empty programs and subprograms.
+    $results = $backend->doSearchRequest([]);
+    $facets = $backend->getFacets($results)['field_activity_category'];
+    $activeSubPrograms = [];
+    foreach ($facets as $item) {
+      if (isset($item['id']) && is_int($item['id']) && !empty($item['id'])) {
+        $activeSubPrograms[] = $item['id'];
+      }
+    }
+    foreach ($activities as $indexProgram => $program) {
+      if (isset($program['value'])) {
+        foreach ($program['value'] as $indexSubProgram => $subProgram) {
+          if (!in_array($subProgram['value'], $activeSubPrograms)) {
+            unset($activities[$indexProgram]['value'][$indexSubProgram]);
+          }
+        }
+      }
+    }
+    foreach ($activities as $indexProgram => $program) {
+      if (empty($program['value'])) {
+        unset($activities[$indexProgram]);
+      }
+    }
+
     usort($activities, function ($a, $b) {
       return $a['label'] > $b['label'];
     });
