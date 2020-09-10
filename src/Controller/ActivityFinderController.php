@@ -96,7 +96,9 @@ class ActivityFinderController extends ControllerBase {
     }
 
     $data = NULL;
+    $debugMsg = "Try to get data from cache. ";
     if ($cache = $this->cacheBackend->get($cid)) {
+      $debugMsg .= "Data getting from cache, cid: $cid";
       $data = $cache->data;
     }
     else {
@@ -111,9 +113,11 @@ class ActivityFinderController extends ControllerBase {
 
       // Cache for 5 minutes.
       $expire = $this->time->getRequestTime() + self::CACHE_LIFETIME;
+      $debugMsg .= "No data in cache, cid: $cid";
       $this->cacheBackend->set($cid, $data, $expire, [OpenyActivityFinderSolrBackend::ACTIVITY_FINDER_CACHE_TAG]);
+      $debugMsg .= ". Data setted to cache, cid: $cid, expire: $expire";
     }
-
+    \Drupal::logger('cache_debug')->debug($debugMsg);
     return new JsonResponse($data);
   }
 
