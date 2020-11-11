@@ -179,4 +179,17 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
     return 'multiple';
   }
 
+  /**
+   * Get the "Group collapse settings" from the AF settings page.
+   */
+  public function getFiltersSectionConfig() {
+    $config = [];
+    foreach (['schedule', 'category', 'locations'] as $name) {
+      $value = $this->config->get("{$name}_collapse_group");
+      if ($value) {
+        $config[$name] = strstr($value, 'collapsed') || strstr($value, 'disabled');
+      }
+    }
+    return $config;
+  }
 }

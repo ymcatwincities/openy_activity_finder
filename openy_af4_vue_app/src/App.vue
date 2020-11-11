@@ -138,6 +138,7 @@
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
+          :filters-section-config="filtersSectionConfig"
           filters-mode="instant"
           @filterChange="onFilterChange($event)"
           @clearFilters="clearFilters"
@@ -263,6 +264,10 @@ export default {
       required: true
     },
     backgroundImage: {
+      type: Object,
+      required: true
+    },
+    filtersSectionConfig: {
       type: Object,
       required: true
     }

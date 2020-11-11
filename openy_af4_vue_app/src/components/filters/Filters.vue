@@ -10,6 +10,7 @@
       <Fieldset
         :label="'Schedules' | t"
         :collapse-id="id + '-toggle-schedules'"
+        :collapsed="fieldsetCollapseState('schedule')"
         :counter="scheduleFiltersCount"
         :hide-counter="true"
       >
@@ -41,6 +42,7 @@
       <Fieldset
         :label="'Activities' | t"
         :collapse-id="id + '-toggle-activities'"
+        :collapsed="fieldsetCollapseState('category')"
         :counter="activityFiltersCount"
         :hide-counter="true"
       >
@@ -55,6 +57,7 @@
       <Fieldset
         :label="'Locations' | t"
         :collapse-id="id + '-toggle-locations'"
+        :collapsed="fieldsetCollapseState('locations')"
         :counter="locationFiltersCount"
         :hide-counter="true"
       >
@@ -158,6 +161,10 @@ export default {
     filtersMode: {
       type: String,
       default: 'accumulative' // 'instant'
+    },
+    filtersSectionConfig: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -243,6 +250,9 @@ export default {
     },
     isEqual(array1, array2) {
       return array1.length === array2.length && array1.every(value => array2.includes(value))
+    },
+    fieldsetCollapseState(type) {
+      return this.filtersSectionConfig[type];
     }
   }
 }
