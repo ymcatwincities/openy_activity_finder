@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
           <div class="controls">
-            <span v-b-modal.activity-finder-search class="control search">
+            <span v-if="!disableSearchBox" v-b-modal.activity-finder-search class="control search">
               <a role="button">
                 <i class="fa fa-search" />
                 {{ 'Search' | t }}
@@ -51,6 +51,12 @@ export default {
   name: 'ResultsBar',
   components: {
     Modal
+  },
+  props: {
+    disableSearchBox: {
+      type: Boolean,
+      required: true
+    }
   },
   data() {
     return {

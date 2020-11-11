@@ -17,8 +17,12 @@
       @startOver="startOver()"
       @viewResults="viewResults()"
     />
-    <ResultsBar v-if="step === 'results'" class="hidden-md hidden-lg">
-      <template v-slot:search="{ hideModal }">
+    <ResultsBar
+      v-if="step === 'results'"
+      class="hidden-md hidden-lg"
+      :disable-search-box="disableSearchBox"
+    >
+      <template v-if="!disableSearchBox" v-slot:search="{ hideModal }">
         <SearchForm v-model="searchKeywords" @input="hideModal" />
       </template>
       <template v-slot:filter="{ hideModal }">
@@ -53,7 +57,7 @@
       :background-image="backgroundImage"
       @nextStep="nextStep('selectPath')"
     >
-      <template v-slot:search>
+      <template v-if="!disableSearchBox" v-slot:search>
         <SearchForm :value="searchKeywords" @input="onSearchInput($event)" />
       </template>
     </SelectPath>
@@ -120,7 +124,7 @@
       @removeItem="removeItem($event)"
       @removeItems="removeItems"
     >
-      <template v-slot:search>
+      <template v-if="!disableSearchBox" v-slot:search>
         <SearchForm v-model="searchKeywords" />
       </template>
       <template v-slot:filters>
@@ -258,6 +262,10 @@ export default {
     },
     legacyMode: {
       type: Number,
+      required: true
+    },
+    disableSearchBox: {
+      type: Boolean,
       required: true
     },
     disableSpotsAvailable: {
