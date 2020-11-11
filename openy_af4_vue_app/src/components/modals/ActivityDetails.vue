@@ -83,6 +83,7 @@
                   </span>
                 </div>
                 <AvailableSpots
+                  v-if="!disableSpotsAvailable"
                   :spots="Number(item.spots_available)"
                   :wait-list="Number(item.wait_list_availability)"
                   big
@@ -212,6 +213,10 @@ export default {
     },
     legacyMode: {
       type: Number,
+      required: true
+    },
+    disableSpotsAvailable: {
+      type: Boolean,
       required: true
     }
   },

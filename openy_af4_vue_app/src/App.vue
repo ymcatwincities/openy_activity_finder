@@ -113,6 +113,7 @@
       :is-loading-data="isLoadingData"
       :cart-items="cartItems"
       :legacy-mode="legacyMode"
+      :disable-spots-available="disableSpotsAvailable"
       @startOver="startOver()"
       @addItem="addItem($event)"
       @removeItem="removeItem($event)"
@@ -255,6 +256,10 @@ export default {
     },
     legacyMode: {
       type: Number,
+      required: true
+    },
+    disableSpotsAvailable: {
+      type: Boolean,
       required: true
     },
     backgroundImage: {

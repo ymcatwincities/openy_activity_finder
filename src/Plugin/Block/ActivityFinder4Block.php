@@ -141,7 +141,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#activities' => $activities,
       '#locations' => $backend->getLocations(),
       '#is_search_box_disabled' => $activity_finder_settings->get('disable_search_box'),
-      '#is_spots_available_disabled' => $activity_finder_settings->get('disable_spots_available'),
+      '#disable_spots_available' => (bool) $activity_finder_settings->get('disable_spots_available'),
       '#expanderSectionsConfig' => $activity_finder_settings->getRawData(),
       '#sort_options' => $backend->getSortOptions(),
       '#legacy_mode' => $conf['legacy_mode'],

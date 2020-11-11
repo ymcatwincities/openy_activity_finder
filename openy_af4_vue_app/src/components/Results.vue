@@ -64,6 +64,7 @@
                   </template>
                 </span>
                 <AvailableSpots
+                  v-if="!disableSpotsAvailable"
                   :spots="Number(item.spots_available)"
                   :wait-list="Number(item.wait_list_availability)"
                 />
@@ -185,6 +186,7 @@
                     </span>
                   </div>
                   <AvailableSpots
+                    v-if="!disableSpotsAvailable"
                     :spots="Number(item.spots_available)"
                     :wait-list="Number(item.wait_list_availability)"
                   />
@@ -201,6 +203,7 @@
             :ages="ages"
             :selected-ages="selectedAges"
             :legacy-mode="legacyMode"
+            :disable-spots-available="disableSpotsAvailable"
             @bookmark="handleActivityDetailsBookmark($event)"
             @unbookmark="handleActivityDetailsUnbookmark($event)"
           />
@@ -267,6 +270,10 @@ export default {
     },
     legacyMode: {
       type: Number,
+      required: true
+    },
+    disableSpotsAvailable: {
+      type: Boolean,
       required: true
     }
   },
