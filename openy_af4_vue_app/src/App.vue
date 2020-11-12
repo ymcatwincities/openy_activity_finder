@@ -36,6 +36,7 @@
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
+          :filters-section-config="filtersSectionConfig"
           @filterChange="onFilterChange($event, hideModal)"
           @clearFilters="clearFilters(hideModal)"
         />

@@ -252,7 +252,7 @@ export default {
       return array1.length === array2.length && array1.every(value => array2.includes(value))
     },
     fieldsetCollapseState(type) {
-      return this.filtersSectionConfig[type];
+      return this.filtersSectionConfig[type]
     }
   }
 }
