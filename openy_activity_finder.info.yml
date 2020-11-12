@@ -3,5 +3,4 @@ type: module
 description: Framework for Activity Finder functionality.
 package: OpenY
 version: 3.0.0
-core: 8.x
 core_version_requirement: ^8 || ^9
