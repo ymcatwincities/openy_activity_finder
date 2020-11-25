@@ -32,23 +32,6 @@ export default {
   mounted() {
     const maxAge = 365 * 24 * 60 * 60
     document.cookie = encodeURIComponent(this.cookieName) + '=1; max-age=' + maxAge
-  },
-  methods: {
-    getCookie(cname) {
-      const name = cname + '='
-      const decodedCookie = decodeURIComponent(document.cookie)
-      const ca = decodedCookie.split(';')
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i]
-        while (c[0] === ' ') {
-          c = c.slice(1)
-        }
-        if (c.startsWith(name)) {
-          return c.slice(name.length, c.length)
-        }
-      }
-      return ''
-    }
   }
 }
 </script>

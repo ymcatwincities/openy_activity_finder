@@ -37,6 +37,11 @@
             <slot name="search" />
           </div>
         </div>
+        <div class="col-xs-12">
+          <div class="homebranch text-center">
+            <slot name="homeBranch" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -214,9 +219,13 @@ export default {
     }
   }
 
-  .search {
+  .search,
+  .homebranch {
     max-width: 340px;
     margin: 0 auto;
+  }
+  .homebranch {
+    margin: 10px auto;
   }
 }
 </style>

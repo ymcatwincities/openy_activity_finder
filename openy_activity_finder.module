@@ -70,6 +70,7 @@ function openy_activity_finder_theme() {
         'filters_section_config' => [],
         'sort_options' => [],
         'legacy_mode' => '',
+        'hide_home_branch_block' => '',
         'background_image' => [],
       ],
     ],

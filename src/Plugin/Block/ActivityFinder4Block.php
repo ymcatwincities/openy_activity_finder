@@ -145,6 +145,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#sort_options' => $backend->getSortOptions(),
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
       '#legacy_mode' => $conf['legacy_mode'],
+      '#hide_home_branch_block' => (bool) $conf['hide_home_branch_block'],
       '#background_image' => [
         'mobile' => $image_mobile,
         'desktop' => $image_desktop,
@@ -180,6 +181,12 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#default_value' => $conf['legacy_mode'],
     ];
 
+    $form['hide_home_branch_block'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide a link to programs for home branch'),
+      '#default_value' => $conf['hide_home_branch_block'],
+    ];
+
     // Entity Browser element for background image.
     $form['background_image'] = $this->getEntityBrowserForm(
       'images_library',
@@ -200,6 +207,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['legacy_mode'] = $form_state->getValue('legacy_mode');
+    $this->configuration['hide_home_branch_block'] = $form_state->getValue('hide_home_branch_block');
     $this->configuration['background_image'] = $this->getEntityBrowserValue($form_state, 'background_image');
   }
 

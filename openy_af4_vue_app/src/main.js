@@ -5,7 +5,6 @@ import router from '@/router/index.js'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
-
 // Global filters.
 Vue.filter('capitalize', function(str) {
   if (!str) return ''
@@ -44,6 +43,21 @@ Vue.mixin({
     },
     formatPlural(value, singular, plural, args, options = { context: 'Activity finder' }) {
       return window.Drupal.formatPlural(value, singular, plural, args, options)
+    },
+    getCookie(cname) {
+      const name = cname + '='
+      const decodedCookie = decodeURIComponent(document.cookie)
+      const ca = decodedCookie.split(';')
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i]
+        while (c[0] === ' ') {
+          c = c.slice(1)
+        }
+        if (c.startsWith(name)) {
+          return c.slice(name.length, c.length)
+        }
+      }
+      return ''
     }
   }
 })
