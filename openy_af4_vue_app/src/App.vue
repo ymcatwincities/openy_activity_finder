@@ -60,13 +60,13 @@
       <template v-if="!disableSearchBox" v-slot:search>
         <SearchForm :value="searchKeywords" @input="onSearchInput($event)" />
       </template>
-      <template v-if="showHomeBranchBlock" v-slot:homeBranch>
-        <p v-if="homeBranchId !== null">
-          <a class="homebranch-link" @click.stop.prevent="viewResults">
+      <template v-if="showHomeBranchBlock" v-slot:home-branch>
+        <p>
+          <a role="button" class="homebranch-link" @click.stop.prevent="viewResults">
             <strong>{{ 'View all programs for Home Branch' | t }}</strong>
           </a>
         </p>
-        <p class="homebranch-count-results">
+        <p class="homebranch-results-count">
           {{ data.count | formatPlural('1 Result', '@count Results') }}
         </p>
       </template>
@@ -366,6 +366,19 @@ export default {
       homeBranchId: null
     }
 
+    // Check if we have the Home Branch location set.
+    const cookie = this.getCookie('home_branch')
+    if (cookie !== '') {
+      try {
+        data.homeBranchId = JSON.parse(cookie).id
+        if (data.homeBranchId) {
+          data.defaults.selectedLocations = [data.homeBranchId]
+        }
+      } catch (e) {
+        data.homeBranchId = null
+      }
+    }
+
     if (this.legacyMode) {
       data.steps = [
         'selectPath',
@@ -457,7 +470,7 @@ export default {
       return this.lastRequestParamsString !== this.searchParamsString
     },
     showHomeBranchBlock() {
-      return !this.hideHomeBranchBlock && this.homeBranchId !== null
+      return !this.hideHomeBranchBlock && this.homeBranchId
     }
   },
   watch: {
@@ -534,7 +547,6 @@ export default {
         localStorage.removeItem(this.cartItemsKey)
       }
     }
-    this.checkHomeBranchCookie()
   },
   methods: {
     scrollToElement() {
@@ -576,9 +588,7 @@ export default {
       if (this.isLoadingData) {
         return
       }
-      if (this.homeBranchId !== null) {
-        this.selectedLocations = [this.homeBranchId]
-      }
+
       this.canLoadData = false
       this.lastRequestParamsString = this.searchParamsString
 
@@ -694,21 +704,6 @@ export default {
     onSearchInput(keywords) {
       this.searchKeywords = keywords
       this.step = 'results'
-    },
-    checkHomeBranchCookie() {
-      // Checking if we have the Home Branch location that was set.
-      const cookie = this.getCookie('home_branch')
-      if (cookie !== '') {
-        try {
-          this.homeBranchId = JSON.parse(cookie).id
-          // If user didn't make chose of HB, then we have homebranch.id = null.
-          if (this.homeBranchId !== null) {
-            this.loadData()
-          }
-        } catch (e) {
-          this.homeBranchId = null
-        }
-      }
     }
   }
 }

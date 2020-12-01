@@ -5,6 +5,7 @@ import router from '@/router/index.js'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
+
 // Global filters.
 Vue.filter('capitalize', function(str) {
   if (!str) return ''

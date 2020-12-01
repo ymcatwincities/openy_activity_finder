@@ -177,13 +177,13 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     $form['legacy_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Legacy mode'),
-      '#description' => $this->t('Enable legacy mode for activity finder'),
+      '#description' => $this->t('Enable legacy mode for Activity Finder.'),
       '#default_value' => $conf['legacy_mode'],
     ];
 
     $form['hide_home_branch_block'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Hide a link to programs for home branch'),
+      '#title' => $this->t('Hide Home Branch info block'),
       '#default_value' => $conf['hide_home_branch_block'],
     ];
 

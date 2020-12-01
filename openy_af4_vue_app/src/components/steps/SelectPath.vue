@@ -39,7 +39,7 @@
         </div>
         <div class="col-xs-12">
           <div class="homebranch text-center">
-            <slot name="homeBranch" />
+            <slot name="home-branch" />
           </div>
         </div>
       </div>
