@@ -30,9 +30,6 @@
               | <a class="start-over" role="button" @click="startOver()">{{ 'Start Over' | t }}</a>
             </span>
             <span>
-              <slot name="pdf" />
-            </span>
-            <span>
               <slot name="sort" />
             </span>
           </div>

@@ -138,10 +138,7 @@ export default {
       this.$emit('nextStep')
     },
     facetCount(value) {
-      let facet
-      if (this.facets) {
-        facet = this.facets.find(x => x.filter === value)
-      }
+      let facet = this.facets.find(x => x.filter === value)
       return facet && facet.count ? facet.count : 0
     },
     isDisabled(value) {
@@ -150,10 +147,8 @@ export default {
     subFiltersCount(index) {
       let result = 0
       this.value.forEach(item => {
-        if (this.daysTimes[index].value) {
-          if (this.daysTimes[index].value.find(day => parseInt(day.value) === parseInt(item))) {
-            result++
-          }
+        if (this.daysTimes[index].value.find(day => parseInt(day.value) === parseInt(item))) {
+          result++
         }
       })
       return result

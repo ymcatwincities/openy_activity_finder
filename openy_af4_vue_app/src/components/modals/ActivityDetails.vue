@@ -290,6 +290,7 @@ export default {
     bookmarkItem(age, index) {
       this.buttonsState = {
         ...this.buttonsState,
+        // TODO: itemBookmarked state is not used.
         ...{ [index]: 'default' }
       }
       this.trackEvent('bookmark', 'Click in activity details', this.item.product_id)

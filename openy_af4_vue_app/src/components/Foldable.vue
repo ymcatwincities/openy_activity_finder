@@ -1,6 +1,6 @@
 <template>
   <div class="foldable-component">
-    <div v-if="label.length > 0" v-b-toggle="collapseId" class="foldable-title">
+    <div v-b-toggle="collapseId" class="foldable-title">
       <span class="left">
         <i class="fa fa-chevron-down" aria-hidden="true" />
         <i class="fa fa-chevron-up" aria-hidden="true" />
@@ -121,6 +121,7 @@ export default {
             display: block;
             position: absolute;
             left: 0;
+            top: 0;
             height: 18px;
             width: 18px;
             margin: auto 16px;
@@ -137,16 +138,12 @@ export default {
           }
 
           &:after {
-            @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-              /* IE10+ CSS styles go here */
-              top: 4px;
-              margin-top: 0;
-            }
             content: '';
             display: block;
             position: absolute;
             left: 19px;
-            margin-top: -2px;
+            top: 4px;
+            margin-top: 0;
             width: 12px;
             height: 7px;
             border-left: 2px solid $white;

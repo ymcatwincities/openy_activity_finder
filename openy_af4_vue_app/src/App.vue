@@ -162,16 +162,6 @@
       <template v-slot:sort>
         <SortSelect v-model="selectedSort" :sort-options="sortOptions" />
       </template>
-      <template v-slot:pdf>
-        <Pdf
-          :data="data"
-          :activities="activities"
-          :initial-activities="selectedActivities"
-          :initial-locations="selectedLocations"
-          :locations="locations"
-          :visible="pdf"
-        />
-      </template>
       <template v-slot:pager>
         <Pager v-model="selectedPage" :total-pages="data.pager_info.total_pages" />
       </template>
@@ -204,11 +194,10 @@ import Loading from '@/components/Loading.vue'
 import ResultsBar from '@/components/ResultsBar.vue'
 import WizardBar from '@/components/WizardBar.vue'
 import Pager from '@/components/filters/Pager.vue'
-import Filters from '@/components/filters/Filters'
-import SortRadios from '@/components/filters/SortRadios'
-import SortSelect from '@/components/filters/SortSelect'
-import SearchForm from '@/components/filters/SearchForm'
-import Pdf from '@/components/filters/Pdf'
+import Filters from '@/components/filters/Filters.vue'
+import SortRadios from '@/components/filters/SortRadios.vue'
+import SortSelect from '@/components/filters/SortSelect.vue'
+import SearchForm from '@/components/filters/SearchForm.vue'
 import NoResults from '@/components/NoResults.vue'
 
 export default {
@@ -230,7 +219,6 @@ export default {
     SortRadios,
     SortSelect,
     SearchForm,
-    Pdf,
     NoResults
   },
   props: {
@@ -354,9 +342,9 @@ export default {
         selectedLocations: [],
         selectedActivities: [],
         selectedPage: 1,
+        // TODO: MPR-178 - check what is supported by Daxko.
         selectedSort: 'af_date_of_day__ACS',
-        searchKeywords: '',
-        pdf: 0
+        searchKeywords: ''
       },
       cartItems: [],
       cartItemsKey: 'activity_finder.cartItems',
@@ -417,8 +405,7 @@ export default {
         categories: this.selectedActivities.join(','),
         page: this.selectedPage,
         sort: this.selectedSort,
-        keywords: this.searchKeywords,
-        pdf: this.pdf
+        keywords: this.searchKeywords
       }
     },
     // Search parameters casted to string primitive.
@@ -432,8 +419,7 @@ export default {
         ...this.selectedActivities,
         this.selectedPage,
         this.selectedSort,
-        this.searchKeywords,
-        this.pdf
+        this.searchKeywords
       ].join('_')
     },
     // Reset page parameters casted to string primitive.
@@ -461,8 +447,7 @@ export default {
         this.selectedPage,
         this.selectedSort,
         this.step,
-        this.searchKeywords,
-        this.pdf
+        this.searchKeywords
       ].join('_')
     },
     // Controls if the search parameters were changed since last data request.
@@ -566,14 +551,6 @@ export default {
     }
   },
   methods: {
-    scrollToElement() {
-      document.getElementById('activity-finder-app').scrollIntoView()
-      const scrollFix = () =>
-        setTimeout(() => {
-          window.scrollBy(0, -25)
-        }, 100)
-      scrollFix()
-    },
     nextStep(step) {
       // First step should be the one chosen by the user - selectedPath.
       if (!this.completedSteps.includes(this.selectedPath) && this.step !== this.selectedPath) {
@@ -674,7 +651,6 @@ export default {
     onFilterChange(event, callback = () => {}) {
       callback()
       this[event.filter] = event.value
-      this.scrollToElement()
     },
     clearFilters(callback = () => {}) {
       callback()

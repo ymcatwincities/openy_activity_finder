@@ -20,9 +20,7 @@
     body-class="af-modal-body"
   >
     <template v-slot:modal-header-close>
-      <button type="button" class="close" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <span aria-hidden="true">&times;</span>
     </template>
     <template v-slot:modal-title>
       <slot name="modal-title" />
@@ -201,7 +199,7 @@ export default {
     }
 
     .close {
-      color: #636466;
+      color: $af-dark-gray;
       font-size: 3rem;
       font-weight: 100;
       position: relative;
@@ -211,27 +209,6 @@ export default {
       height: 50px;
       background-color: $white;
       opacity: 1;
-
-      .left,
-      .right {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border-bottom: 2px solid $af-dark-gray;
-        border-right: 2px solid $af-dark-gray;
-      }
-
-      .left {
-        left: 15px;
-        top: 20px;
-        transform: rotate(-45deg);
-      }
-
-      .right {
-        left: 26px;
-        top: 20px;
-        transform: rotate(135deg);
-      }
     }
   }
 

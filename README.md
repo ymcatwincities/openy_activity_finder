@@ -35,4 +35,3 @@ function custom_module_activity_finder_program_process_results_alter(&$data, Nod
   }
 }
 ```
-

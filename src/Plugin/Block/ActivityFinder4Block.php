@@ -80,7 +80,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   public function build() {
     $activity_finder_settings = $this->configFactory->get('openy_activity_finder.settings');
     $backend_service_id = $activity_finder_settings->get('backend');
-    /** @var \Drupal\openy_activity_finder\OpenyActivityFinderSolrBackend $backend */
+    /** @var \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface $backend */
     $backend = \Drupal::service($backend_service_id);
     $conf = $this->getConfiguration();
 

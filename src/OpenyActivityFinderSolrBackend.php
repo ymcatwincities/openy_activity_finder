@@ -46,7 +46,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   protected $database;
 
   /**
-   * The EntityTypeManagerInterface.
+   * The EntityTypeManager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
