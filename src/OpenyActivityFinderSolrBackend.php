@@ -904,7 +904,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   }
 
   /**
-   * Get results forr session search request.
+   * Get results for session search request.
    *
    * @param array $session_ids
    *   Array session nids to get data.

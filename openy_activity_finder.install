@@ -161,10 +161,10 @@ function openy_activity_finder_update_8009() {
 }
 
 /**
- * Add Session Data rest endpoint config and permission.
+ * Add Session Data rest endpoint config and permissions.
  */
-function openy_activity_finder_update_8006() {
-  //Import config for rest endpoint.
+function openy_activity_finder_update_8400() {
+  // Import config for rest endpoint.
   $cim = \Drupal::service('config_import.importer');
   $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/install');
   $cim->importConfigs(['rest.resource.openy_activity_finder_session_data']);
@@ -181,5 +181,18 @@ function openy_activity_finder_update_8006() {
       $role->grantPermission($permission);
     }
     $role->save();
+  }
+}
+
+/**
+ * Update configs for search index.
+ */
+function openy_activity_finder_update_8401() {
+  $cim = \Drupal::service('config_import.importer');
+  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $config = \Drupal::config('search_api.index.default');
+  if (!$config->isNew()) {
+    // Import config only in case it already exists.
+    $cim->importConfigs(['search_api.index.default']);
   }
 }

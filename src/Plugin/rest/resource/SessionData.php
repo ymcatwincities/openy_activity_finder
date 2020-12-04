@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *   id = "openy_activity_finder_session_data",
  *   label = @Translation("Session Data"),
  *   uri_paths = {
- *     "canonical" = "/af/api/v1/session_data"
+ *     "canonical" = "/af/api/v1/session-data"
  *   }
  * )
  */

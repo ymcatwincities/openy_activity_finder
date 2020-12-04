@@ -544,9 +544,10 @@ export default {
           item => item.timestamp > new Date().getTime() - this.cartItemsTimeout
         )
 
+        // Update cart items info.
         const itemIds = this.cartItems.map(item => item.item.nid)
         if (itemIds.length) {
-          client('rest')
+          client('session_data')
             .request({ params: { _format: 'json', session_ids: itemIds.join(',') } })
             .then(response => {
               this.cartItems = this.cartItems
