@@ -94,7 +94,6 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       $image_desktop = $storage->load('prgf_gallery')->buildUrl($image->getFileUri());
     }
 
-    // Sort activity groups and activities in alphabetical order.
     $activities = $backend->getCategories();
 
     // Remove empty programs and subprograms.
@@ -102,7 +101,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     $facets = $results['facets']['field_activity_category'];
     $activeSubPrograms = [];
     foreach ($facets as $item) {
-      if (isset($item['id']) && is_int($item['id']) && !empty($item['id'])) {
+      if (isset($item['id']) && !empty($item['id'])) {
         $activeSubPrograms[] = $item['id'];
       }
     }
@@ -121,6 +120,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       }
     }
 
+    // Sort activity groups and activities in alphabetical order.
     usort($activities, function ($a, $b) {
       return $a['label'] > $b['label'];
     });
