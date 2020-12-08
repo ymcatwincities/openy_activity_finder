@@ -8,7 +8,7 @@
               <span class="title">
                 <slot name="title" />
               </span>
-              <span class="buttons-desktop hidden-xs hidden-sm">
+              <span class="buttons-desktop d-none d-md-block hidden-xs hidden-sm">
                 <button
                   v-if="filtersSelected"
                   type="button"
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div ref="bottom" class="bottom hidden-md hidden-lg">
+    <div ref="bottom" class="bottom d-md-none hidden-md hidden-lg">
       <div class="buttons" :class="{ sticky: sticky }">
         <div class="separator"></div>
         <button v-if="filtersSelected" type="button" class="btn btn-lg btn-next" @click="onNext">
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div ref="bottomDesktop" class="bottom-desktop hidden-xs hidden-sm">
+    <div ref="bottomDesktop" class="bottom-desktop d-none d-md-block hidden-xs hidden-sm">
       <div class="container" :class="{ sticky: stickyDesktop }">
         <div class="row">
           <div class="col-12 col-xs-12">

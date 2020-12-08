@@ -1,6 +1,6 @@
 <template>
   <div class="filters-component">
-    <div class="filters-header hidden-xs hidden-sm">
+    <div class="filters-header d-none d-md-block hidden-xs hidden-sm">
       <span class="text-uppercase">
         <strong>{{ 'Filter' | t }}</strong>
       </span>
@@ -69,7 +69,7 @@
         />
       </Fieldset>
     </div>
-    <div class="filters-footer hidden-md hidden-lg">
+    <div class="filters-footer d-md-none hidden-md hidden-lg">
       <div class="buttons">
         <div class="separator"></div>
         <button v-if="hasChanges" type="button" class="btn btn-lg btn-apply" @click="applyFilters">

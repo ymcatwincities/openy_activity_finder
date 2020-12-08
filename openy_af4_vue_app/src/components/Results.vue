@@ -2,10 +2,13 @@
   <div class="results-component">
     <div class="container">
       <div class="row">
-        <div v-if="!data.facets" class="col-12 col-xs-12 col-sm-3 hidden-xs hidden-sm">
+        <div
+          v-if="!data.facets"
+          class="col-12 col-xs-12 col-sm-3 d-none d-md-block hidden-xs hidden-sm"
+        >
           <Loading />
         </div>
-        <div v-else class="col-12 col-xs-12 col-md-3 hidden-xs hidden-sm">
+        <div v-else class="col-12 col-xs-12 col-md-3 d-none d-md-block hidden-xs hidden-sm">
           <div class="search">
             <slot name="search" />
           </div>
@@ -16,13 +19,13 @@
           <Loading />
         </div>
         <div v-else class="col-12 col-xs-12 col-md-9">
-          <div class="header hidden-md hidden-lg">
+          <div class="header d-md-none hidden-md hidden-lg">
             <span class="results">
               {{ data.count | formatPlural('1 Result', '@count Results') }}
             </span>
             <a class="start-over" role="button" @click="startOver()">{{ 'Start Over' | t }}</a>
           </div>
-          <div class="header hidden-xs hidden-sm">
+          <div class="header d-none d-md-block hidden-xs hidden-sm">
             <span>
               <span class="results">
                 {{ data.count | formatPlural('1 Result', '@count Results') }}
@@ -41,7 +44,7 @@
             role="button"
             @click="showActivityDetailsModal(item)"
           >
-            <div class="hidden-sm hidden-md hidden-lg">
+            <div class="d-sm-none hidden-sm hidden-md hidden-lg">
               <div class="result-header">
                 <span class="title">
                   {{ item.name }}
@@ -110,7 +113,7 @@
               </div>
             </div>
 
-            <div class="hidden-xs">
+            <div class="d-none d-sm-block hidden-xs">
               <div class="result-header">
                 <span class="title">
                   {{ item.name }}

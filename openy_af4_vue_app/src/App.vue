@@ -19,7 +19,7 @@
     />
     <ResultsBar
       v-if="step === 'results'"
-      class="hidden-md hidden-lg"
+      class="d-md-none hidden-md hidden-lg"
       :disable-search-box="disableSearchBox"
     >
       <template v-if="!disableSearchBox" v-slot:search="{ hideModal }">
