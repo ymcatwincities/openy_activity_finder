@@ -2,7 +2,7 @@
   <div class="wizard-bar-component">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12 col-xs-12">
           <div class="controls">
             <span class="filters">
               <a :class="{ 'no-filters': !filtersCount }" role="button" @click="showFiltersModal()">

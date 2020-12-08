@@ -18,7 +18,7 @@
         >
           <div class="options">
             <div class="row">
-              <div v-for="time in times" :key="time.value" class="option check col-xs-12 col-sm-4">
+              <div v-for="time in times" :key="time.value" class="option check col-12 col-xs-12 col-sm-4">
                 <input
                   :id="time.value"
                   v-model="selectedTimes"

@@ -22,7 +22,7 @@
               <div class="title">{{ item.item.name }}</div>
 
               <div class="row">
-                <div class="col-xs-8">
+                <div class="col-8 col-xs-8">
                   <div class="item-detail dates">
                     <i class="fa fa-calendar"></i>
                     <span>
@@ -47,7 +47,7 @@
                     </span>
                   </div>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-4 col-xs-4">
                   <span class="age">
                     <span class="age-label">Age:</span>
                     <AgeIcon v-if="item.age" :age="parseInt(item.age)" :ages="ages" big />

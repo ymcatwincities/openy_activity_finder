@@ -2,7 +2,7 @@
   <div class="step-component">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12 col-xs-12">
           <div class="top">
             <div class="controls">
               <span class="title">
@@ -29,7 +29,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12 col-xs-12">
           <slot :handle-sticky="handleSticky" />
         </div>
       </div>
@@ -50,7 +50,7 @@
     <div ref="bottomDesktop" class="bottom-desktop hidden-xs hidden-sm">
       <div class="container" :class="{ sticky: stickyDesktop }">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12 col-xs-12">
             <div class="full-width separator"></div>
             <div class="controls">
               <span class="title">

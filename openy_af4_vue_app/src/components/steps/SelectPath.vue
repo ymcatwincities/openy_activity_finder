@@ -9,7 +9,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12 col-xs-12">
           <div class="description text-center">
             <p>{{ 'Find activities that fit your schedule(s)!' | t }}</p>
             <p>
@@ -22,7 +22,7 @@
         <div
           v-for="path in paths"
           :key="path.id"
-          class="col-xs-6 col-sm-3"
+          class="col-6 col-xs-6 col-sm-3"
           @click="onClick(path.id)"
         >
           <button type="button" class="path btn">
@@ -32,12 +32,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12 col-xs-12">
           <div class="search">
             <slot name="search" />
           </div>
         </div>
-        <div class="col-xs-12">
+        <div class="col-12 col-xs-12">
           <div class="homebranch text-center">
             <slot name="home-branch" />
           </div>

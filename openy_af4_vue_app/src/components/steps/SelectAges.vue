@@ -20,7 +20,7 @@
         >
           <div class="options">
             <div class="row">
-              <div v-for="age in ages" :key="age.value" class="option check col-xs-6 col-sm-3">
+              <div v-for="age in ages" :key="age.value" class="option check col-6 col-xs-6 col-sm-3">
                 <input
                   :id="age.value"
                   v-model="selectedAges"

@@ -7,7 +7,7 @@
     class="ages-filter-component"
   >
     <div class="row">
-      <div v-for="age in ages" :key="id + '-age-' + age.value" class="age-option col-xs-4">
+      <div v-for="age in ages" :key="id + '-age-' + age.value" class="age-option col-4 col-xs-4">
         <input
           :id="id + '-age-' + age.value"
           v-model="selectedAges"

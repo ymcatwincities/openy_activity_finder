@@ -2,7 +2,7 @@
   <div class="results-bar-component">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="col-12 col-xs-12 col-sm-8 col-sm-offset-2">
           <div class="controls">
             <span v-if="!disableSearchBox" v-b-modal.activity-finder-search class="control search">
               <a role="button">

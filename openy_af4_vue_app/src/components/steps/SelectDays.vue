@@ -21,7 +21,7 @@
               <div
                 v-for="day in days"
                 :key="day.search_value"
-                class="option check col-xs-6 col-sm-3"
+                class="option check col-6 col-xs-6 col-sm-3"
               >
                 <input
                   :id="day.search_value"

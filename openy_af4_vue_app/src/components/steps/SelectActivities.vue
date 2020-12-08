@@ -25,7 +25,7 @@
               <div
                 v-for="activity in activity_type.value"
                 :key="activity.value"
-                class="option check col-xs-12 col-sm-3"
+                class="option check col-12 col-xs-12 col-sm-3"
               >
                 <input
                   :id="activity.value"

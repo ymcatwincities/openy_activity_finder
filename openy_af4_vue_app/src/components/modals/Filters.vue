@@ -3,7 +3,7 @@
     <template>
       <div class="filters-modal-content">
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-12 col-xs-12">
             <div class="content">
               <div class="description">{{ 'The following filters have been applied' | t }}:</div>
               <ul>

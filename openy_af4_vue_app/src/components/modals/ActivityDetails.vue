@@ -9,21 +9,21 @@
     <template>
       <div class="activity-details-modal-content">
         <div class="row">
-          <div class="col-xs-12 col-md-6 left-wrapper">
+          <div class="col-12 col-xs-12 col-md-6 left-wrapper">
             <div class="left">
               <div class="title">{{ item.name }}</div>
               <div class="description">{{ item.description }}</div>
               <div v-if="item.ages" class="row ages">
-                <div class="col-xs-3">
+                <div class="col-3 col-xs-3">
                   <strong>{{ 'Ages:' | t }}</strong>
                 </div>
-                <div class="col-xs-9">{{ item.ages }}</div>
+                <div class="col-9 col-xs-9">{{ item.ages }}</div>
               </div>
               <div v-if="item.gender" class="row gender">
-                <div class="col-xs-3">
+                <div class="col-3 col-xs-3">
                   <strong>{{ 'Gender:' | t }}</strong>
                 </div>
-                <div class="col-xs-9">{{ item.gender }}</div>
+                <div class="col-9 col-xs-9">{{ item.gender }}</div>
               </div>
               <a :href="item.link" target="_blank" class="learn-more">
                 {{ 'Learn more about this program' | t }}
@@ -31,7 +31,7 @@
               </a>
             </div>
           </div>
-          <div class="col-xs-12 col-md-6 right-wrapper">
+          <div class="col-12 col-xs-12 col-md-6 right-wrapper">
             <div class="right">
               <div class="info-section">
                 <div v-if="item.dates" class="item-detail dates">

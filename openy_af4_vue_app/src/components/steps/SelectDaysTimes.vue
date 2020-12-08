@@ -23,7 +23,7 @@
               <div
                 v-for="time in day.value"
                 :key="time.value"
-                class="option check col-xs-6 col-sm-3"
+                class="option check col-6 col-xs-6 col-sm-3"
               >
                 <input
                   :id="time.value"

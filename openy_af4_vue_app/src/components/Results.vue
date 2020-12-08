@@ -2,20 +2,20 @@
   <div class="results-component">
     <div class="container">
       <div class="row">
-        <div v-if="!data.facets" class="col-xs-12 col-sm-3 hidden-xs hidden-sm">
+        <div v-if="!data.facets" class="col-12 col-xs-12 col-sm-3 hidden-xs hidden-sm">
           <Loading />
         </div>
-        <div v-else class="col-xs-12 col-md-3 hidden-xs hidden-sm">
+        <div v-else class="col-12 col-xs-12 col-md-3 hidden-xs hidden-sm">
           <div class="search">
             <slot name="search" />
           </div>
           <slot name="filters" />
         </div>
 
-        <div v-if="isLoadingData" class="col-xs-12 col-md-9">
+        <div v-if="isLoadingData" class="col-12 col-xs-12 col-md-9">
           <Loading />
         </div>
-        <div v-else class="col-xs-12 col-md-9">
+        <div v-else class="col-12 col-xs-12 col-md-9">
           <div class="header hidden-md hidden-lg">
             <span class="results">
               {{ data.count | formatPlural('1 Result', '@count Results') }}
