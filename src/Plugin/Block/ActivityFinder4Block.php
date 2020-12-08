@@ -98,8 +98,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     $activities = $backend->getCategories();
 
     // Remove empty programs and subprograms.
-    $results = $backend->doSearchRequest([]);
-    $facets = $backend->getFacets($results)['field_activity_category'];
+    $results = $backend->runProgramSearch([], 0);
+    $facets = $results['facets']['field_activity_category'];
     $activeSubPrograms = [];
     foreach ($facets as $item) {
       if (isset($item['id']) && is_int($item['id']) && !empty($item['id'])) {
@@ -130,6 +130,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       });
     }
 
+    $sort_options = $backend->getSortOptions();
+
     return [
       '#theme' => 'openy_activity_finder_4_block',
       '#ages' => $backend->getAges(),
@@ -142,7 +144,9 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#locations' => $backend->getLocations(),
       '#disable_search_box' => (bool) $activity_finder_settings->get('disable_search_box'),
       '#disable_spots_available' => (bool) $activity_finder_settings->get('disable_spots_available'),
-      '#sort_options' => $backend->getSortOptions(),
+      '#sort_options' => $sort_options,
+      // TODO: make default sort option configurable.
+      '#default_sort_option' => array_keys($sort_options)[0],
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
       '#legacy_mode' => $conf['legacy_mode'],
       '#hide_home_branch_block' => (bool) $conf['hide_home_branch_block'],

@@ -69,6 +69,7 @@ function openy_activity_finder_theme() {
         'disable_spots_available' => '',
         'filters_section_config' => [],
         'sort_options' => [],
+        'default_sort_option' => '',
         'legacy_mode' => '',
         'hide_home_branch_block' => '',
         'background_image' => [],

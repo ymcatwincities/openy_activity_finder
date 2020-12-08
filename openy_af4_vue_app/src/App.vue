@@ -258,6 +258,10 @@ export default {
       type: Object,
       required: true
     },
+    defaultSortOption: {
+      type: String,
+      required: true
+    },
     legacyMode: {
       type: Number,
       required: true
@@ -343,7 +347,7 @@ export default {
         selectedActivities: [],
         selectedPage: 1,
         // TODO: MPR-178 - check what is supported by Daxko.
-        selectedSort: 'af_date_of_day__ACS',
+        selectedSort: this.defaultSortOption,
         searchKeywords: ''
       },
       cartItems: [],
