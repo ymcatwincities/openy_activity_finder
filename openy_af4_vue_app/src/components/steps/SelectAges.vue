@@ -20,7 +20,11 @@
         >
           <div class="options">
             <div class="row">
-              <div v-for="age in ages" :key="age.value" class="option check col-6 col-xs-6 col-sm-3">
+              <div
+                v-for="age in ages"
+                :key="age.value"
+                class="option check col-6 col-xs-6 col-sm-3"
+              >
                 <input
                   :id="age.value"
                   v-model="selectedAges"
@@ -32,7 +36,7 @@
                 <label :id="'label-' + age.value" :for="age.value" role="button">
                   <span>
                     <span class="title">{{ age.label }}</span>
-                    <span class="results-count">
+                    <span v-if="facetCount(age.value) !== null" class="results-count">
                       {{ facetCount(age.value) | formatPlural('1 Result', '@count Results') }}
                     </span>
                   </span>
@@ -121,6 +125,9 @@ export default {
       this.$emit('nextStep')
     },
     facetCount(value) {
+      if (this.facets.length === 0) {
+        return null
+      }
       let facet = this.facets.find(x => x.value === value)
       return facet && facet.count ? facet.count : 0
     },

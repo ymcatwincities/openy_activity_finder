@@ -118,7 +118,8 @@ export default {
       this.$emit('nextStep')
     },
     facetCount(value) {
-      let facet = this.facets.find(x => x.filter === value)
+      // toLowerCase is required here as Daxko facets return days with first capital letter.
+      let facet = this.facets.find(x => x.filter.toLowerCase() === value)
       return facet && facet.count ? facet.count : 0
     },
     isDisabled(value) {
