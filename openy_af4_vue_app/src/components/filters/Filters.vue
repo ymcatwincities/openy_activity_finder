@@ -1,6 +1,6 @@
 <template>
   <div class="filters-component">
-    <div class="filters-header d-none d-md-block hidden-xs hidden-sm">
+    <div class="filters-header d-none d-md-flex hidden-xs hidden-sm">
       <span class="text-uppercase">
         <strong>{{ 'Filter' | t }}</strong>
       </span>

@@ -57,6 +57,11 @@ export default {
   .btn {
     background-color: $af-violet;
     width: 40px;
+    padding: 6px 12px;
+    border: none;
+    font-size: 18px;
+    line-height: 1;
+    border-radius: unset;
 
     .fa {
       font-size: 18px;

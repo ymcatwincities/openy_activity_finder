@@ -25,7 +25,7 @@
             </span>
             <a class="start-over" role="button" @click="startOver()">{{ 'Start Over' | t }}</a>
           </div>
-          <div class="header d-none d-md-block hidden-xs hidden-sm">
+          <div class="header d-none d-md-flex hidden-xs hidden-sm">
             <span>
               <span class="results">
                 {{ data.count | formatPlural('1 Result', '@count Results') }}
