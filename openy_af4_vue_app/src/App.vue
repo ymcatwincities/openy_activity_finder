@@ -163,7 +163,8 @@
         <SortSelect v-model="selectedSort" :sort-options="sortOptions" />
       </template>
       <template v-slot:pager>
-        <Pager v-model="selectedPage" :total-pages="data.pager_info.total_pages" />
+        <DaxkoPager v-if="daxko" v-model="selectedPage" :daxko-pages="daxkoPages" />
+        <Pager v-else v-model="selectedPage" :total-pages="data.pager_info.total_pages" />
       </template>
       <template v-slot:no-results>
         <NoResults
@@ -194,6 +195,7 @@ import Loading from '@/components/Loading.vue'
 import ResultsBar from '@/components/ResultsBar.vue'
 import WizardBar from '@/components/WizardBar.vue'
 import Pager from '@/components/filters/Pager.vue'
+import DaxkoPager from '@/components/filters/DaxkoPager.vue'
 import Filters from '@/components/filters/Filters.vue'
 import SortRadios from '@/components/filters/SortRadios.vue'
 import SortSelect from '@/components/filters/SortSelect.vue'
@@ -215,6 +217,7 @@ export default {
     ResultsBar,
     WizardBar,
     Pager,
+    DaxkoPager,
     Filters,
     SortRadios,
     SortSelect,
@@ -222,6 +225,10 @@ export default {
     NoResults
   },
   props: {
+    backendService: {
+      type: String,
+      required: true
+    },
     ages: {
       type: Array,
       required: true
@@ -295,6 +302,9 @@ export default {
       canLoadData: true,
       // Search parameters of the last request casted to string primitive.
       lastRequestParamsString: '',
+      // Indicates if we are working with Daxko backend.
+      daxko: false,
+      daxkoPages: [],
       data: {},
       steps: [
         'selectPath',
@@ -346,7 +356,6 @@ export default {
         selectedLocations: [],
         selectedActivities: [],
         selectedPage: 1,
-        // TODO: MPR-178 - check what is supported by Daxko.
         selectedSort: this.defaultSortOption,
         searchKeywords: ''
       },
@@ -356,6 +365,11 @@ export default {
       clearFiltersSkip: ['step', 'selectedSort', 'searchKeywords'],
       // The Home Branch ID from cookie.
       homeBranchId: null
+    }
+
+    // Identify daxko backend.
+    if (this.backendService === 'openy_daxko2.openy_activity_finder_backend') {
+      data.daxko = true
     }
 
     // Check if we have the Home Branch location set.
@@ -371,6 +385,7 @@ export default {
       }
     }
 
+    // Legacy mode tweaks.
     if (this.legacyMode) {
       data.steps = [
         'selectPath',
@@ -400,7 +415,7 @@ export default {
   computed: {
     // Search parameters for data request.
     searchParams() {
-      return {
+      let params = {
         ages: this.selectedAges.join(','),
         days: this.selectedDays.join(','),
         times: this.selectedTimes.join(','),
@@ -411,6 +426,12 @@ export default {
         sort: this.selectedSort,
         keywords: this.searchKeywords
       }
+
+      if (this.daxko && this.selectedPage > 1 && this.daxkoPages[this.selectedPage]) {
+        params.next = encodeURIComponent(this.daxkoPages[this.selectedPage])
+      }
+
+      return params
     },
     // Search parameters casted to string primitive.
     searchParamsString() {
@@ -442,6 +463,7 @@ export default {
     // Parameters to update the url casted to string primitive.
     updateUrlString() {
       return [
+        this.step,
         ...this.selectedAges,
         ...this.selectedDays,
         ...this.selectedTimes,
@@ -450,7 +472,6 @@ export default {
         ...this.selectedActivities,
         this.selectedPage,
         this.selectedSort,
-        this.step,
         this.searchKeywords
       ].join('_')
     },
@@ -480,6 +501,7 @@ export default {
       }
 
       this.selectedPage = this.defaults.selectedPage
+      this.daxkoPages = []
     },
     updateUrlString() {
       this.updateUrl()
@@ -595,6 +617,9 @@ export default {
         .request({ params: this.searchParams })
         .then(response => {
           this.data = response.data
+          if (this.daxko) {
+            this.daxkoPages[this.selectedPage + 1] = this.data.pager
+          }
           this.isLoadingData = false
           // If there were other changes while the request was in progress - we should load data again.
           this.loadData()
@@ -608,8 +633,12 @@ export default {
             this[key] = query[key].split(',')
           } else {
             if (key === 'selectedPage') {
-              // selectedPage should be number, not a string.
-              this[key] = parseInt(query[key])
+              if (this.daxko && this.daxkoPages.length === 0) {
+                this[key] = 1
+              } else {
+                // selectedPage should be number, not a string.
+                this[key] = parseInt(query[key])
+              }
             } else {
               this[key] = query[key]
             }

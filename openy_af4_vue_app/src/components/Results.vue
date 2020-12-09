@@ -39,7 +39,7 @@
 
           <div
             v-for="item in data.table"
-            :key="item.nid"
+            :key="item.nid ? item.nid : item.offering_id"
             class="result"
             role="button"
             @click="showActivityDetailsModal(item)"

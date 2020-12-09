@@ -3,6 +3,7 @@
  * @file
  *
  * Available variables:
+ * - backend_service
  * - ages
  * - days
  * - times
@@ -25,6 +26,7 @@
 <div id="activity-finder">
   <div class="activity-finder__wrapper">
     <activity-finder
+      :backend-service="{{ backend_service|json_encode }}"
       :ages="{{ ages|json_encode }}"
       :days="{{ days|json_encode }}"
       :times="{{ times|json_encode }}"

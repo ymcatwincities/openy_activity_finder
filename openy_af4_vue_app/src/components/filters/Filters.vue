@@ -20,7 +20,7 @@
             v-model="selectedAges"
             :ages="ages"
             :max-ages="maxAges"
-            :facets="data.facets.static_age_filter"
+            :facets="data.facets.static_age_filter ? data.facets.static_age_filter : []"
           />
           <DaysFilter
             v-if="legacyMode"

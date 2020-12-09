@@ -134,6 +134,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
     return [
       '#theme' => 'openy_activity_finder_4_block',
+      '#backend_service' => $backend_service_id,
       '#ages' => $backend->getAges(),
       '#days' => $backend->getDaysOfWeek(),
       '#times' => $backend->getPartsOfDay(),

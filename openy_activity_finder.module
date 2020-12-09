@@ -57,6 +57,7 @@ function openy_activity_finder_theme() {
     ],
     'openy_activity_finder_4_block' => [
       'variables' => [
+        'backend_service' => '',
         'ages' => [],
         'days' => [],
         'times' => [],
