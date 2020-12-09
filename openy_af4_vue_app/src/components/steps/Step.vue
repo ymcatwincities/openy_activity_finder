@@ -48,27 +48,29 @@
     </div>
 
     <div ref="bottomDesktop" class="bottom-desktop d-none d-md-block hidden-xs hidden-sm">
-      <div class="container" :class="{ sticky: stickyDesktop }">
-        <div class="row">
-          <div class="col-12 col-xs-12">
-            <div class="full-width separator"></div>
-            <div class="controls">
-              <span class="title">
-                <slot name="title" />
-              </span>
-              <span class="buttons-desktop">
-                <button
-                  v-if="filtersSelected"
-                  type="button"
-                  class="btn btn-lg btn-next"
-                  @click="onNext"
-                >
-                  {{ nextLabel }}
-                </button>
-                <button v-else type="button" class="btn btn-lg btn-skip" @click="onSkip">
-                  {{ skipLabel }}
-                </button>
-              </span>
+      <div :class="{ sticky: stickyDesktop }">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-xs-12">
+              <div class="full-width separator"></div>
+              <div class="controls">
+                <span class="title">
+                  <slot name="title" />
+                </span>
+                <span class="buttons-desktop">
+                  <button
+                    v-if="filtersSelected"
+                    type="button"
+                    class="btn btn-lg btn-next"
+                    @click="onNext"
+                  >
+                    {{ nextLabel }}
+                  </button>
+                  <button v-else type="button" class="btn btn-lg btn-skip" @click="onSkip">
+                    {{ skipLabel }}
+                  </button>
+                </span>
+              </div>
             </div>
           </div>
         </div>
