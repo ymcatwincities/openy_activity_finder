@@ -33,7 +33,7 @@
                   </div>
 
                   <div class="item-detail schedule">
-                    <i class="fa fa-clock-o"></i>
+                    <i class="fa fa-clock fa-clock-o"></i>
                     <span class="schedule-items">
                       <span
                         v-for="(schedule, schedule_index) in item.item.schedule"
@@ -75,7 +75,7 @@
                     @click="register(index)"
                   >
                     {{ getButtonTitle(index) }}
-                    <i class="fa fa-external-link"></i>
+                    <i class="fa fa-external-link fa-external-link-alt"></i>
                   </a>
                   <a
                     key="remove"
@@ -95,7 +95,7 @@
                     @click="resetAction(index)"
                   >
                     <span>{{ 'Sent to register' | t }}</span>
-                    <i class="fa fa-repeat"></i>
+                    <i class="fa fa-redo fa-repeat"></i>
                   </a>
                   <a
                     key="remove"

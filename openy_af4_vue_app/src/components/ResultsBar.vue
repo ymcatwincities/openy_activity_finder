@@ -18,7 +18,7 @@
             </span>
             <span v-b-modal.activity-finder-sort class="control sort">
               <a role="button">
-                <i class="fa fa-sort-amount-desc" />
+                <i class="fa fa-sort-amount-down fa-sort-amount-desc" />
                 {{ 'Sort' | t }}
               </a>
             </span>

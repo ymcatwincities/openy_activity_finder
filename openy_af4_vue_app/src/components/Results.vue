@@ -80,7 +80,7 @@
               </div>
 
               <div class="item-detail schedule">
-                <i class="fa fa-clock-o"></i>
+                <i class="fa fa-clock fa-clock-o"></i>
                 <span class="schedule-items">
                   <span
                     v-for="(schedule, index) in item.schedule"
@@ -143,7 +143,7 @@
                   </div>
 
                   <div class="item-detail schedule">
-                    <i class="fa fa-clock-o"></i>
+                    <i class="fa fa-clock fa-clock-o"></i>
                     <span class="schedule-items">
                       <span
                         v-for="(schedule, index) in item.schedule"
@@ -180,7 +180,7 @@
 
                 <div class="col-sm-4">
                   <div v-if="item.price" class="item-detail price">
-                    <i class="fa fa-money"></i>
+                    <i class="fa fa-money-bill fa-money"></i>
                     <span>
                       <span class="info">{{ item.price }}</span>
                     </span>

@@ -27,7 +27,7 @@
               </div>
               <a :href="item.link" target="_blank" class="learn-more">
                 {{ 'Learn more about this program' | t }}
-                <i class="fa fa-external-link"></i>
+                <i class="fa fa-external-link fa-external-link-alt"></i>
               </a>
             </div>
           </div>
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="item-detail schedule">
-                  <i class="fa fa-clock-o"></i>
+                  <i class="fa fa-clock fa-clock-o"></i>
                   <span class="schedule-items">
                     <span
                       v-for="(schedule, index) in item.schedule"
@@ -77,7 +77,7 @@
                 </div>
 
                 <div v-if="item.price" class="item-detail price">
-                  <i class="fa fa-money"></i>
+                  <i class="fa fa-money-bill fa-money"></i>
                   <span>
                     <span class="info">{{ item.price }}</span>
                   </span>
@@ -104,7 +104,7 @@
                     @click="register(index)"
                   >
                     {{ getButtonTitle }}
-                    <i class="fa fa-external-link"></i>
+                    <i class="fa fa-external-link fa-external-link-alt"></i>
                   </a>
                   <a
                     v-if="!isBookmarked(age) && !legacyMode"
@@ -135,7 +135,7 @@
                     @click="resetAction(index)"
                   >
                     <span>{{ 'Sent to register' | t }}</span>
-                    <i class="fa fa-repeat"></i>
+                    <i class="fa fa-redo fa-repeat"></i>
                   </a>
                   <a
                     v-if="!isBookmarked(age) && !legacyMode"
@@ -166,7 +166,7 @@
                     @click="resetAction(index)"
                   >
                     <span>{{ 'Item bookmarked' | t }}</span>
-                    <i class="fa fa-times-circle-o"></i>
+                    <i class="fa fa-times-circle fa-times-circle-o"></i>
                   </a>
                 </template>
               </div>
