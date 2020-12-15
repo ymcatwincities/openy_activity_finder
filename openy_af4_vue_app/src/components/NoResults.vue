@@ -1,7 +1,9 @@
 <template>
   <div class="no-results-component">
     <div class="row">
-      <div class="col-sx-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4 text-center">
+      <div
+        class="col-12 col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4 m-auto text-center"
+      >
         <h2>{{ 'Oh no!' | t }}</h2>
         <p>{{ "We're sorry, but no results meet your search criteria." | t }}</p>
         <p v-if="selectedDimensions >= 2">
