@@ -1,11 +1,11 @@
-name: 'OpenY Paragraph Activity Finder 4'
-description: 'Feature with Activity Finder 4 paragraph.'
+name: 'Open Y Paragraph Activity Finder'
+description: 'Feature with Activity Finder paragraph.'
 type: module
-core: 8.x
+core_version_requirement: ^8 || ^9
 dependencies:
-  - field
-  - node
-  - openy_node_landing
-  - paragraphs
-  - plugin
-version: 8.x-1.0
+  - drupal:field
+  - drupal:node
+  - openy_node_landing:openy_node_landing
+  - paragraphs:paragraphs
+  - plugin:plugin
+version: 4.0.0

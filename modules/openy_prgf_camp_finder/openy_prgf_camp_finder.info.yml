@@ -1,4 +1,5 @@
 name: 'OpenY Paragraph Camp Finder'
+description: 'Feature with Camp Finder paragraph.'
 type: module
 core_version_requirement: ^8 || ^9
 dependencies:
@@ -12,5 +13,4 @@ dependencies:
   - paragraphs
   - plugin
 version: 8.x-1.0
-description: 'Feature with Camp Finder paragraph.'
 core_incompatible: false

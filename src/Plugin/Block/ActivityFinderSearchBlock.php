@@ -11,7 +11,7 @@ use Drupal\openy_activity_finder\OpenyActivityFinderSolrBackend;
  *
  * @Block(
  *   id = "activity_finder_search_block",
- *   admin_label = @Translation("Activity Finder Search Block"),
+ *   admin_label = @Translation("Activity Finder Search Block [deprecated]"),
  *   category = @Translation("Paragraph Blocks")
  * )
  */

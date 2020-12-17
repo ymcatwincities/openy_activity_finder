@@ -49,3 +49,24 @@ function openy_prgf_activity_finder_update_8003() {
     'field.storage.paragraph.field_pgf_af_show_filter_open',
   ]);
 }
+
+/**
+ * Update configs with deprecation notices.
+ */
+function openy_prgf_activity_finder_update_8004() {
+  $config_dir = drupal_get_path('module', 'openy_prgf_activity_finder') . '/config/install/';
+  $configs = [
+    'paragraphs.paragraphs_type.activity_finder' => [
+      'label',
+      'description',
+    ],
+  ];
+
+  $config_updater = \Drupal::service('openy_upgrade_tool.param_updater');
+  foreach ($configs as $config_name => $params) {
+    $config = $config_dir . $config_name . '.yml';
+    foreach ($params as $param) {
+      $config_updater->update($config, $config_name, $param);
+    }
+  }
+}

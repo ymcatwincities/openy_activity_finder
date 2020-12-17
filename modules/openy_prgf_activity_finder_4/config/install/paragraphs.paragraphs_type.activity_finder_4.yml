@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: activity_finder_4
-label: 'Activity Finder 4'
+label: 'Activity Finder'
 icon_uuid: null
-description: 'Paragraph for Activity Finder 4.'
+description: 'Paragraph for Activity Finder.'
 behavior_plugins: {  }

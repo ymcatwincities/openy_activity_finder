@@ -1,6 +1,52 @@
-# Examples
+# Open Y Activity Finder
 
-## How to override processResults in ActivityFinder
+## Versions
+There are currently 2 major versions: 3 and 4. Open Y distribution has
+`^3.1 || ^4.0` version constraint allowing you to choose which version you want
+to use depending on the project requirements.
+
+### Deprecations
+Outdated implementations are not removed immediately allowing you to update
+your projects and migrate to new components without breaking your site pages.
+They are marked with `[deprecated]` notices in the next version and planned to
+be removed in the future releases.
+
+### New projects
+All the new projects should get the latest available Open Y Activity Finder
+release.
+
+### Existing projects
+You have a choice of either staying on the same version you use or to update to
+the next version. It depends on your project requirements and customizations.
+We recommend updating to the latest release if you have resources for it.
+
+### Update from version 3.x to version 4.x
+Activity Finder is a complex functionality, it connects together many different
+pieces and might require additional steps to make it working. The list of
+actions below outlines the major steps to get Activity Finder updated to
+version 4.
+- Update the codebase using composer command:
+  `composer require ymcatwincities/openy_activity_finder:"^4.0"`
+- Run database updates `drush -y updb`
+  - Verify there were no errors and updates went fine
+- Install the new "Open Y Paragraph Activity Finder" module,
+  Machine name: `openy_prgf_activity_finder_4`:
+  `drush en openy_prgf_activity_finder_4`
+- Create new or update existing Landing Page with Activity Finder
+- Add Activity Finder paragraph (replace the deprecated paragraph), configure
+  it and save the page
+  - Verify the page and Activity Finder functionality is working fine
+- The previous version of Activity Finder used 2 landing pages with 2 paragraph
+  types - one for wizard and another one for results - find and remove these
+  pages
+- Uninstall "OpenY Paragraph Activity Finder" module,
+  Machine name: `openy_prgf_activity_finder`
+- Uninstall "OpenY Paragraph Activity Finder Search" module,
+  Machine name: `openy_paragraph_activity_finder_search`
+
+## Development
+
+### How to override processResults in Activity Finder
 
 See `openy_activity_finder.api.php`
 

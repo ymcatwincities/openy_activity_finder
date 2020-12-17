@@ -16,8 +16,8 @@ id: paragraph.activity_finder_4.field_prgf_block
 field_name: field_prgf_block
 entity_type: paragraph
 bundle: activity_finder_4
-label: 'Activity Finder 4 Block'
-description: 'Select Activity Finder 4 block.'
+label: 'Activity Finder Block'
+description: 'Select Activity Finder block.'
 required: true
 translatable: true
 default_value:

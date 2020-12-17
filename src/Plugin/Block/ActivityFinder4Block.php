@@ -13,11 +13,11 @@ use Drupal\openy_system\EntityBrowserFormTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides an 'Activity Finder 4' block.
+ * Provides an 'Activity Finder' block.
  *
  * @Block(
  *   id = "activity_finder_4",
- *   admin_label = @Translation("Activity Finder 4"),
+ *   admin_label = @Translation("Activity Finder"),
  *   category = @Translation("Paragraph Blocks")
  * )
  */

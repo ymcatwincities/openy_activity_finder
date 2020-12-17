@@ -1,5 +1,5 @@
 name: 'OpenY Paragraph Activity Finder Search'
-description: 'Feature with Activity Finder Search paragraph.'
+description: 'Feature with Activity Finder Search paragraph [deprecated].'
 type: module
 core_version_requirement: ^8 || ^9
 dependencies:

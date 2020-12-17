@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @Block(
  *   id = "activity_finder_block",
- *   admin_label = @Translation("Activity Finder Block"),
+ *   admin_label = @Translation("Activity Finder Block [deprecated]"),
  *   category = @Translation("Paragraph Blocks")
  * )
  */

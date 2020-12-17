@@ -12,7 +12,7 @@ Vue.filter('capitalize', function(str) {
   str = str.toString()
   return str[0].toUpperCase() + str.slice(1)
 })
-Vue.filter('t', function(value, args, options = { context: 'Activity finder' }) {
+Vue.filter('t', function(value, args, options = { context: 'Activity Finder' }) {
   return window.Drupal.t(value, args, options)
 })
 Vue.filter('formatPlural', function(
@@ -20,7 +20,7 @@ Vue.filter('formatPlural', function(
   singular,
   plural,
   args,
-  options = { context: 'Activity finder' }
+  options = { context: 'Activity Finder' }
 ) {
   return window.Drupal.formatPlural(value, singular, plural, args, options)
 })
@@ -39,10 +39,10 @@ Vue.mixin({
         window.ga('send', 'event', category, action, label, value)
       }
     },
-    t(value, args, options = { context: 'Activity finder' }) {
+    t(value, args, options = { context: 'Activity Finder' }) {
       return window.Drupal.t(value, args, options)
     },
-    formatPlural(value, singular, plural, args, options = { context: 'Activity finder' }) {
+    formatPlural(value, singular, plural, args, options = { context: 'Activity Finder' }) {
       return window.Drupal.formatPlural(value, singular, plural, args, options)
     },
     getCookie(cname) {

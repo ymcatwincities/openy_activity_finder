@@ -1,4 +1,5 @@
 name: 'OpenY Paragraph Activity Finder'
+description: 'Feature with Activity Finder paragraph [deprecated].'
 type: module
 core_version_requirement: ^8 || ^9
 dependencies:
@@ -10,4 +11,3 @@ dependencies:
   - paragraphs:paragraphs
   - plugin:plugin
 version: 8.x-1.0
-description: 'Feature with Activity Finder paragraph.'
