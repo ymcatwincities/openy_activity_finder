@@ -314,7 +314,8 @@ export default {
       this.cartItems.forEach((cartItem, index) => {
         if (
           cartItem.age === age &&
-          cartItem.item.product_id === this.activityDetailsModal.item.product_id
+          cartItem.item.product_id === this.activityDetailsModal.item.product_id &&
+          cartItem.item.nid === this.activityDetailsModal.item.nid
         ) {
           this.removeItem(index)
         }

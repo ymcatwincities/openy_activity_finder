@@ -277,7 +277,11 @@ export default {
     isBookmarked(age) {
       let bookmarked = false
       this.cartItems.forEach(item => {
-        if (item.age === age && item.item.product_id === this.item.product_id) {
+        if (
+          item.age === age &&
+          item.item.product_id === this.item.product_id &&
+          item.item.nid === this.item.nid
+        ) {
           bookmarked = true
         }
       })
