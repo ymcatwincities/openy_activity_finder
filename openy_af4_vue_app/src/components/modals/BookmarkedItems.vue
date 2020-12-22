@@ -57,6 +57,7 @@
                   </span>
                   <span class="spots">
                     <AvailableSpots
+                      v-if="!disableSpotsAvailable && item.item.spots_available !== ''"
                       :spots="Number(item.item.spots_available)"
                       :wait-list="Number(item.item.wait_list_availability)"
                     />
@@ -162,6 +163,10 @@ export default {
     selectedAges: {
       type: Array,
       required: true
+    },
+    disableSpotsAvailable: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -228,7 +233,10 @@ export default {
     },
     getButtonTitle(index) {
       let title = this.t('Register now')
-      if (!this.cartItems[index].item.spots_available) {
+      if (
+        this.cartItems[index].item.spots_available !== '' &&
+        !this.cartItems[index].item.spots_available
+      ) {
         title =
           this.cartItems[index].item.wait_list_availability > 0
             ? this.t('Waiting list')
@@ -238,6 +246,7 @@ export default {
     },
     isRegisterDisabled(index) {
       return (
+        this.cartItems[index].item.spots_available !== '' &&
         !this.cartItems[index].item.spots_available &&
         !this.cartItems[index].item.wait_list_availability
       )

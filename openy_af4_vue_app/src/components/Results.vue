@@ -64,7 +64,7 @@
                   </template>
                 </span>
                 <AvailableSpots
-                  v-if="!disableSpotsAvailable"
+                  v-if="!disableSpotsAvailable && item.spots_available !== ''"
                   :spots="Number(item.spots_available)"
                   :wait-list="Number(item.wait_list_availability)"
                 />
@@ -186,7 +186,7 @@
                     </span>
                   </div>
                   <AvailableSpots
-                    v-if="!disableSpotsAvailable"
+                    v-if="!disableSpotsAvailable && item.spots_available !== ''"
                     :spots="Number(item.spots_available)"
                     :wait-list="Number(item.wait_list_availability)"
                   />
@@ -213,6 +213,7 @@
             :cart-items="cartItems"
             :ages="ages"
             :selected-ages="selectedAges"
+            :disable-spots-available="disableSpotsAvailable"
             @removeItem="removeItem($event)"
             @removeItems="removeItems"
           />

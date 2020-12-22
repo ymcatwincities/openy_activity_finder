@@ -83,7 +83,7 @@
                   </span>
                 </div>
                 <AvailableSpots
-                  v-if="!disableSpotsAvailable"
+                  v-if="!disableSpotsAvailable && item.spots_available !== ''"
                   :spots="Number(item.spots_available)"
                   :wait-list="Number(item.wait_list_availability)"
                   big
@@ -243,13 +243,17 @@ export default {
     },
     getButtonTitle() {
       let title = this.t('Register')
-      if (!this.item.spots_available) {
+      if (this.item.spots_available !== '' && !this.item.spots_available) {
         title = this.item.wait_list_availability > 0 ? this.t('Waiting list') : this.t('Full')
       }
       return title
     },
     isRegisterDisabled() {
-      return !this.item.spots_available && !this.item.wait_list_availability
+      return (
+        this.item.spots_available !== '' &&
+        !this.item.spots_available &&
+        !this.item.wait_list_availability
+      )
     }
   },
   watch: {

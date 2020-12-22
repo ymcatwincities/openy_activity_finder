@@ -198,6 +198,7 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
   public function getFiltersSectionConfig() {
     $config = [];
     foreach (['schedule', 'category', 'locations'] as $name) {
+      $config[$name] = TRUE;
       $value = $this->config->get("{$name}_collapse_group");
       if ($value) {
         $config[$name] = strstr($value, 'collapsed') || strstr($value, 'disabled');
