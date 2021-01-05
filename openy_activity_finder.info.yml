@@ -4,3 +4,6 @@ description: Framework for Activity Finder functionality.
 package: OpenY
 version: 4.0.0
 core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:rest
+  - serialization:serialization
