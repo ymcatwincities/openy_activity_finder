@@ -102,7 +102,8 @@ export default {
       display: flex;
       height: 50px;
 
-      input[type='checkbox'] {
+      input[type='checkbox'],
+      input[type='radio'] {
         display: none;
 
         + label {

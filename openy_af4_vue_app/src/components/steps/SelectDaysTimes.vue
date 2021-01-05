@@ -147,7 +147,7 @@ export default {
     subFiltersCount(index) {
       let result = 0
       this.value.forEach(item => {
-        if (this.daysTimes[index].value.find(day => parseInt(day.value) === parseInt(item))) {
+        if (this.daysTimes[index].value.find(day => String(day.value) === String(item))) {
           result++
         }
       })

@@ -222,7 +222,8 @@ export default {
           margin-bottom: 10px;
         }
 
-        input[type='checkbox'] {
+        input[type='checkbox'],
+        input[type='radio'] {
           display: none;
 
           & + label {
@@ -266,7 +267,8 @@ export default {
           }
         }
 
-        input[type='checkbox']:checked + label {
+        input[type='checkbox']:checked + label,
+        input[type='radio']:checked + label {
           background-color: $af-blue;
           border-color: $af-blue;
 
@@ -289,7 +291,8 @@ export default {
             }
           }
 
-          input[type='checkbox']:checked + label {
+          input[type='checkbox']:checked + label,
+          input[type='radio']:checked + label {
             &:before {
               border: none;
               background-color: $white;
@@ -309,7 +312,8 @@ export default {
             }
           }
 
-          input[type='checkbox']:disabled + label {
+          input[type='checkbox']:disabled + label,
+          input[type='radio']:disabled + label {
             background-color: $af-light-gray;
             border-color: $af-light-gray;
             cursor: default;
@@ -344,14 +348,16 @@ export default {
             }
           }
 
-          input[type='checkbox']:checked + label {
+          input[type='checkbox']:checked + label,
+          input[type='radio']:checked + label {
             &:before {
               border-color: $white;
               box-shadow: inset 0 0 0 3px $af-blue;
             }
           }
 
-          input[type='checkbox']:disabled + label {
+          input[type='checkbox']:disabled + label,
+          input[type='radio']:disabled + label {
             background-color: $af-light-gray;
             border-color: $af-light-gray;
             cursor: default;

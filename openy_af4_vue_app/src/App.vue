@@ -41,6 +41,7 @@
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
           :filters-section-config="filtersSectionConfig"
+          :daxko="daxko"
           @filterChange="onFilterChange($event, hideModal)"
           @clearFilters="clearFilters(hideModal)"
         />
@@ -118,6 +119,7 @@
       :activities="activities"
       :facets="data.facets.field_activity_category"
       :first-step="selectedPath === 'selectActivities'"
+      :multiple="!daxko"
       @nextStep="nextStep('selectActivities')"
     />
     <Results
@@ -154,6 +156,7 @@
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
           :filters-section-config="filtersSectionConfig"
+          :daxko="daxko"
           filters-mode="instant"
           @filterChange="onFilterChange($event)"
           @clearFilters="clearFilters"

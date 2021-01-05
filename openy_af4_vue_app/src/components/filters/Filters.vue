@@ -51,6 +51,7 @@
           v-model="selectedActivities"
           :activities="activities"
           :facets="data.facets.field_activity_category"
+          :multiple="!daxko"
         />
       </Fieldset>
 
@@ -165,6 +166,10 @@ export default {
     filtersSectionConfig: {
       type: Object,
       required: true
+    },
+    daxko: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

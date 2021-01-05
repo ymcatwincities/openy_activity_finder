@@ -3,7 +3,7 @@ export function activitiesList(src, activities) {
   let activityDetails = value => {
     let result = ''
     activities.forEach(activity_type => {
-      let activity = activity_type.value.find(item => parseInt(item.value) === parseInt(value))
+      let activity = activity_type.value.find(item => String(item.value) === String(value))
       if (activity) {
         result = activity_type.label + ' (' + activity.label + ')'
       }
@@ -65,7 +65,7 @@ export function daysTimesList(src, daysTimes) {
   let daysTimesDetails = value => {
     let result = ''
     daysTimes.forEach(day => {
-      let time = day.value.find(item => parseInt(item.value) === parseInt(value))
+      let time = day.value.find(item => String(item.value) === String(value))
       if (time) {
         result =
           day.search_value.charAt(0).toUpperCase() +

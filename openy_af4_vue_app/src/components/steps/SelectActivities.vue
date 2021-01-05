@@ -25,12 +25,13 @@
               <div
                 v-for="activity in activity_type.value"
                 :key="activity.value"
-                class="option check col-12 col-xs-12 col-sm-3"
+                class="option col-12 col-xs-12 col-sm-3"
+                :class="{ check: multiple, radio: !multiple }"
               >
                 <input
                   :id="activity.value"
                   v-model="selectedActivities"
-                  type="checkbox"
+                  :type="multiple ? 'checkbox' : 'radio'"
                   :value="activity.value"
                   :disabled="isDisabled(activity.value)"
                   @change="onChange(activity)"
@@ -78,11 +79,15 @@ export default {
     firstStep: {
       type: Boolean,
       default: false
+    },
+    multiple: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      selectedActivities: this.value
+      selectedActivities: this.multiple ? this.value : this.value.length ? this.value[0] : null
     }
   },
   computed: {
@@ -113,13 +118,17 @@ export default {
   },
   watch: {
     value() {
-      this.selectedActivities = this.value
+      this.selectedActivities = this.multiple
+        ? this.value
+        : this.value.length
+        ? this.value[0]
+        : null
     }
   },
   methods: {
     onChange(activity) {
       this.trackEvent('selectActivities', 'Click on activity ' + activity.label, activity.value)
-      this.$emit('input', this.selectedActivities)
+      this.$emit('input', this.multiple ? this.selectedActivities : [this.selectedActivities])
     },
     onSkip() {
       this.trackEvent('skip', 'Click on selectActivities')
@@ -141,7 +150,7 @@ export default {
       let result = 0
       this.value.forEach(item => {
         if (
-          this.activities[index].value.find(activity => parseInt(activity.value) === parseInt(item))
+          this.activities[index].value.find(activity => String(activity.value) === String(item))
         ) {
           result++
         }

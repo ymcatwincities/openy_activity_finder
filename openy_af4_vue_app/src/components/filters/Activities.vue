@@ -7,11 +7,16 @@
       :collapse-id="id + '-toggle-' + index"
       :counter="subFiltersCount(index)"
     >
-      <div v-for="item in item_type.value" :key="id + '-activity-' + item.value" class="option">
+      <div
+        v-for="item in item_type.value"
+        :key="id + '-activity-' + item.value"
+        class="option"
+        :class="{ check: multiple, radio: !multiple }"
+      >
         <input
           :id="id + '-activity-' + item.value"
           v-model="selectedActivities"
-          type="checkbox"
+          :type="multiple ? 'checkbox' : 'radio'"
           :value="item.value"
         />
         <label :for="id + '-activity-' + item.value">
@@ -46,27 +51,35 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    multiple: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      selectedActivities: this.value
+      selectedActivities: this.multiple ? this.value : this.value.length ? this.value[0] : null
     }
   },
   watch: {
     value() {
-      this.selectedActivities = this.value
+      this.selectedActivities = this.multiple
+        ? this.value
+        : this.value.length
+        ? this.value[0]
+        : null
     },
     selectedActivities() {
-      this.$emit('input', this.selectedActivities)
+      this.$emit('input', this.multiple ? this.selectedActivities : [this.selectedActivities])
     }
   },
   methods: {
     subFiltersCount(index) {
       let result = 0
-      this.selectedActivities.forEach(item => {
+      this.value.forEach(item => {
         if (
-          this.activities[index].value.find(activity => parseInt(activity.value) === parseInt(item))
+          this.activities[index].value.find(activity => String(activity.value) === String(item))
         ) {
           result++
         }
