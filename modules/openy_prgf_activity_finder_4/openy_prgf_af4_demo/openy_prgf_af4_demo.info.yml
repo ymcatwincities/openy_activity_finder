@@ -1,0 +1,12 @@
+name: 'Open Y Paragraph Activity Finder v4 Demo'
+description: 'Feature with Activity Finder v4 paragraph demo Landing Page.'
+type: module
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:field
+  - drupal:node
+  - openy_node_landing:openy_node_landing
+  - openy_prgf_activity_finder_4:openy_prgf_activity_finder_4
+  - paragraphs:paragraphs
+  - plugin:plugin
+version: 4.0.1

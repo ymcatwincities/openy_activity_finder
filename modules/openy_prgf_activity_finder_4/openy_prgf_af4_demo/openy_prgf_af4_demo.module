@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update routines.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
+
+ function openy_prgf_af4_demo_install() {
+     // Make sure that blocks are available.
+  openy_enable_module('openy_prgf_activity_finder_4');
+  drupal_flush_all_caches();
+
+  $af_node = Node::create(
+    [
+      'type' => 'landing_page',
+      'title' => 'Activity Finder v4',
+      'langcode' => 'en',
+      'uid' => '1',
+      'status' => 1,
+      'field_lp_layout' => ['value' => 'one_column_clean'],
+    ]
+  );
+  $af_node->save();
+
+  $af_paragraph = Paragraph::create(
+    [
+      'type' => 'activity_finder_4',
+      'parent_id' => $af_node->id(),
+      'parent_type' => 'node',
+      'parent_field_name' => 'field_content',
+      'status' => 1,
+      'field_prgf_block' => ['plugin_id' => 'activity_finder_4']
+    ]
+  );
+  $af_paragraph->save();
+
+  $af_node->field_content->entity = $af_paragraph;
+  $af_node->save();
+
+  // For some reason af blocks do not have block's id in their
+  // configuration. This is why we manually ensure they are set up.
+  $process_paragraphs = function ($prgfs) {
+    foreach ($prgfs as $prgf) {
+      $tables = $prgf['tables'];
+      $plugin_id_field = $prgf['plugin_id_field'];
+      $config_field = $prgf['config_field'];
+      foreach ($tables as $table) {
+        // Select all paragraphs that have "broken" as plugin_id.
+        $db = \Drupal::database();
+        $query = $db->select($table, 'ptable');
+        $query->fields('ptable');
+        $query->condition('ptable.' . $plugin_id_field, 'broken');
+        $broken_paragraphs = $query->execute()->fetchAll();
+
+        // Update to correct plugin_id based on data array.
+        foreach ($broken_paragraphs as $paragraph) {
+          $data = unserialize($paragraph->{$config_field});
+
+          if ($paragraph->bundle == 'activity_finder_v4') {
+            $data['id'] = 'activity_finder_v4_block';
+          }
+        //   elseif ($paragraph->bundle == 'activity_finder_search') {
+        //     $data['id'] = 'activity_finder_search_block';
+        //   }
+          $query = $db->update($table);
+          $query->fields([
+            $plugin_id_field => $data['id'],
+            $config_field => serialize($data),
+          ]);
+          $query->condition('bundle', $paragraph->bundle);
+          $query->condition('entity_id', $paragraph->entity_id);
+          $query->condition('revision_id', $paragraph->revision_id);
+          $query->condition('langcode', $paragraph->langcode);
+          $query->execute();
+        }
+      }
+    }
+  };
+  $process_paragraphs([
+    0 => [
+      'id' => 'activity_finder_v4',
+      'tables' => [
+        'paragraph__field_prgf_block',
+        'paragraph_revision__field_prgf_block',
+      ],
+      'plugin_id_field' => 'field_prgf_block_plugin_id',
+      'config_field' => 'field_prgf_block_plugin_configuration',
+    ]
+  ]);
+ }
+ 
