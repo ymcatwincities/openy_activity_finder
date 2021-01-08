@@ -34,3 +34,12 @@ function custom_module_activity_finder_program_process_results_alter(&$data, Nod
   }
 }
 ```
+
+How to use Trusted Redirect Hosts:
+Add this section to the settings.php:
+```
+// Trusted hosts to redirect to for Activity Finder.
+$settings['activity_finder_trusted_redirect_host_patterns'] = [
+  '^apm\.activecommunities\.com$',
+];
+```
