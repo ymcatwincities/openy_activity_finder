@@ -6,6 +6,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Site\Settings;
 use Drupal\openy_activity_finder\Entity\ProgramSearchLog;
 use Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface;
 use Drupal\openy_activity_finder\Entity\ProgramSearchCheckLog;
@@ -122,6 +123,30 @@ class ActivityFinderController extends ControllerBase {
     $details = $request->get('details');
     $url = $request->get('url');
 
+    if (empty($url)) {
+      throw new NotFoundHttpException();
+    }
+
+    // Validate redirect request against trusted host patterns.
+    $host_patterns = Settings::get('activity_finder_trusted_redirect_host_patterns', []);
+    $trusted = FALSE;
+    if (empty($host_patterns)) {
+      $trusted = TRUE;
+    }
+    else {
+      $host = parse_url($url, PHP_URL_HOST);
+      foreach ($host_patterns as $host_pattern) {
+        if (preg_match('/' . $host_pattern . '/i', $host)) {
+          $trusted = TRUE;
+          break;
+        }
+      }
+    }
+
+    if (!$trusted) {
+      throw new NotFoundHttpException();
+    }
+
     if (!empty($details) && !empty($log)) {
       $details_log = ProgramSearchCheckLog::create([
         'details' => $details,
@@ -129,10 +154,6 @@ class ActivityFinderController extends ControllerBase {
         'type' => ProgramSearchCheckLog::TYPE_REGISTER,
       ]);
       $details_log->save();
-    }
-
-    if (empty($url)) {
-      throw new NotFoundHttpException();
     }
 
     return new TrustedRedirectResponse($url, 301);
