@@ -204,6 +204,7 @@
             :selected-ages="selectedAges"
             :legacy-mode="legacyMode"
             :disable-spots-available="disableSpotsAvailable"
+            :request-more-info="requestMoreInfo"
             @bookmark="handleActivityDetailsBookmark($event)"
             @unbookmark="handleActivityDetailsUnbookmark($event)"
           />
@@ -276,6 +277,10 @@ export default {
     disableSpotsAvailable: {
       type: Boolean,
       required: true
+    },
+    requestMoreInfo: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
