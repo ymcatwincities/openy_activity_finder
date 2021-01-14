@@ -8,7 +8,8 @@
   >
     <template>
       <div class="activity-details-modal-content">
-        <div class="row">
+        <Loading v-if="isLoadingData" />
+        <div v-else class="row">
           <div class="col-12 col-xs-12 col-md-6 left-wrapper">
             <div class="left">
               <div class="title">{{ item.name }}</div>
@@ -179,16 +180,19 @@
 </template>
 
 <script>
+import client from '@/client/index.js'
 import Modal from '@/components/modals/Modal.vue'
 import AgeIcon from '@/components/AgeIcon.vue'
 import AvailableSpots from '@/components/AvailableSpots'
+import Loading from '@/components/Loading.vue'
 
 export default {
   name: 'ActivityDetailsModal',
   components: {
     Modal,
     AgeIcon,
-    AvailableSpots
+    AvailableSpots,
+    Loading
   },
   props: {
     value: {
@@ -218,12 +222,18 @@ export default {
     disableSpotsAvailable: {
       type: Boolean,
       required: true
+    },
+    requestMoreInfo: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       visible: this.value,
-      buttonsState: {}
+      buttonsState: {},
+      // Flag to show if the data request is in progress.
+      isLoadingData: false
     }
   },
   computed: {
@@ -263,6 +273,7 @@ export default {
     visible() {
       this.$emit('input', this.visible)
       if (this.visible) {
+        this.loadData()
         this.buttonsState = {}
         this.availableAges.forEach((age, index) => {
           this.buttonsState = {
@@ -313,6 +324,34 @@ export default {
         ...this.buttonsState,
         ...{ [index]: 'default' }
       }
+    },
+    loadData() {
+      if (!this.requestMoreInfo) {
+        return
+      }
+      if (this.item.moreInfoLoaded) {
+        return
+      }
+
+      this.isLoadingData = true
+      client('more_info')
+        .request({
+          params: {
+            log: this.item.log_id,
+            details: this.item.name,
+            nid: this.item.nid,
+            program: this.item.program_id,
+            offering: this.item.offering_id,
+            location: this.item.location_id
+          }
+        })
+        .then(response => {
+          this.isLoadingData = false
+          this.item.description = response.data.description
+          this.item.program_name = response.data.program_name
+          this.item.spots_available = response.data.spots_available
+          this.item.moreInfoLoaded = true
+        })
     }
   }
 }

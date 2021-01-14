@@ -131,6 +131,7 @@
       :cart-items="cartItems"
       :legacy-mode="legacyMode"
       :disable-spots-available="disableSpotsAvailable"
+      :request-more-info="daxko"
       @startOver="startOver()"
       @addItem="addItem($event)"
       @removeItem="removeItem($event)"
