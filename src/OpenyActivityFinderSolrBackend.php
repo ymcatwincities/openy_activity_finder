@@ -156,13 +156,8 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
     $index_id = $this->config->get('index') ? $this->config->get('index') : 'default';
     $index = Index::load($index_id);
     $query = $index->query();
-    $parse_mode = \Drupal::service('plugin.manager.search_api.parse_mode')->createInstance('direct');
-    $query->getParseMode()->setConjunction('OR');
-    $query->setParseMode($parse_mode);
     $keys = !empty($parameters['keywords']) ? $parameters['keywords'] : '';
     if ($keys) {
-      $keys = explode(' ', trim($keys));
-      $keys['#conjunction'] = 'AND';
       $query->keys($keys);
     }
     $query->setFulltextFields(['title']);
