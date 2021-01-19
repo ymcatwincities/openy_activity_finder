@@ -746,6 +746,10 @@ export default {
   padding-top: 0 !important;
 }
 
+.activity-finder__wrapper {
+  position: relative;
+}
+
 // Fix Safari grid issue.
 // @see https://stackoverflow.com/questions/49403391/bootstrap-4-safari-on-mac-grid-issue
 .row:before,
