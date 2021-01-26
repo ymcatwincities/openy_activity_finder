@@ -54,6 +54,8 @@
     <SelectPath
       v-else-if="step === 'selectPath'"
       v-model="selectedPath"
+      :label="label"
+      :label-display="labelDisplay"
       :paths="paths"
       :background-image="backgroundImage"
       @nextStep="nextStep('selectPath')"
@@ -233,6 +235,14 @@ export default {
       type: String,
       required: true
     },
+    label: {
+      type: String,
+      required: true
+    },
+    labelDisplay: {
+      type: Boolean,
+      required: true
+    },
     ages: {
       type: Array,
       required: true
@@ -282,7 +292,7 @@ export default {
       required: true
     },
     legacyMode: {
-      type: Number,
+      type: Boolean,
       required: true
     },
     hideHomeBranchBlock: {

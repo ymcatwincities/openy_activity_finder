@@ -4,6 +4,8 @@
  *
  * Available variables:
  * - backend_service
+ * - label
+ * - label_display
  * - ages
  * - days
  * - times
@@ -29,6 +31,8 @@
   <div class="activity-finder__wrapper">
     <activity-finder
       :backend-service="{{ backend_service|json_encode }}"
+      :label="{{ label|json_encode }}"
+      :label-display="{{ label_display|json_encode }}"
       :ages="{{ ages|json_encode }}"
       :days="{{ days|json_encode }}"
       :times="{{ times|json_encode }}"

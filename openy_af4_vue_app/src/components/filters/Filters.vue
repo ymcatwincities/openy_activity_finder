@@ -156,7 +156,7 @@ export default {
       required: true
     },
     legacyMode: {
-      type: Number,
+      type: Boolean,
       required: true
     },
     filtersMode: {
