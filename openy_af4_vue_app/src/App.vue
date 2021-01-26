@@ -273,6 +273,14 @@ export default {
       type: String,
       required: true
     },
+    limitByCategory: {
+      type: Array,
+      required: true
+    },
+    excludeByCategory: {
+      type: Array,
+      required: true
+    },
     legacyMode: {
       type: Number,
       required: true
@@ -428,7 +436,8 @@ export default {
         categories: this.selectedActivities.join(','),
         page: this.selectedPage,
         sort: this.selectedSort,
-        keywords: this.searchKeywords
+        keywords: this.searchKeywords,
+        exclude: this.excludeByCategory.join(',')
       }
 
       if (this.daxko && this.selectedPage > 1 && this.daxkoPages[this.selectedPage]) {
