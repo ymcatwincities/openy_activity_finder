@@ -3,7 +3,9 @@
     <div class="banner" :style="{ background: 'url(' + image + ') center center/cover no-repeat' }">
       <div class="separator"></div>
       <div class="shadow">
-        <h1 class="text-center text-uppercase">{{ 'Activity Finder' | t }}</h1>
+        <h1 class="text-center text-uppercase" :class="{ 'visually-hidden': !labelDisplay }">
+          {{ label }}
+        </h1>
       </div>
     </div>
 
@@ -53,6 +55,14 @@ export default {
   props: {
     value: {
       type: String,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    labelDisplay: {
+      type: Boolean,
       required: true
     },
     paths: {

@@ -135,6 +135,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     return [
       '#theme' => 'openy_activity_finder_4_block',
       '#backend_service' => $backend_service_id,
+      '#label' => $conf['label'],
+      '#label_display' => (bool) $conf['label_display'],
       '#ages' => $backend->getAges(),
       '#days' => $backend->getDaysOfWeek(),
       '#times' => $backend->getPartsOfDay(),
@@ -151,7 +153,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
       '#limit_by_category' => $conf['limit_by_category'],
       '#exclude_by_category' => $conf['exclude_by_category'],
-      '#legacy_mode' => $conf['legacy_mode'],
+      '#legacy_mode' => (bool) $conf['legacy_mode'],
       '#hide_home_branch_block' => (bool) $conf['hide_home_branch_block'],
       '#background_image' => [
         'mobile' => $image_mobile,
