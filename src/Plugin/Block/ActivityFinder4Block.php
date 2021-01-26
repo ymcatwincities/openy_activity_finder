@@ -155,6 +155,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#days' => $backend->getDaysOfWeek(),
       '#times' => $backend->getPartsOfDay(),
       '#days_times' => $backend->getDaysTimes(),
+      '#weeks' => $backend->getWeeks(),
       '#categories' => $backend->getCategories(),
       '#categories_type' => $backend->getCategoriesType(),
       '#activities' => $activities,
@@ -168,6 +169,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#limit_by_category' => $conf['limit_by_category'],
       '#exclude_by_category' => $conf['exclude_by_category'],
       '#legacy_mode' => (bool) $conf['legacy_mode'],
+      '#weeks_filter' => (bool) $conf['weeks_filter'],
       '#hide_home_branch_block' => (bool) $conf['hide_home_branch_block'],
       '#background_image' => [
         'mobile' => $image_mobile,
@@ -228,6 +230,13 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#default_value' => $conf['legacy_mode'],
     ];
 
+    $form['weeks_filter'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Weeks filter'),
+      '#description' => $this->t('Replace date/time filter with weeks filter.'),
+      '#default_value' => $conf['weeks_filter'],
+    ];
+
     $form['hide_home_branch_block'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hide Home Branch info block'),
@@ -260,6 +269,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       ? array_column($form_state->getValue('exclude_by_category'), 'target_id')
       : [];
     $this->configuration['legacy_mode'] = $form_state->getValue('legacy_mode');
+    $this->configuration['weeks_filter'] = $form_state->getValue('weeks_filter');
     $this->configuration['hide_home_branch_block'] = $form_state->getValue('hide_home_branch_block');
     $this->configuration['background_image'] = $this->getEntityBrowserValue($form_state, 'background_image');
   }

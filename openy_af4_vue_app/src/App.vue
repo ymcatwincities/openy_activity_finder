@@ -6,12 +6,14 @@
       :days="days"
       :times="times"
       :days-times="daysTimes"
+      :weeks="weeks"
       :locations="locations"
       :activities="activities"
       :selected-ages="selectedAges"
       :selected-days="selectedDays"
       :selected-times="selectedTimes"
       :selected-days-times="selectedDaysTimes"
+      :selected-weeks="selectedWeeks"
       :selected-locations="selectedLocations"
       :selected-activities="selectedActivities"
       @startOver="startOver()"
@@ -31,15 +33,18 @@
           :ages="ages"
           :days="days"
           :days-times="daysTimes"
+          :weeks="weeks"
           :locations="locations"
           :activities="activities"
           :initial-ages="selectedAges"
           :initial-days="selectedDays"
           :initial-days-times="selectedDaysTimes"
+          :initial-weeks="selectedWeeks"
           :initial-locations="selectedLocations"
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
+          :weeks-filter="weeksFilter"
           :filters-section-config="filtersSectionConfig"
           :daxko="daxko"
           @filterChange="onFilterChange($event, hideModal)"
@@ -107,6 +112,14 @@
       :first-step="selectedPath === 'selectDaysTimes'"
       @nextStep="nextStep('selectDaysTimes')"
     />
+    <SelectWeeks
+      v-else-if="step === 'selectWeeks'"
+      v-model="selectedWeeks"
+      :weeks="weeks"
+      :facets="data.facets.static_weeks_filter"
+      :first-step="selectedPath === 'selectWeeks'"
+      @nextStep="nextStep('selectWeeks')"
+    />
     <SelectLocations
       v-else-if="step === 'selectLocations'"
       v-model="selectedLocations"
@@ -150,15 +163,18 @@
           :ages="ages"
           :days="days"
           :days-times="daysTimes"
+          :weeks="weeks"
           :locations="locations"
           :activities="activities"
           :initial-ages="selectedAges"
           :initial-days="selectedDays"
           :initial-days-times="selectedDaysTimes"
+          :initial-weeks="selectedWeeks"
           :initial-locations="selectedLocations"
           :initial-activities="selectedActivities"
           :max-ages="maxAges"
           :legacy-mode="legacyMode"
+          :weeks-filter="weeksFilter"
           :filters-section-config="filtersSectionConfig"
           :daxko="daxko"
           filters-mode="instant"
@@ -195,6 +211,7 @@ import SelectAges from '@/components/steps/SelectAges.vue'
 import SelectDays from '@/components/steps/SelectDays.vue'
 import SelectTimes from '@/components/steps/SelectTimes.vue'
 import SelectDaysTimes from '@/components/steps/SelectDaysTimes.vue'
+import SelectWeeks from '@/components/steps/SelectWeeks.vue'
 import SelectLocations from '@/components/steps/SelectLocations.vue'
 import SelectActivities from '@/components/steps/SelectActivities.vue'
 import Results from '@/components/Results.vue'
@@ -217,6 +234,7 @@ export default {
     SelectDays,
     SelectTimes,
     SelectDaysTimes,
+    SelectWeeks,
     SelectLocations,
     SelectActivities,
     Results,
@@ -260,6 +278,10 @@ export default {
       type: Array,
       required: true
     },
+    weeks: {
+      type: Array,
+      required: true
+    },
     categories: {
       type: Array,
       required: true
@@ -293,6 +315,10 @@ export default {
       required: true
     },
     legacyMode: {
+      type: Boolean,
+      required: true
+    },
+    weeksFilter: {
       type: Boolean,
       required: true
     },
@@ -344,6 +370,7 @@ export default {
         'selectTimes',
         'selectDays',
         'selectDaysTimes',
+        'selectWeeks',
         'selectLocations'
       ],
       paths: [
@@ -376,6 +403,7 @@ export default {
         selectedDays: [],
         selectedTimes: [],
         selectedDaysTimes: [],
+        selectedWeeks: [],
         selectedLocations: [],
         selectedActivities: [],
         selectedPage: 1,
@@ -426,6 +454,23 @@ export default {
       data.maxAges = 0
     }
 
+    // Replace days/times by Weeks selection step.
+    if (this.weeksFilter) {
+      data.steps = [
+        'selectPath',
+        'selectAges',
+        'selectActivities',
+        'selectWeeks',
+        'selectLocations',
+        'results'
+      ]
+      data.paths[1] = {
+        id: 'selectWeeks',
+        name: this.t('Week'),
+        icon: 'fa-calendar'
+      }
+    }
+
     // Initialize reactive properties for every default value.
     for (let key in data.defaults) {
       data[key] = Array.isArray(data.defaults[key])
@@ -445,6 +490,7 @@ export default {
         days: this.step === 'selectDays' ? '' : this.selectedDays.join(','),
         times: this.step === 'selectTimes' ? '' : this.selectedTimes.join(','),
         daystimes: this.step === 'selectDaysTimes' ? '' : this.selectedDaysTimes.join(','),
+        weeks: this.step === 'selectWeeks' ? '' : this.selectedWeeks.join(','),
         locations: this.step === 'selectLocations' ? '' : this.selectedLocations.join(','),
         categories: this.step === 'selectActivities' ? '' : this.selectedActivities.join(','),
         page: this.selectedPage,
@@ -470,6 +516,7 @@ export default {
         ...this.selectedDays,
         ...this.selectedTimes,
         ...this.selectedDaysTimes,
+        ...this.selectedWeeks,
         ...this.selectedLocations,
         ...this.selectedActivities,
         this.selectedSort,
@@ -484,6 +531,7 @@ export default {
         ...this.selectedDays,
         ...this.selectedTimes,
         ...this.selectedDaysTimes,
+        ...this.selectedWeeks,
         ...this.selectedLocations,
         ...this.selectedActivities,
         this.selectedPage,

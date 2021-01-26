@@ -98,3 +98,18 @@ export function locationsList(src, locations) {
   src.forEach(item => filters.push(locationsDetails(item)))
   return filters.filter(x => x !== '')
 }
+
+export function weeksList(src, weeks) {
+  let filters = []
+  let weekDetails = value => {
+    let result = ''
+    let week = weeks.find(item => item.value === value)
+    if (week) {
+      result = week.label
+    }
+    return result
+  }
+
+  src.forEach(week => filters.push(weekDetails(week)))
+  return filters.filter(x => x !== '')
+}

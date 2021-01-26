@@ -23,18 +23,25 @@
             :facets="data.facets.static_age_filter ? data.facets.static_age_filter : []"
           />
           <DaysFilter
-            v-if="legacyMode"
+            v-if="legacyMode && !weeksFilter"
             :id="id + '-days-filter'"
             v-model="selectedDays"
             :days="days"
             :facets="data.facets.days_of_week"
           />
           <DaysTimesFilter
-            v-else
+            v-if="!legacyMode && !weeksFilter"
             :id="id + '-days-times-filter'"
             v-model="selectedDaysTimes"
             :days-times="daysTimes"
             :facets="data.facets.af_weekdays_parts_of_day"
+          />
+          <WeeksFilter
+            v-if="weeksFilter"
+            :id="id + '-weeks-filter'"
+            v-model="selectedWeeks"
+            :weeks="weeks"
+            :facets="data.facets.static_weeks_filter"
           />
         </div>
       </Fieldset>
@@ -89,6 +96,7 @@ import Fieldset from '@/components/Fieldset.vue'
 import AgesFilter from '@/components/filters/Ages.vue'
 import DaysFilter from '@/components/filters/Days.vue'
 import DaysTimesFilter from '@/components/filters/DaysTimes.vue'
+import WeeksFilter from '@/components/filters/Weeks.vue'
 import LocationsFilter from '@/components/filters/Locations.vue'
 import ActivitiesFilter from '@/components/filters/Activities.vue'
 
@@ -99,6 +107,7 @@ export default {
     AgesFilter,
     DaysFilter,
     DaysTimesFilter,
+    WeeksFilter,
     LocationsFilter,
     ActivitiesFilter
   },
@@ -123,6 +132,10 @@ export default {
       type: Array,
       required: true
     },
+    weeks: {
+      type: Array,
+      required: true
+    },
     locations: {
       type: Array,
       required: true
@@ -143,6 +156,10 @@ export default {
       type: Array,
       required: true
     },
+    initialWeeks: {
+      type: Array,
+      required: true
+    },
     initialLocations: {
       type: Array,
       required: true
@@ -156,6 +173,10 @@ export default {
       required: true
     },
     legacyMode: {
+      type: Boolean,
+      required: true
+    },
+    weeksFilter: {
       type: Boolean,
       required: true
     },
@@ -177,13 +198,19 @@ export default {
       selectedAges: this.initialAges,
       selectedDays: this.initialDays,
       selectedDaysTimes: this.initialDaysTimes,
+      selectedWeeks: this.initialWeeks,
       selectedLocations: this.initialLocations,
       selectedActivities: this.initialActivities
     }
   },
   computed: {
     scheduleFiltersCount() {
-      return this.selectedAges.length + this.selectedDays.length + this.selectedDaysTimes.length
+      return (
+        this.selectedAges.length +
+        this.selectedDays.length +
+        this.selectedDaysTimes.length +
+        this.selectedWeeks.length
+      )
     },
     activityFiltersCount() {
       return this.selectedActivities.length
@@ -200,6 +227,7 @@ export default {
         !this.isEqual(this.selectedAges, this.initialAges) ||
         !this.isEqual(this.selectedDays, this.initialDays) ||
         !this.isEqual(this.selectedDaysTimes, this.initialDaysTimes) ||
+        !this.isEqual(this.selectedWeeks, this.initialWeeks) ||
         !this.isEqual(this.selectedLocations, this.initialLocations) ||
         !this.isEqual(this.selectedActivities, this.initialActivities)
       )
@@ -215,6 +243,9 @@ export default {
     initialDaysTimes() {
       this.selectedDaysTimes = this.initialDaysTimes
     },
+    initialWeeks() {
+      this.selectedWeeks = this.initialWeeks
+    },
     initialLocations() {
       this.selectedLocations = this.initialLocations
     },
@@ -229,6 +260,9 @@ export default {
     },
     selectedDaysTimes() {
       this.filterChange({ filter: 'selectedDaysTimes', value: this.selectedDaysTimes })
+    },
+    selectedWeeks() {
+      this.filterChange({ filter: 'selectedWeeks', value: this.selectedWeeks })
     },
     selectedLocations() {
       this.filterChange({ filter: 'selectedLocations', value: this.selectedLocations })
@@ -247,7 +281,7 @@ export default {
       }
     },
     applyFilters() {
-      for (let key of ['Ages', 'Days', 'DaysTimes', 'Locations', 'Activities']) {
+      for (let key of ['Ages', 'Days', 'DaysTimes', 'Weeks', 'Locations', 'Activities']) {
         if (!this.isEqual(this['selected' + key], this['initial' + key])) {
           this.$emit('filterChange', { filter: 'selected' + key, value: this['selected' + key] })
         }

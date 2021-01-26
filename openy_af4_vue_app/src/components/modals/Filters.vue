@@ -32,7 +32,8 @@ import {
   locationsList,
   daysList,
   timesList,
-  daysTimesList
+  daysTimesList,
+  weeksList
 } from '@/helpers/filters'
 
 export default {
@@ -77,6 +78,14 @@ export default {
       type: Array,
       required: true
     },
+    weeks: {
+      type: Array,
+      required: true
+    },
+    selectedWeeks: {
+      type: Array,
+      required: true
+    },
     activities: {
       type: Array,
       required: true
@@ -107,7 +116,8 @@ export default {
         ...locationsList(this.selectedLocations, this.locations),
         ...daysList(this.selectedDays, this.days),
         ...timesList(this.selectedTimes, this.times),
-        ...daysTimesList(this.selectedDaysTimes, this.daysTimes)
+        ...daysTimesList(this.selectedDaysTimes, this.daysTimes),
+        ...weeksList(this.selectedWeeks, this.weeks)
       ].sort()
     }
   },
