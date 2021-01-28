@@ -20,17 +20,10 @@ use Drupal\paragraphs\Entity\Paragraph;
       'langcode' => 'en',
       'uid' => '1',
       'status' => 1,
-      'field_prgf_block' => [
-        [
-          'plugin_id' => 'activity_finder_4',
-          'plugin_configuration' => [
-            'exclude_by_category' => [],
-          ],
-        ],
-      ]
+      'field_lp_layout' => ['value' => 'one_column_clean'],
     ]
   );
-  $af_paragraph->save();
+  $af_node->save();
 
   $af_paragraph = Paragraph::create(
     [
@@ -39,7 +32,14 @@ use Drupal\paragraphs\Entity\Paragraph;
       'parent_type' => 'node',
       'parent_field_name' => 'field_content',
       'status' => 1,
-      'field_prgf_block' => ['plugin_id' => 'activity_finder_4']
+      'field_prgf_block' => [
+        [
+          'plugin_id' => 'activity_finder_4',
+          'plugin_configuration' => [
+            'exclude_by_category' => [],
+          ],
+        ],
+      ]
     ]
   );
   $af_paragraph->save();
