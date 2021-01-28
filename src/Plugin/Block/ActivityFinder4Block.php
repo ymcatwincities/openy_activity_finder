@@ -135,6 +135,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     return [
       '#theme' => 'openy_activity_finder_4_block',
       '#backend_service' => $backend_service_id,
+      '#label' => $conf['label'],
+      '#label_display' => (bool) $conf['label_display'],
       '#ages' => $backend->getAges(),
       '#days' => $backend->getDaysOfWeek(),
       '#times' => $backend->getPartsOfDay(),
@@ -149,7 +151,9 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       // TODO: make default sort option configurable.
       '#default_sort_option' => array_keys($sort_options)[0],
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
-      '#legacy_mode' => $conf['legacy_mode'],
+      '#limit_by_category' => $conf['limit_by_category'],
+      '#exclude_by_category' => $conf['exclude_by_category'],
+      '#legacy_mode' => (bool) $conf['legacy_mode'],
       '#hide_home_branch_block' => (bool) $conf['hide_home_branch_block'],
       '#background_image' => [
         'mobile' => $image_mobile,
@@ -178,6 +182,30 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $conf = $this->getConfiguration();
+
+    $base_by_category = [
+      '#type' => 'entity_autocomplete',
+      '#description' => $this->t('Separate multiple values by comma.'),
+      '#target_type' => 'node',
+      '#tags' => TRUE,
+      '#selection_settings' => [
+        'target_bundles' => ['program_subcategory'],
+      ],
+      '#size' => 100,
+      '#maxlength' => 1024,
+    ];
+    $form['limit_by_category'] = $base_by_category + [
+      '#title' => $this->t('Limit by category'),
+      '#default_value' => $conf['limit_by_category']
+        ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['limit_by_category'])
+        : NULL,
+    ];
+    $form['exclude_by_category'] = $base_by_category + [
+      '#title' => $this->t('Exclude by category'),
+      '#default_value' => $conf['exclude_by_category']
+        ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['exclude_by_category'])
+        : NULL,
+    ];
 
     $form['legacy_mode'] = [
       '#type' => 'checkbox',
@@ -211,6 +239,12 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
+    $this->configuration['limit_by_category'] = $form_state->getValue('limit_by_category')
+      ? array_column($form_state->getValue('limit_by_category'), 'target_id')
+      : [];
+    $this->configuration['exclude_by_category'] = $form_state->getValue('exclude_by_category')
+      ? array_column($form_state->getValue('exclude_by_category'), 'target_id')
+      : [];
     $this->configuration['legacy_mode'] = $form_state->getValue('legacy_mode');
     $this->configuration['hide_home_branch_block'] = $form_state->getValue('hide_home_branch_block');
     $this->configuration['background_image'] = $this->getEntityBrowserValue($form_state, 'background_image');

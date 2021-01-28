@@ -44,6 +44,25 @@ version 4.
 - Uninstall "OpenY Paragraph Activity Finder Search" module,
   Machine name: `openy_paragraph_activity_finder_search`
 
+## Trusted redirect host patterns
+Activity Finder has a feature to track redirects to 3rd party systems. In order
+to control the URLs to redirect to you should use the trusted host patterns.
+This feature works similar to Drupal core trusted_host_patterns setting.
+
+Example - add this section to the settings.php:
+```
+// Trusted hosts to redirect to for Activity Finder.
+$settings['activity_finder_trusted_redirect_host_patterns'] = [
+  '^apm\.activecommunities\.com$',
+];
+```
+It is also recommended to disallow these paths in robots.txt:
+```
+# Activity Finder redirects
+Disallow: /af/register-redirect/
+Disallow: /index.php/af/register-redirect/
+```
+
 ## Development
 
 ### How to override processResults in Activity Finder

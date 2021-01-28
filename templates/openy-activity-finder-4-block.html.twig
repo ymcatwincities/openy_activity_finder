@@ -4,6 +4,8 @@
  *
  * Available variables:
  * - backend_service
+ * - label
+ * - label_display
  * - ages
  * - days
  * - times
@@ -17,6 +19,8 @@
  * - expanderSectionsConfig
  * - sort_options
  * - default_sort_option
+ * - limit_by_category
+ * - exclude_by_category
  * - legacy_mode
  * - background_image
  */
@@ -27,6 +31,8 @@
   <div class="activity-finder__wrapper">
     <activity-finder
       :backend-service="{{ backend_service|json_encode }}"
+      :label="{{ label|json_encode }}"
+      :label-display="{{ label_display|json_encode }}"
       :ages="{{ ages|json_encode }}"
       :days="{{ days|json_encode }}"
       :times="{{ times|json_encode }}"
@@ -37,6 +43,8 @@
       :locations="{{ locations|json_encode }}"
       :sort-options="{{ sort_options|json_encode }}"
       :default-sort-option="{{ default_sort_option|json_encode }}"
+      :limit-by-category="{{ limit_by_category|json_encode }}"
+      :exclude-by-category="{{ exclude_by_category|json_encode }}"
       :legacy-mode="{{ legacy_mode|json_encode }}"
       :hide-home-branch-block="{{ hide_home_branch_block|json_encode }}"
       :background-image="{{ background_image|json_encode }}"
