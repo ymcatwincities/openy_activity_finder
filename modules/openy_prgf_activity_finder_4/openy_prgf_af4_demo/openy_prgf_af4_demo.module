@@ -20,10 +20,17 @@ use Drupal\paragraphs\Entity\Paragraph;
       'langcode' => 'en',
       'uid' => '1',
       'status' => 1,
-      'field_lp_layout' => ['value' => 'one_column_clean'],
+      'field_prgf_block' => [
+        [
+          'plugin_id' => 'activity_finder_4',
+          'plugin_configuration' => [
+            'exclude_by_category' => [],
+          ],
+        ],
+      ]
     ]
   );
-  $af_node->save();
+  $af_paragraph->save();
 
   $af_paragraph = Paragraph::create(
     [
