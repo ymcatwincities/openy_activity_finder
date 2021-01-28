@@ -32,7 +32,14 @@ use Drupal\paragraphs\Entity\Paragraph;
       'parent_type' => 'node',
       'parent_field_name' => 'field_content',
       'status' => 1,
-      'field_prgf_block' => ['plugin_id' => 'activity_finder_4']
+      'field_prgf_block' => [
+        [
+          'plugin_id' => 'activity_finder_4',
+          'plugin_configuration' => [
+            'exclude_by_category' => [],
+          ],
+        ],
+      ]
     ]
   );
   $af_paragraph->save();
