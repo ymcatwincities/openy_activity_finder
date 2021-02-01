@@ -77,6 +77,20 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
+  public function defaultConfiguration() {
+    return [
+      'label_display' => 'visible',
+      'limit_by_category' => [],
+      'exclude_by_category' => [],
+      'legacy_mode' => 0,
+      'weeks_filter' => 0,
+      'hide_home_branch_block' => 0,
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function build() {
     $activity_finder_settings = $this->configFactory->get('openy_activity_finder.settings');
     $backend_service_id = $activity_finder_settings->get('backend');
@@ -136,7 +150,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#theme' => 'openy_activity_finder_4_block',
       '#backend_service' => $backend_service_id,
       '#label' => $conf['label'],
-      '#label_display' => (bool) $conf['label_display'],
+      '#label_display' => $conf['label_display'] == 'visible',
       '#ages' => $backend->getAges(),
       '#days' => $backend->getDaysOfWeek(),
       '#times' => $backend->getPartsOfDay(),
