@@ -98,7 +98,7 @@ class WeekdaysPartsOfDay extends ProcessorPluginBase implements ContainerFactory
       return;
     }
 
-    $paragraphs = $entity->field_session_time->referencedEntities();
+    $paragraphs = $entity->field_session_time ? $entity->field_session_time->referencedEntities() : [];
     if (empty($paragraphs)) {
       return;
     }
