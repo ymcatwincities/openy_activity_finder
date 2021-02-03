@@ -57,7 +57,11 @@ class PartsOfDay extends ProcessorPluginBase {
     $time12pm = strtotime('12:00:00Z');
     $time5pm = strtotime('17:00:00Z');
 
-    if ($entity->hasField('field_session_time') && $paragraphs = $entity->field_session_time->referencedEntities()) {
+    if ($entity->hasField('field_session_time')) {
+      $paragraphs = $entity->field_session_time ? $entity->field_session_time->referencedEntities() : [];
+      if (empty($paragraphs)) {
+        return;
+      }
       $values = [];
       foreach ($paragraphs as $paragraph) {
         $_period = $paragraph->field_session_time_date->getValue()[0];
