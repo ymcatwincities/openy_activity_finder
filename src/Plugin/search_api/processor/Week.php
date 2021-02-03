@@ -54,7 +54,7 @@ class Week extends ProcessorPluginBase {
     preg_match('/Camp/', $entity->getTitle(), $matches_title);
     preg_match('/Camp/', $entity->field_session_room->value, $matches_room);
     if (!empty($matches_title[0]) || !empty($matches_room[0])) {
-      $dates = $entity->field_session_time->referencedEntities();
+      $dates = $entity->field_session_time ? $entity->field_session_time->referencedEntities() : [];
       foreach ($dates as $date) {
         if (empty($date) || empty($date->field_session_time_date->getValue())) {
           continue;

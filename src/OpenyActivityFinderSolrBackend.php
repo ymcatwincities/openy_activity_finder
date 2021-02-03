@@ -308,7 +308,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         continue;
       }
       $fields = $result_item->getFields();
-      $dates = $entity->field_session_time->referencedEntities();
+      $dates = $entity->field_session_time ? $entity->field_session_time->referencedEntities() : [];
       $schedule_items = [];
       foreach ($dates as $date) {
         $_period = $date->field_session_time_date->getValue()[0];
