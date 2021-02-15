@@ -437,13 +437,15 @@ export default {
   computed: {
     // Search parameters for data request.
     searchParams() {
+      // We shouldn't filter by the selected values on the corresponding step
+      // to not limit the available options.
       let params = {
-        ages: this.selectedAges.join(','),
-        days: this.selectedDays.join(','),
-        times: this.selectedTimes.join(','),
-        daystimes: this.selectedDaysTimes.join(','),
-        locations: this.selectedLocations.join(','),
-        categories: this.selectedActivities.join(','),
+        ages: this.step === 'selectAges' ? '' : this.selectedAges.join(','),
+        days: this.step === 'selectDays' ? '' : this.selectedDays.join(','),
+        times: this.step === 'selectTimes' ? '' : this.selectedTimes.join(','),
+        daystimes: this.step === 'selectDaysTimes' ? '' : this.selectedDaysTimes.join(','),
+        locations: this.step === 'selectLocations' ? '' : this.selectedLocations.join(','),
+        categories: this.step === 'selectActivities' ? '' : this.selectedActivities.join(','),
         page: this.selectedPage,
         sort: this.selectedSort,
         keywords: this.searchKeywords,
@@ -458,17 +460,7 @@ export default {
     },
     // Search parameters casted to string primitive.
     searchParamsString() {
-      return [
-        ...this.selectedAges,
-        ...this.selectedDays,
-        ...this.selectedTimes,
-        ...this.selectedDaysTimes,
-        ...this.selectedLocations,
-        ...this.selectedActivities,
-        this.selectedPage,
-        this.selectedSort,
-        this.searchKeywords
-      ].join('_')
+      return Object.values(this.searchParams).join('_')
     },
     // Reset page parameters casted to string primitive.
     resetPageString() {
