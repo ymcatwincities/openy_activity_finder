@@ -233,10 +233,9 @@ export default {
     },
     getButtonTitle(index) {
       let title = this.t('Register now')
-      if (
-        this.cartItems[index].item.spots_available !== '' &&
-        !this.cartItems[index].item.spots_available
-      ) {
+      // parseInt('') -> NaN
+      // parseInt('0') -> 0
+      if (parseInt(this.cartItems[index].item.spots_available) === 0) {
         title =
           this.cartItems[index].item.wait_list_availability > 0
             ? this.t('Waiting list')
@@ -245,9 +244,10 @@ export default {
       return title
     },
     isRegisterDisabled(index) {
+      // parseInt('') -> NaN
+      // parseInt('0') -> 0
       return (
-        this.cartItems[index].item.spots_available !== '' &&
-        !this.cartItems[index].item.spots_available &&
+        parseInt(this.cartItems[index].item.spots_available) === 0 &&
         !this.cartItems[index].item.wait_list_availability
       )
     },
