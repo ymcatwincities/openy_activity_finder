@@ -83,6 +83,10 @@ export default {
     multiple: {
       type: Boolean,
       default: true
+    },
+    excludeByCategory: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -92,16 +96,35 @@ export default {
   },
   computed: {
     filteredActivities() {
-      if (!this.firstStep) {
+      if (!this.firstStep && !this.excludeByCategory.length) {
         return this.activities
       }
 
       const filteredActivities = {}
-      for (let key in this.activities) {
-        if (this.optionsCount(key) > 0) {
-          filteredActivities[key] = this.activities[key]
+      this.activities.forEach((activityGroup, key) => {
+        // Filter out activity groups with empty facets if it is the first step.
+        if (this.firstStep && !this.optionsCount(key)) {
+          return
         }
-      }
+
+        // Filter out excluded categories.
+        if (!this.excludeByCategory.length) {
+          filteredActivities[key] = activityGroup
+          return
+        }
+
+        const filteredValue = activityGroup.value.filter(item => {
+          return !this.excludeByCategory.includes(item.value.toString())
+        })
+        if (!filteredValue.length) {
+          return
+        }
+
+        filteredActivities[key] = {
+          ...activityGroup,
+          value: filteredValue
+        }
+      })
       return filteredActivities
     },
     filtersSelected() {
