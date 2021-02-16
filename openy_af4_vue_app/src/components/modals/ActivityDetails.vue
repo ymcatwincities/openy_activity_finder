@@ -253,17 +253,17 @@ export default {
     },
     getButtonTitle() {
       let title = this.t('Register')
-      if (this.item.spots_available !== '' && !this.item.spots_available) {
+      // parseInt('') -> NaN
+      // parseInt('0') -> 0
+      if (parseInt(this.item.spots_available) === 0) {
         title = this.item.wait_list_availability > 0 ? this.t('Waiting list') : this.t('Full')
       }
       return title
     },
     isRegisterDisabled() {
-      return (
-        this.item.spots_available !== '' &&
-        !this.item.spots_available &&
-        !this.item.wait_list_availability
-      )
+      // parseInt('') -> NaN
+      // parseInt('0') -> 0
+      return parseInt(this.item.spots_available) === 0 && !this.item.wait_list_availability
     }
   },
   watch: {
