@@ -117,6 +117,7 @@ export default {
       padding: 0 10px;
       border-radius: 5px;
       background-color: $af-violet;
+      color: $white;
       margin-bottom: 20px;
 
       &:last-child {
