@@ -534,9 +534,10 @@ export default {
         flex-grow: 1;
         border-radius: 5px;
         font-size: 18px;
-        line-height: 50px;
+        line-height: 32px;
         font-weight: bolder;
         padding: 0 15px 0 20px;
+        white-space: normal;
 
         .fa {
           font-size: 20px;
