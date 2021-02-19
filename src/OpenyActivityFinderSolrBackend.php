@@ -760,7 +760,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       ];
       $locations[$item['type']]['label'] = ucfirst($item['type']);
     }
-    return array_values($locations);
+    return array_filter(array_values($locations));
   }
 
   /**
