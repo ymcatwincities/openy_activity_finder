@@ -57,10 +57,15 @@ class AgesMinMax extends ProcessorPluginBase {
         $min_age = 0;
       }
       if (empty($max_age)) {
-        // Set max age as 100 years if max age was not set the a session.
+        // Set max age as 100 years if max age was not set in the session.
         $max_age = 100 * 12;
       }
-      $range = range($min_age, $max_age, 6);
+      if ($max_age - $min_age < 6) {
+        $range = [$min_age];
+      }
+      else {
+        $range = range($min_age, $max_age, 6);
+      }
       $fields = $this->getFieldsHelper()
         ->filterForPropertyPath($item->getFields(), NULL, 'search_api_af_ages_min_max');
       foreach ($fields as $field) {
