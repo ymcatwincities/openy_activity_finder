@@ -70,16 +70,17 @@ class ActivityFinderController extends ControllerBase {
     $hash_ip_agent = substr($user_agent, 0, 50) . '   ' . $ip;
     $record = [
       'hash_ip_agent' => $hash_ip_agent,
-      'location' => $request->get('locations'),
-      'keyword' => $request->get('keywords'),
-      'category' => $request->get('categories'),
-      'page' => $request->get('page'),
-      'day' => $request->get('days'),
+      'ages' => $request->get('ages'),
+      'days' => $request->get('days'),
       'times' => $request->get('times'),
       'daystimes' => $request->get('daystimes'),
       'weeks' => $request->get('weeks'),
-      'age' => $request->get('ages'),
+      'locations' => $request->get('locations'),
+      'categories' => $request->get('categories'),
+      'page' => $request->get('page'),
       'sort' => $request->get('sort'),
+      'keywords' => $request->get('keywords'),
+      'exclude' => $request->get('exclude'),
     ];
     $record['hash'] = md5(json_encode($record));
 
