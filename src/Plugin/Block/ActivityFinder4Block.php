@@ -206,7 +206,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
         'target_bundles' => ['program_subcategory'],
       ],
       '#size' => 100,
-      '#maxlength' => 1024,
+      '#maxlength' => 2048,
     ];
     $form['limit_by_category'] = $base_by_category + [
       '#title' => $this->t('Limit by category'),
