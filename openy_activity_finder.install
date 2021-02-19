@@ -29,6 +29,19 @@ function openy_activity_finder_install() {
 }
 
 /**
+ * Implements hook_update_dependencies().
+ */
+function openy_activity_finder_update_dependencies() {
+  $dependencies['openy_activity_finder'] = [
+    8006 => [
+      'search_api_solr' => 8332,
+    ],
+  ];
+
+  return $dependencies;
+}
+
+/**
 * Update configs.
 */
 function openy_activity_finder_update_8001() {
