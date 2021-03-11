@@ -94,8 +94,9 @@ export default {
     selectedDimensions() {
       return (
         (this.selectedAges.length ? 1 : 0) +
-        (this.selectedDaysTimes.length ? 1 : 0) +
+        (this.selectedDays.length ? 1 : 0) +
         (this.selectedTimes.length ? 1 : 0) +
+        (this.selectedDaysTimes.length ? 1 : 0) +
         (this.selectedLocations.length ? 1 : 0) +
         (this.selectedActivities.length ? 1 : 0)
       )
