@@ -71,12 +71,12 @@
       </template>
       <template v-if="showHomeBranchBlock" v-slot:home-branch>
         <p>
-          <a role="button" class="homebranch-link" @click.stop.prevent="viewResults">
+          <a role="button" class="homebranch-link" @click.stop.prevent="viewHomeBranchResults">
             <strong>{{ 'View all programs for Home Branch' | t }}</strong>
           </a>
         </p>
-        <p class="homebranch-results-count">
-          {{ data.count | formatPlural('1 Result', '@count Results') }}
+        <p v-if="homeBranchResultsCount" class="homebranch-results-count">
+          {{ homeBranchResultsCount | formatPlural('1 Result', '@count Results') }}
         </p>
       </template>
     </SelectPath>
@@ -127,6 +127,7 @@
       :locations="locations"
       :facets="data.facets.locations"
       :first-step="selectedPath === 'selectLocations'"
+      :home-branch-id="homeBranchId"
       @nextStep="nextStep('selectLocations')"
     />
     <SelectActivities
@@ -417,25 +418,14 @@ export default {
       cartItemsTimeout: 5 * 24 * 3600 * 1000,
       clearFiltersSkip: ['step', 'selectedSort', 'searchKeywords'],
       // The Home Branch ID from cookie.
-      homeBranchId: null
+      homeBranchId: this.getHomeBranchId(),
+      // Results count for the Home Branch.
+      homeBranchResultsCount: null
     }
 
     // Identify daxko backend.
     if (this.backendService === 'openy_daxko2.openy_activity_finder_backend') {
       data.daxko = true
-    }
-
-    // Check if we have the Home Branch location set.
-    const cookie = this.getCookie('home_branch')
-    if (cookie !== '') {
-      try {
-        data.homeBranchId = JSON.parse(cookie).id
-        if (data.homeBranchId) {
-          data.defaults.selectedLocations = [data.homeBranchId]
-        }
-      } catch (e) {
-        data.homeBranchId = null
-      }
     }
 
     // Legacy mode tweaks.
@@ -613,6 +603,7 @@ export default {
   },
   created() {
     this.loadData()
+    this.getHomeBranchResultsCount()
   },
   mounted() {
     if (localStorage.getItem(this.cartItemsKey)) {
@@ -636,6 +627,7 @@ export default {
                 })
                 .filter(cartItem => cartItem.item)
             })
+            .catch(error => { error })
         }
       } catch (e) {
         localStorage.removeItem(this.cartItemsKey)
@@ -661,6 +653,10 @@ export default {
       }
     },
     viewResults() {
+      this.step = 'results'
+    },
+    viewHomeBranchResults() {
+      this.selectedLocations = [this.homeBranchId]
       this.step = 'results'
     },
     loadData() {
@@ -690,6 +686,7 @@ export default {
           // If there were other changes while the request was in progress - we should load data again.
           this.loadData()
         })
+        .catch(error => { error })
     },
     getDataFromUrl() {
       const query = this.$route.query
@@ -743,9 +740,7 @@ export default {
         })
         // TODO: is there any good way to detect if we are already at this router location? - MPR-164
         // Catch to avoid "NavigationDuplicated" error.
-        .catch(err => {
-          err
-        })
+        .catch(err => { err })
     },
     onFilterChange(event, callback = () => {}) {
       callback()
@@ -797,6 +792,40 @@ export default {
     onSearchInput(keywords) {
       this.searchKeywords = keywords
       this.step = 'results'
+    },
+    getHomeBranchId() {
+      const cookie = this.getCookie('home_branch')
+      if (cookie !== '') {
+        try {
+          return JSON.parse(cookie).id
+        } catch (e) {
+          return null
+        }
+      }
+      return null
+    },
+    getHomeBranchResultsCount() {
+      if (this.hideHomeBranchBlock) {
+        return
+      }
+      if (!this.homeBranchId) {
+        return
+      }
+      if (this.homeBranchResultsCount) {
+        return
+      }
+
+      client()
+        .request({
+          params: {
+            locations: this.homeBranchId,
+            exclude: this.searchParams.exclude
+          }
+        })
+        .then(response => {
+          this.homeBranchResultsCount = response.data.count
+        })
+        .catch(error => { error })
     }
   }
 }
