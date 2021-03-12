@@ -52,13 +52,18 @@
               </div>
 
               <div class="ages-spots">
-                <span v-if="item.ages" class="ages">
+                <span v-if="item.ages || (selectedAges.length && !legacyMode)" class="ages">
                   <span class="age-label">{{ 'Ages' | t }}:</span>
                   <span v-if="!selectedAges.length || legacyMode" class="info">
                     {{ item.ages }}
                   </span>
                   <template v-for="age in selectedAges" v-else>
-                    <template v-if="parseInt(item.min_age) <= age && parseInt(item.max_age) >= age">
+                    <template
+                      v-if="
+                        (!item.min_age || parseInt(item.min_age) <= age) &&
+                          (!item.max_age || parseInt(item.max_age) >= age)
+                      "
+                    >
                       <AgeIcon :key="age" :age="parseInt(age)" :ages="ages" big />
                     </template>
                   </template>
@@ -118,13 +123,18 @@
                 <span class="title">
                   {{ item.name }}
                 </span>
-                <span v-if="item.ages" class="ages">
+                <span v-if="item.ages || (selectedAges.length && !legacyMode)" class="ages">
                   <span class="age-label">{{ 'Ages' | t }}:</span>
                   <span v-if="!selectedAges.length || legacyMode" class="info">
                     {{ item.ages }}
                   </span>
                   <template v-for="age in selectedAges" v-else>
-                    <template v-if="parseInt(item.min_age) <= age && parseInt(item.max_age) >= age">
+                    <template
+                      v-if="
+                        (!item.min_age || parseInt(item.min_age) <= age) &&
+                          (!item.max_age || parseInt(item.max_age) >= age)
+                      "
+                    >
                       <AgeIcon :key="age" :age="parseInt(age)" :ages="ages" big />
                     </template>
                   </template>
