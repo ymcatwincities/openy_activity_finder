@@ -47,6 +47,7 @@
           :weeks-filter="weeksFilter"
           :filters-section-config="filtersSectionConfig"
           :daxko="daxko"
+          :exclude-by-category="excludeByCategory"
           @filterChange="onFilterChange($event, hideModal)"
           @clearFilters="clearFilters(hideModal)"
         />
@@ -177,6 +178,7 @@
           :weeks-filter="weeksFilter"
           :filters-section-config="filtersSectionConfig"
           :daxko="daxko"
+          :exclude-by-category="excludeByCategory"
           filters-mode="instant"
           @filterChange="onFilterChange($event)"
           @clearFilters="clearFilters"

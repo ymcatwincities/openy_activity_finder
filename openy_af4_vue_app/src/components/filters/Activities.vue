@@ -1,7 +1,7 @@
 <template>
   <div class="activities-filter-component">
     <Foldable
-      v-for="(item_type, index) in activities"
+      v-for="(item_type, index) in filteredActivities"
       :key="id + '-activity-type-' + index"
       :label="item_type.label"
       :collapse-id="id + '-toggle-' + index"
@@ -55,11 +55,44 @@ export default {
     multiple: {
       type: Boolean,
       default: true
+    },
+    excludeByCategory: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
       selectedActivities: this.multiple ? this.value : this.value.length ? this.value[0] : null
+    }
+  },
+  computed: {
+    filteredActivities() {
+      if (!this.excludeByCategory.length) {
+        return this.activities
+      }
+
+      const filteredActivities = {}
+      this.activities.forEach((activityGroup, key) => {
+        // Filter out excluded categories.
+        if (!this.excludeByCategory.length) {
+          filteredActivities[key] = activityGroup
+          return
+        }
+
+        const filteredValue = activityGroup.value.filter(item => {
+          return !this.excludeByCategory.includes(item.value.toString())
+        })
+        if (!filteredValue.length) {
+          return
+        }
+
+        filteredActivities[key] = {
+          ...activityGroup,
+          value: filteredValue
+        }
+      })
+      return filteredActivities
     }
   },
   watch: {
