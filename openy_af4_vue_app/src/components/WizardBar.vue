@@ -26,6 +26,8 @@
         :selected-times="selectedTimes"
         :days-times="daysTimes"
         :selected-days-times="selectedDaysTimes"
+        :weeks="weeks"
+        :selected-weeks="selectedWeeks"
         :locations="locations"
         :selected-locations="selectedLocations"
         :activities="activities"
@@ -65,6 +67,10 @@ export default {
       type: Array,
       required: true
     },
+    weeks: {
+      type: Array,
+      required: true
+    },
     locations: {
       type: Array,
       required: true
@@ -82,6 +88,10 @@ export default {
       required: true
     },
     selectedDaysTimes: {
+      type: Array,
+      required: true
+    },
+    selectedWeeks: {
       type: Array,
       required: true
     },
@@ -108,6 +118,7 @@ export default {
         this.selectedDays.length +
         this.selectedTimes.length +
         this.selectedDaysTimes.length +
+        this.selectedWeeks.length +
         this.selectedLocations.length +
         this.selectedActivities.length
       )
