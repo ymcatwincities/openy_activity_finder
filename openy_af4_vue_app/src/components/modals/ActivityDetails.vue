@@ -244,8 +244,8 @@ export default {
 
       const availableAges = this.selectedAges.filter(age => {
         return (
-          parseInt(this.item.min_age) <= parseInt(age) &&
-          parseInt(this.item.max_age) >= parseInt(age)
+          (!this.item.min_age || parseInt(this.item.min_age) <= parseInt(age)) &&
+          (!this.item.max_age || parseInt(this.item.max_age) >= parseInt(age))
         )
       })
 
