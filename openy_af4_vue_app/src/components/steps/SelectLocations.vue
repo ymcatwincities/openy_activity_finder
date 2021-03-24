@@ -79,6 +79,10 @@ export default {
     firstStep: {
       type: Boolean,
       default: false
+    },
+    homeBranchId: {
+      type: String,
+      default: null
     }
   },
   data() {
@@ -108,6 +112,18 @@ export default {
     value() {
       this.selectedLocations = this.value
     }
+  },
+  mounted() {
+    if (!this.homeBranchId) {
+      return
+    }
+    if (this.selectedLocations.length) {
+      return
+    }
+    if (!this.facetCount(this.homeBranchId)) {
+      return
+    }
+    this.selectedLocations.push(this.homeBranchId)
   },
   methods: {
     onChange(location) {
