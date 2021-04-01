@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss">
-.results-bar-component {
+.results-bar-component .container {
   background-color: $af-light-gray;
 
   .controls {

@@ -80,6 +80,7 @@ function openy_activity_finder_theme() {
         'weeks_filter' => FALSE,
         'hide_home_branch_block' => FALSE,
         'background_image' => [],
+        'bootstrap_version' => NULL,
       ],
     ],
   ];
