@@ -8,7 +8,7 @@
         >
           <Loading />
         </div>
-        <div v-else :class="getFiltersClasses">
+        <div v-else :class="filtersClasses">
           <div class="search">
             <slot name="search" />
           </div>
@@ -18,7 +18,7 @@
         <div v-if="isLoadingData" class="col-12 col-xs-12 col-md-9">
           <Loading />
         </div>
-        <div v-else :class="getResultsClasses">
+        <div v-else :class="resultsClasses">
           <div class="header d-md-none hidden-md hidden-lg">
             <span class="results">
               {{ data.count | formatPlural('1 Result', '@count Results') }}
@@ -309,10 +309,10 @@ export default {
     }
   },
   computed: {
-    getFiltersClasses() {
+    filtersClasses() {
       return this.bsVersion === 4 ? 'col-3 d-none d-lg-block' : 'col-md-3 hidden-xs hidden-sm'
     },
-    getResultsClasses() {
+    resultsClasses() {
       return this.bsVersion === 4 ? 'col-12 col-lg-9' : ' col-xs-12 col-md-9'
     }
   },

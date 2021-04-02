@@ -21,7 +21,7 @@
     />
     <ResultsBar
       v-if="step === 'results'"
-      :class="getResultsBarClasses"
+      :class="resultsBarClasses"
       :disable-search-box="disableSearchBox"
     >
       <template v-if="!disableSearchBox" v-slot:search="{ hideModal }">
@@ -543,7 +543,7 @@ export default {
     showHomeBranchBlock() {
       return !this.hideHomeBranchBlock && this.homeBranchId
     },
-    getResultsBarClasses() {
+    resultsBarClasses() {
       return this.bsVersion === 4 ? 'd-lg-none' : 'hidden-md hidden-lg'
     }
   },

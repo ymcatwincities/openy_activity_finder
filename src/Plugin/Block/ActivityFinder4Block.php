@@ -26,7 +26,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
   use EntityBrowserFormTrait;
 
-  CONST THEME_BOOTSTRAP_VERSION = [
+  const THEME_BOOTSTRAP_VERSION = [
     'openy_carnation' => 4,
     'openy_lily' => 3,
     'openy_rose' => 3,
@@ -168,7 +168,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     $sort_options = $backend->getSortOptions();
 
     $bs_version = 4;
-    $theme_name = $this->themeManager->getActiveTheme()->getName();
+    $active_theme = $this->themeManager->getActiveTheme();
+    $theme_name = $active_theme->getExtension()->base_theme ?? $active_theme->getName();
     if (array_key_exists($theme_name, self::THEME_BOOTSTRAP_VERSION)) {
       $bs_version = self::THEME_BOOTSTRAP_VERSION[$theme_name];
     }
@@ -202,7 +203,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
         'mobile' => $image_mobile,
         'desktop' => $image_desktop,
       ],
-      '#bootstrap_version' => $bs_version,
+      '#bs_version' => $bs_version,
       '#attached' => [
         'library' => 'openy_activity_finder/activity_finder_4',
       ],
