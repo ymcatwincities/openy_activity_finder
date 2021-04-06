@@ -8,7 +8,6 @@ use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\openy_activity_finder\OpenyActivityFinderSolrBackend;
 use Drupal\openy_system\EntityBrowserFormTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -26,12 +25,6 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
   use EntityBrowserFormTrait;
 
-  const THEME_BOOTSTRAP_VERSION = [
-    'openy_carnation' => 4,
-    'openy_lily' => 3,
-    'openy_rose' => 3,
-  ];
-
   /**
    * Config Factory definition.
    *
@@ -47,13 +40,6 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   protected $entityTypeManager;
 
   /**
-   * The theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface
-   */
-  protected $themeManager;
-
-  /**
    * Constructs a Block object.
    *
    * @param array $configuration
@@ -66,19 +52,15 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    *   The Config Factory.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param \Drupal\Core\Theme\ThemeManagerInterface $theme_manager
-   *   The theme manager.
    */
   public function __construct(array $configuration,
                               $plugin_id,
                               $plugin_definition,
                               ConfigFactory $config_factory,
-                              EntityTypeManagerInterface $entity_type_manager,
-                              ThemeManagerInterface $theme_manager) {
+                              EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configFactory = $config_factory;
     $this->entityTypeManager = $entity_type_manager;
-    $this->themeManager = $theme_manager;
   }
 
   /**
@@ -90,8 +72,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
-      $container->get('entity_type.manager'),
-      $container->get('theme.manager')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -167,13 +148,6 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
     $sort_options = $backend->getSortOptions();
 
-    $bs_version = 4;
-    $active_theme = $this->themeManager->getActiveTheme();
-    $theme_name = $active_theme->getExtension()->base_theme ?? $active_theme->getName();
-    if (array_key_exists($theme_name, self::THEME_BOOTSTRAP_VERSION)) {
-      $bs_version = self::THEME_BOOTSTRAP_VERSION[$theme_name];
-    }
-
     return [
       '#theme' => 'openy_activity_finder_4_block',
       '#backend_service' => $backend_service_id,
@@ -203,7 +177,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
         'mobile' => $image_mobile,
         'desktop' => $image_desktop,
       ],
-      '#bs_version' => $bs_version,
+      '#bs_version' => (int) $activity_finder_settings->get('bs_version'),
       '#attached' => [
         'library' => 'openy_activity_finder/activity_finder_4',
       ],

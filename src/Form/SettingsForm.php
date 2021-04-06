@@ -151,6 +151,17 @@ class SettingsForm extends ConfigFormBase {
       ];
     }
 
+    $form['bs_version'] = [
+      '#type' => 'select',
+      '#options' => [
+        3 => 3,
+        4 => 4,
+      ],
+      '#title' => $this->t('Bootstrap version'),
+      '#default_value' => $config->get('bs_version'),
+      '#description' => $this->t('Determine which Bootstrap grid version to use.'),
+    ];
+
     $form['ages'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Ages'),
@@ -287,6 +298,7 @@ class SettingsForm extends ConfigFormBase {
 
     $config->set('backend', $form_state->getValue('backend'))->save();
     $config->set('index', $form_state->getValue('index'))->save();
+    $config->set('bs_version', $form_state->getValue('bs_version'))->save();
     $config->set('ages', $form_state->getValue('ages'))->save();
     $config->set('weeks', $form_state->getValue('weeks'))->save();
     $config->set('exclude', $form_state->getValue('exclude'))->save();
