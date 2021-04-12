@@ -209,3 +209,13 @@ function openy_activity_finder_update_8401() {
     $cim->importConfigs(['search_api.index.default']);
   }
 }
+
+/**
+ * Update Bootstrap version in Activity Finder configs.
+ */
+function openy_activity_finder_update_8402() {
+  \Drupal::configFactory()
+    ->getEditable('openy_activity_finder.settings')
+    ->set('bs_version', 3)
+    ->save();
+}

@@ -50,6 +50,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactory $config_factory
    *   The Config Factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
    */
   public function __construct(array $configuration,
                               $plugin_id,
@@ -175,6 +177,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
         'mobile' => $image_mobile,
         'desktop' => $image_desktop,
       ],
+      '#bs_version' => (int) $activity_finder_settings->get('bs_version'),
       '#attached' => [
         'library' => 'openy_activity_finder/activity_finder_4',
       ],

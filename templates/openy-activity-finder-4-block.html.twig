@@ -25,6 +25,7 @@
  * - legacy_mode
  * - weeks_filter
  * - background_image
+ * - bs_version
  */
  *
 #}
@@ -55,6 +56,7 @@
       :disable-spots-available="{{ disable_spots_available|json_encode }}"
       :disable-search-box="{{ disable_search_box|json_encode }}"
       :filters-section-config="{{ filters_section_config|json_encode }}"
+      :bs-version="{{ bs_version|json_encode }}"
     ></activity-finder>
   </div>
 </div>

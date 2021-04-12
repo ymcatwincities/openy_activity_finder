@@ -21,7 +21,7 @@
     />
     <ResultsBar
       v-if="step === 'results'"
-      class="d-md-none hidden-md hidden-lg"
+      :class="resultsBarClasses"
       :disable-search-box="disableSearchBox"
     >
       <template v-if="!disableSearchBox" v-slot:search="{ hideModal }">
@@ -150,6 +150,7 @@
       :legacy-mode="legacyMode"
       :disable-spots-available="disableSpotsAvailable"
       :request-more-info="daxko"
+      :bs-version="bsVersion"
       @startOver="startOver()"
       @addItem="addItem($event)"
       @removeItem="removeItem($event)"
@@ -344,6 +345,10 @@ export default {
     filtersSectionConfig: {
       type: Object,
       required: true
+    },
+    bsVersion: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -537,6 +542,9 @@ export default {
     },
     showHomeBranchBlock() {
       return !this.hideHomeBranchBlock && this.homeBranchId
+    },
+    resultsBarClasses() {
+      return this.bsVersion === 4 ? 'd-lg-none' : 'hidden-md hidden-lg'
     }
   },
   watch: {
@@ -627,7 +635,9 @@ export default {
                 })
                 .filter(cartItem => cartItem.item)
             })
-            .catch(error => { error })
+            .catch(error => {
+              error
+            })
         }
       } catch (e) {
         localStorage.removeItem(this.cartItemsKey)
@@ -686,7 +696,9 @@ export default {
           // If there were other changes while the request was in progress - we should load data again.
           this.loadData()
         })
-        .catch(error => { error })
+        .catch(error => {
+          error
+        })
     },
     getDataFromUrl() {
       const query = this.$route.query
@@ -740,7 +752,9 @@ export default {
         })
         // TODO: is there any good way to detect if we are already at this router location? - MPR-164
         // Catch to avoid "NavigationDuplicated" error.
-        .catch(err => { err })
+        .catch(err => {
+          err
+        })
     },
     onFilterChange(event, callback = () => {}) {
       callback()
@@ -825,7 +839,9 @@ export default {
         .then(response => {
           this.homeBranchResultsCount = response.data.count
         })
-        .catch(error => { error })
+        .catch(error => {
+          error
+        })
     }
   }
 }

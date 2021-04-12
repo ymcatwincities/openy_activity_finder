@@ -8,7 +8,7 @@
         >
           <Loading />
         </div>
-        <div v-else class="col-12 col-xs-12 col-md-3 d-none d-md-block hidden-xs hidden-sm">
+        <div v-else :class="filtersClasses">
           <div class="search">
             <slot name="search" />
           </div>
@@ -18,7 +18,7 @@
         <div v-if="isLoadingData" class="col-12 col-xs-12 col-md-9">
           <Loading />
         </div>
-        <div v-else class="col-12 col-xs-12 col-md-9">
+        <div v-else :class="resultsClasses">
           <div class="header d-md-none hidden-md hidden-lg">
             <span class="results">
               {{ data.count | formatPlural('1 Result', '@count Results') }}
@@ -291,6 +291,10 @@ export default {
     requestMoreInfo: {
       type: Boolean,
       default: false
+    },
+    bsVersion: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -302,6 +306,14 @@ export default {
       bookmarkedItemsModal: {
         visible: false
       }
+    }
+  },
+  computed: {
+    filtersClasses() {
+      return this.bsVersion === 4 ? 'col-3 d-none d-lg-block' : 'col-md-3 hidden-xs hidden-sm'
+    },
+    resultsClasses() {
+      return this.bsVersion === 4 ? 'col-12 col-lg-9' : ' col-xs-12 col-md-9'
     }
   },
   methods: {
