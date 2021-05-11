@@ -8,4 +8,4 @@ dependencies:
   - openy_node_landing:openy_node_landing
   - paragraphs:paragraphs
   - plugin:plugin
-version: 8.x-1.0
+version: 4.0.1
