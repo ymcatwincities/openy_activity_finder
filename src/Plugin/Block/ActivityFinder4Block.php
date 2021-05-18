@@ -87,6 +87,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       'legacy_mode' => 0,
       'weeks_filter' => 0,
       'hide_home_branch_block' => 0,
+      'background_image' => NULL,
     ];
   }
 
