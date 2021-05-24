@@ -1,6 +1,6 @@
 <template>
   <div class="filters-component">
-    <div class="filters-header d-none d-md-flex hidden-xs hidden-sm">
+    <div class="filters-header" :class="headerClasses">
       <span class="text-uppercase">
         <strong>{{ 'Filter' | t }}</strong>
       </span>
@@ -240,6 +240,9 @@ export default {
         !this.isEqual(this.selectedLocations, this.initialLocations) ||
         !this.isEqual(this.selectedActivities, this.initialActivities)
       )
+    },
+    headerClasses() {
+      return this.bsVersion === 4 ? 'd-none d-lg-flex' : 'hidden-xs hidden-sm'
     },
     footerClasses() {
       return this.bsVersion === 4 ? 'd-lg-none' : 'hidden-md hidden-lg'
