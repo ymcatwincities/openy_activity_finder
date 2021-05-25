@@ -24,7 +24,7 @@
         <div
           v-for="path in paths"
           :key="path.id"
-          class="col-6 col-xs-6 col-sm-3"
+          :class="pathClasses"
           @click="onClick(path.id)"
         >
           <button type="button" class="path btn">
@@ -72,11 +72,20 @@ export default {
     backgroundImage: {
       type: Object,
       required: true
+    },
+    bsVersion: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       image: this.backgroundImage.mobile
+    }
+  },
+  computed: {
+    pathClasses() {
+      return this.bsVersion === 4 ? 'col-6 col-md-3' : 'col-xs-6 col-md-3'
     }
   },
   mounted() {
