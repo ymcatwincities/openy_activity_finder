@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     pathClasses() {
-      return this.bsVersion === 4 ? 'col-6 col-md-3' : 'col-xs-6 col-md-3'
+      return this.bsVersion === 4 ? 'col-6 col-md-3' : 'col-xs-6 col-sm-3'
     }
   },
   mounted() {
