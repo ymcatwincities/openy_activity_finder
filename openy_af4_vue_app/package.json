@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "library": "vue-cli-service build --target lib --formats umd-min --name activity_finder_4 src/main.js",
-    "library-watch": "vue-cli-service build --target lib --formats umd-min --name activity_finder_4 src/main.js --watch"
+    "build": "vue-cli-service build --target lib --formats umd-min --name activity_finder_4 src/main.js",
+    "dev": "vue-cli-service build --target lib --formats umd-min --name activity_finder_4 src/main.js --watch",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.21.1",
