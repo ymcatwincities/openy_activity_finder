@@ -44,6 +44,35 @@ version 4.
 - Uninstall "OpenY Paragraph Activity Finder Search" module,
   Machine name: `openy_paragraph_activity_finder_search`
 
+### Activity Finder block options
+
+#### Title
+  A text field to display text that will displaying on top banner of the AF block
+#### Limit by category
+  A reference field where you can select the categories to limit results by these categories
+#### Exclude by category
+  A reference field where you can select the categories for which you don't want to display results
+#### Legacy mode
+  A special mode for show some data as on previous version of AF.
+
+  What it provides:
+  
+  - disables a bookmark functionality on the results screen
+  - doesn't display an age indicator in result card of activity
+  - changes the days + times wizard step. We can display only days of week, but not times of each day (doesn't support DaysTimes filter)
+#### Hide Home Branch info block
+  - You can just hide block that related to Home Branch functionality (link to result for Home branch and count of results for this branch)
+#### Background image
+  - An image field to upload the image for background of top banner of AF block
+
+### Limitations with using Daxko backend
+  - We can't use home branch functionality on start screen
+  - We have to use Legacy mode
+  - We can't display count of result for each age on the age's wizard step
+  - We can't display count of available spots for each activity, before user click by activity details
+- Limited pager on results page. We  can display only previous and next page link. And can't display count of pages
+
+
 ## Trusted redirect host patterns
 Activity Finder has a feature to track redirects to 3rd party systems. In order
 to control the URLs to redirect to you should use the trusted host patterns.
@@ -100,3 +129,5 @@ function custom_module_activity_finder_program_process_results_alter(&$data, Nod
   }
 }
 ```
+
+
