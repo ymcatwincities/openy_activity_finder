@@ -1,6 +1,6 @@
 <template>
   <div class="filters-component">
-    <div class="filters-header d-none d-md-flex hidden-xs hidden-sm">
+    <div class="filters-header" :class="headerClasses">
       <span class="text-uppercase">
         <strong>{{ 'Filter' | t }}</strong>
       </span>
@@ -78,7 +78,7 @@
         />
       </Fieldset>
     </div>
-    <div class="filters-footer d-md-none hidden-md hidden-lg">
+    <div class="filters-footer" :class="footerClasses">
       <div class="buttons">
         <div class="separator"></div>
         <button v-if="hasChanges" type="button" class="btn btn-lg btn-apply" @click="applyFilters">
@@ -196,6 +196,10 @@ export default {
     excludeByCategory: {
       type: Array,
       required: true
+    },
+    bsVersion: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -236,6 +240,12 @@ export default {
         !this.isEqual(this.selectedLocations, this.initialLocations) ||
         !this.isEqual(this.selectedActivities, this.initialActivities)
       )
+    },
+    headerClasses() {
+      return this.bsVersion === 4 ? 'd-none d-lg-flex' : 'hidden-xs hidden-sm'
+    },
+    footerClasses() {
+      return this.bsVersion === 4 ? 'd-lg-none' : 'hidden-md hidden-lg'
     }
   },
   watch: {
