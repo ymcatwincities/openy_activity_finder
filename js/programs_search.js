@@ -278,7 +278,7 @@
 
   // Does not yet support flat list of radios. Only two level as for Daxko location.
   Vue.component('sidebar-filter-single', {
-    props: ['title', 'id', 'options', 'default', 'type', 'hide_label', 'expander_sections_config', 'loading'],
+    props: ['title', 'id', 'options', 'default', 'type', 'expanded', 'hide_label', 'expander_sections_config', 'loading'],
     data: function() {
       return {
         radios: [],
