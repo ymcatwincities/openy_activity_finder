@@ -65,6 +65,7 @@
       :label-display="labelDisplay"
       :paths="paths"
       :background-image="backgroundImage"
+      :bs-version="bsVersion"
       @nextStep="nextStep('selectPath')"
     >
       <template v-if="!disableSearchBox" v-slot:search>
