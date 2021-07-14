@@ -1,7 +1,7 @@
 # Open Y Activity Finder
 
 ## Versions
-There are currently 2 major versions: 3 and 4. Open Y distribution has
+There is currently 1 major version: 4. Open Y distribution prior 9.2.10.0 had
 `^3.1 || ^4.0` version constraint allowing you to choose which version you want
 to use depending on the project requirements.
 
