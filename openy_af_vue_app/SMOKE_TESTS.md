@@ -305,7 +305,7 @@ Hide Program Categories
 
 ### Expected Results
 
-1. The select location step sould be skipped
+1. The select program step sould be skipped
 
 ## Check paragraph settings
 
