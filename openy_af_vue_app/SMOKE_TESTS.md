@@ -224,6 +224,8 @@ Anonymous
 - Sort by Activity (A-Z)
 - Sort by Activity (Z-A)
 4. All manipulations on the page happens without reloading the page
+5. Open browser console (press F12 on keyboard). Check there are no errors related to AF3 in console logs.
+
 
 ## Check paragraph settings
 
