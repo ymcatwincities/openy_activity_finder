@@ -1,6 +1,6 @@
-# Welcome to Grid Content smoke tests documentation
+# Welcome to Activity Finder 3 smoke tests documentation
 
-In order for Open Y Grid Content being tested in a short timeframe, please follow steps below
+In order for Open Y Activity Finder 3 being tested in a short timeframe, please follow steps below
 
 # Paragraph: Activity Finder 3 (Solr back-end)							
 
