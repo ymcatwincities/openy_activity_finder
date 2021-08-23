@@ -136,7 +136,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       $locations[$key]['count'] = 0;
       foreach ($group['value'] as $location) {
         foreach ($data['facets']['locations'] as $fl) {
-          if ($fl['id'] == $location['value']) {
+          if (isset($fl['id']) && isset($location['value']) && $fl['id'] == $location['value']) {
             $locations[$key]['count'] += $fl['count'];
           }
         }
@@ -489,7 +489,10 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
           // For some reason if location doesn't contain any session
           // in filter we have '!' instead of location name.
           if (!empty($item['filter']) && $item['filter'] != '!') {
-            $facets_m[$f][$i]['id'] = $locationsInfo[str_replace('"', '', $item['filter'])]['nid'];
+            $location_title = str_replace('"', '', $item['filter']);
+            if (isset($locationsInfo[$location_title])) {
+              $facets_m[$f][$i]['id'] = $locationsInfo[$location_title]['nid'];
+            }
           }
         }
         if ($f == 'field_activity_category') {
@@ -843,7 +846,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
           if (isset($ages[$i + 1]) && $ages[$i + 1] == 0) {
             $plus = ' + ';
           }
-          $ages_y[$i] = $ages[$i] . \Drupal::translation()->formatPlural($ages_y[$i], ' month', ' months' . $plus);
+          $ages_y[$i] = $ages[$i] . \Drupal::translation()->formatPlural($ages[$i], ' month', ' months' . $plus);
         }
         else {
           if ($ages[$i] == 0 && $ages[$i + 1]) {
