@@ -15,7 +15,7 @@
     "lodash": "^4.17.13",
     "moment": "^2.24.0",
     "query-string": "^6.8.3",
-    "set-value": ">=2.0.1",
+    "set-value": ">=4.0.1",
     "v-calendar": "^0.9.7",
     "vue-bootstrap-typeahead": "^0.2.6"
   },
