@@ -424,7 +424,7 @@ export default {
       cartItems: [],
       cartItemsKey: 'activity_finder.cartItems',
       cartItemsTimeout: 5 * 24 * 3600 * 1000,
-      clearFiltersSkip: ['step', 'selectedSort', 'searchKeywords'],
+      clearFiltersSkip: ['step', 'selectedSort'],
       // The Home Branch ID from cookie.
       homeBranchId: this.getHomeBranchId(),
       // Results count for the Home Branch.
