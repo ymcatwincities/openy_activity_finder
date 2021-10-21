@@ -6,10 +6,10 @@
       >
         <h2>{{ 'Oh no!' | t }}</h2>
         <p>{{ "We're sorry, but no results meet your search criteria." | t }}</p>
-        <p v-if="selectedDimensions >= 2">
+        <p v-if="selectedDimensionsAndKeywords >= 2">
           <strong>{{ 'What criteria is most important to you?' | t }}</strong>
         </p>
-        <div v-if="selectedDimensions >= 2" class="actions">
+        <div v-if="selectedDimensionsAndKeywords >= 2" class="actions">
           <button
             v-if="selectedAges.length"
             type="button"
@@ -113,9 +113,11 @@ export default {
         (this.selectedTimes.length ? 1 : 0) +
         (this.selectedDaysTimes.length ? 1 : 0) +
         (this.selectedLocations.length ? 1 : 0) +
-        (this.selectedActivities.length ? 1 : 0) +
-        (this.searchKeywords.length ? 1 : 0)
+        (this.selectedActivities.length ? 1 : 0)
       )
+    },
+    selectedDimensionsAndKeywords() {
+      return this.selectedDimensions + (this.searchKeywords.length ? 1 : 0)
     }
   },
   methods: {
