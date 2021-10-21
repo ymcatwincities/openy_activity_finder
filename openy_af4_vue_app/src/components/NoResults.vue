@@ -50,6 +50,9 @@
           >
             {{ 'Activity' | t }}
           </button>
+          <button v-if="searchKeywords.length" type="button" class="btn btn-lg" @click="onChoice()">
+            {{ 'Keywords' | t }}
+          </button>
         </div>
         <div v-else class="actions">
           <button v-if="selectedDimensions" type="button" class="btn btn-lg" @click="onChoice()">
@@ -110,12 +113,17 @@ export default {
         (this.selectedTimes.length ? 1 : 0) +
         (this.selectedDaysTimes.length ? 1 : 0) +
         (this.selectedLocations.length ? 1 : 0) +
-        (this.selectedActivities.length ? 1 : 0)
+        (this.selectedActivities.length ? 1 : 0) +
+        (this.searchKeywords.length ? 1 : 0)
       )
     }
   },
   methods: {
     onChoice(choice) {
+      // If we leave some specific filter, we should clear all others including the keywords.
+      if (choice) {
+        this.clearKeywords()
+      }
       this.$emit('noResultsChoice', choice)
     },
     clearKeywords() {
