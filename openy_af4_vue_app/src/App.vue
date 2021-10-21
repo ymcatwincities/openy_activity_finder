@@ -204,7 +204,9 @@
           :selected-days-times="selectedDaysTimes"
           :selected-locations="selectedLocations"
           :selected-activities="selectedActivities"
+          :search-keywords="searchKeywords"
           @noResultsChoice="noResultsChoice($event)"
+          @clearKeywords="clearKeywords($event)"
         />
       </template>
     </Results>
@@ -424,7 +426,7 @@ export default {
       cartItems: [],
       cartItemsKey: 'activity_finder.cartItems',
       cartItemsTimeout: 5 * 24 * 3600 * 1000,
-      clearFiltersSkip: ['step', 'selectedSort'],
+      clearFiltersSkip: ['step', 'selectedSort', 'searchKeywords'],
       // The Home Branch ID from cookie.
       homeBranchId: this.getHomeBranchId(),
       // Results count for the Home Branch.
@@ -805,6 +807,9 @@ export default {
           ? this.defaults[key].slice()
           : this.defaults[key]
       }
+    },
+    clearKeywords() {
+      this['searchKeywords'] = ''
     },
     onSearchInput(keywords) {
       this.searchKeywords = keywords
