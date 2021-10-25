@@ -809,7 +809,7 @@ export default {
       }
     },
     clearKeywords() {
-      this['searchKeywords'] = ''
+      this.searchKeywords = ''
     },
     onSearchInput(keywords) {
       this.searchKeywords = keywords

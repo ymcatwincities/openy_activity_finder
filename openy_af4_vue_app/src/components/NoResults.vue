@@ -6,10 +6,10 @@
       >
         <h2>{{ 'Oh no!' | t }}</h2>
         <p>{{ "We're sorry, but no results meet your search criteria." | t }}</p>
-        <p v-if="selectedDimensionsAndKeywords >= 2">
+        <p v-if="selectedDimensions >= 2">
           <strong>{{ 'What criteria is most important to you?' | t }}</strong>
         </p>
-        <div v-if="selectedDimensionsAndKeywords >= 2" class="actions">
+        <div v-if="selectedDimensions >= 2" class="actions">
           <button
             v-if="selectedAges.length"
             type="button"
@@ -49,9 +49,6 @@
             @click="onChoice('selectedActivities')"
           >
             {{ 'Activity' | t }}
-          </button>
-          <button v-if="searchKeywords.length" type="button" class="btn btn-lg" @click="onChoice()">
-            {{ 'Keywords' | t }}
           </button>
         </div>
         <div v-else class="actions">
@@ -115,17 +112,10 @@ export default {
         (this.selectedLocations.length ? 1 : 0) +
         (this.selectedActivities.length ? 1 : 0)
       )
-    },
-    selectedDimensionsAndKeywords() {
-      return this.selectedDimensions + (this.searchKeywords.length ? 1 : 0)
     }
   },
   methods: {
     onChoice(choice) {
-      // If we leave some specific filter, we should clear all others including the keywords.
-      if (choice) {
-        this.clearKeywords()
-      }
       this.$emit('noResultsChoice', choice)
     },
     clearKeywords() {
