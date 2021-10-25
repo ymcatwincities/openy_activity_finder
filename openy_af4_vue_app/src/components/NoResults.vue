@@ -52,8 +52,16 @@
           </button>
         </div>
         <div v-else class="actions">
-          <button type="button" class="btn btn-lg" @click="onChoice()">
+          <button v-if="selectedDimensions" type="button" class="btn btn-lg" @click="onChoice()">
             {{ 'Clear Filters' | t }}
+          </button>
+          <button
+            v-if="searchKeywords.length"
+            type="button"
+            class="btn btn-lg"
+            @click="clearKeywords()"
+          >
+            {{ 'Clear Keywords' | t }}
           </button>
         </div>
       </div>
@@ -88,6 +96,10 @@ export default {
     selectedActivities: {
       type: Array,
       required: true
+    },
+    searchKeywords: {
+      type: String,
+      required: true
     }
   },
   computed: {
@@ -105,6 +117,9 @@ export default {
   methods: {
     onChoice(choice) {
       this.$emit('noResultsChoice', choice)
+    },
+    clearKeywords() {
+      this.$emit('clearKeywords')
     }
   }
 }

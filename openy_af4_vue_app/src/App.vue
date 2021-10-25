@@ -204,7 +204,9 @@
           :selected-days-times="selectedDaysTimes"
           :selected-locations="selectedLocations"
           :selected-activities="selectedActivities"
+          :search-keywords="searchKeywords"
           @noResultsChoice="noResultsChoice($event)"
+          @clearKeywords="clearKeywords($event)"
         />
       </template>
     </Results>
@@ -805,6 +807,9 @@ export default {
           ? this.defaults[key].slice()
           : this.defaults[key]
       }
+    },
+    clearKeywords() {
+      this.searchKeywords = ''
     },
     onSearchInput(keywords) {
       this.searchKeywords = keywords
