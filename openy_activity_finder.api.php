@@ -36,7 +36,7 @@ function hook_activity_finder_program_more_info_alter(&$data) {
 }
 
 /**
- * Alter remove location.
+ * Alter location list.
  */
 function hook_activity_finder_location_list_alter(array &$data) {
 
