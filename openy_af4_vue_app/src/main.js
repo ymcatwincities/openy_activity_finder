@@ -2,6 +2,7 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import App from '@/App.vue'
 import router from '@/router/index.js'
+import {isIOS, isMobile} from "mobile-device-detect";
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
@@ -59,6 +60,15 @@ Vue.mixin({
         }
       }
       return ''
+    }
+  },
+  computed: {
+    isIosMobile() {
+      let iosMobile = false
+      if (isMobile && isIOS) {
+        iosMobile = true
+      }
+      return iosMobile
     }
   }
 })
