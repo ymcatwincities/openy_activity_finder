@@ -64,11 +64,7 @@ Vue.mixin({
   },
   computed: {
     isIosMobile() {
-      let iosMobile = false
-      if (isMobile && isIOS) {
-        iosMobile = true
-      }
-      return iosMobile
+      return isMobile && isIOS
     }
   }
 })
