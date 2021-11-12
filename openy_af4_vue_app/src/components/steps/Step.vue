@@ -1,5 +1,5 @@
 <template>
-  <div class="step-component">
+  <div class="step-component" :class="{ 'ios-mobile-device': isIosMobile }">
     <div class="container">
       <div class="row">
         <div class="col-12 col-xs-12">
@@ -222,6 +222,10 @@ export default {
     margin-top: 20px;
   }
 
+  &.ios-mobile-device .buttons.sticky {
+    border-bottom: 70px solid $af-black;
+  }
+
   .buttons {
     width: 100%;
 
@@ -229,7 +233,6 @@ export default {
       position: fixed;
       bottom: 0;
       left: 0;
-      border-bottom: 70px solid $af-black;
     }
 
     .separator {

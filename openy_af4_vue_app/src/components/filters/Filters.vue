@@ -245,7 +245,9 @@ export default {
       return this.bsVersion === 4 ? 'd-none d-lg-flex' : 'hidden-xs hidden-sm'
     },
     footerClasses() {
-      return this.bsVersion === 4 ? 'd-lg-none' : 'hidden-md hidden-lg'
+      const classes = this.bsVersion === 4 ? ['d-lg-none'] : ['hidden-md', 'hidden-lg']
+      classes.push(this.isIosMobile ? 'ios-mobile-device' : '')
+      return classes
     }
   },
   watch: {
@@ -323,6 +325,10 @@ export default {
   .filters-footer {
     height: 140px;
 
+    &.ios-mobile-device .buttons {
+      border-bottom: 70px solid $white;
+    }
+
     .buttons {
       position: fixed;
       bottom: 0;
@@ -330,7 +336,6 @@ export default {
       margin-right: -10px;
       width: calc(100% - 2px);
       max-width: 358px;
-      border-bottom: 70px solid $white;
 
       .separator {
         height: 5px;
