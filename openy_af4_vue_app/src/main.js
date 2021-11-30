@@ -3,6 +3,20 @@ import BootstrapVue from 'bootstrap-vue'
 import App from '@/App.vue'
 import router from '@/router/index.js'
 
+// Global function to track events in Google Analytics.
+function trackEvent(action, label, value = 0, category = 'Activity Finder') {
+  if (window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value
+    })
+  } else if (window.ga) {
+    window.ga('send', 'event', category, action, label, value)
+  }
+}
+window.appTrackEvent = trackEvent
+
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 
@@ -27,17 +41,8 @@ Vue.filter('formatPlural', function(
 
 Vue.mixin({
   methods: {
-    // Global mixin to track events in Google Analytics.
     trackEvent(action, label, value = 0, category = 'Activity Finder') {
-      if (window.gtag) {
-        window.gtag('event', action, {
-          event_category: category,
-          event_label: label,
-          value: value
-        })
-      } else if (window.ga) {
-        window.ga('send', 'event', category, action, label, value)
-      }
+      window.appTrackEvent(action, label, value, category)
     },
     t(value, args, options = { context: 'Activity Finder' }) {
       return window.Drupal.t(value, args, options)
