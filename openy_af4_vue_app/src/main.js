@@ -4,7 +4,7 @@ import App from '@/App.vue'
 import router from '@/router/index.js'
 
 // Listen to custom event to track events in Google Analytics.
-document.addEventListener('trackEvent', (e) => {
+document.addEventListener('openy_activity_finder_event', (e) => {
   const { action, label, value, category } = e.detail
 
   if (window.gtag) {
@@ -43,8 +43,8 @@ Vue.filter('formatPlural', function(
 Vue.mixin({
   methods: {
     trackEvent(action, label, value = 0, category = 'Activity Finder') {
-      // Custom event for tracking events in Google Analytics.
-      const event = new CustomEvent('trackEvent', {
+      // Custom event for external code to listen to and react upon.
+      const event = new CustomEvent('openy_activity_finder_event', {
         detail: {
           action,
           label,
