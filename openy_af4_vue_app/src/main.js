@@ -3,6 +3,21 @@ import BootstrapVue from 'bootstrap-vue'
 import App from '@/App.vue'
 import router from '@/router/index.js'
 
+// Listen to custom event to track events in Google Analytics.
+document.addEventListener('openy_activity_finder_event', (e) => {
+  const { action, label, value, category } = e.detail
+
+  if (window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value
+    })
+  } else if (window.ga) {
+    window.ga('send', 'event', category, action, label, value)
+  }
+})
+
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 
@@ -27,17 +42,17 @@ Vue.filter('formatPlural', function(
 
 Vue.mixin({
   methods: {
-    // Global mixin to track events in Google Analytics.
     trackEvent(action, label, value = 0, category = 'Activity Finder') {
-      if (window.gtag) {
-        window.gtag('event', action, {
-          event_category: category,
-          event_label: label,
-          value: value
-        })
-      } else if (window.ga) {
-        window.ga('send', 'event', category, action, label, value)
-      }
+      // Custom event for external code to listen to and react upon.
+      const event = new CustomEvent('openy_activity_finder_event', {
+        detail: {
+          action,
+          label,
+          value,
+          category
+        }
+      })
+      document.dispatchEvent(event)
     },
     t(value, args, options = { context: 'Activity Finder' }) {
       return window.Drupal.t(value, args, options)
