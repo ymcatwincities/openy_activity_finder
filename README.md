@@ -56,7 +56,7 @@ version 4.
   A special mode for show some data as on previous version of AF.
 
   What it provides:
-  
+
   - disables a bookmark functionality on the results screen
   - doesn't display an age indicator in result card of activity
   - changes the days + times wizard step. We can display only days of week, but not times of each day (doesn't support DaysTimes filter)
@@ -130,4 +130,34 @@ function custom_module_activity_finder_program_process_results_alter(&$data, Nod
 }
 ```
 
+### How to add external functionality to analytics event
 
+See `openy_af4_vue_app/main.js`
+
+```js
+// Listen to a custom event to pass events in Google Analytics.
+document.addEventListener('openy_activity_finder_event', (e) => {
+  const { action, label, value, category } = e.detail
+
+  if (window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value
+    })
+  } else if (window.ga) {
+    window.ga('send', 'event', category, action, label, value)
+  }
+})
+```
+
+#### Example of custom event
+
+```js
+document.addEventListener('openy_activity_finder_event', (e) => {
+  const { action, label, value, category } = e.detail // Properties you can use for analitics.
+  ...
+  { your_functionality }
+  ...
+})
+```
