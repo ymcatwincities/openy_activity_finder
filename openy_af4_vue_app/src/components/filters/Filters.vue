@@ -245,9 +245,7 @@ export default {
       return this.bsVersion === 4 ? 'd-none d-lg-flex' : 'hidden-xs hidden-sm'
     },
     footerClasses() {
-      const classes = this.bsVersion === 4 ? ['d-lg-none'] : ['hidden-md', 'hidden-lg']
-      classes.push(this.isIosMobile ? 'ios-mobile-device' : '')
-      return classes
+      return this.bsVersion === 4 ? ['d-lg-none'] : ['hidden-md', 'hidden-lg']
     }
   },
   watch: {
@@ -324,10 +322,6 @@ export default {
 
   .filters-footer {
     height: 140px;
-
-    &.ios-mobile-device .buttons {
-      border-bottom: 70px solid $white;
-    }
 
     .buttons {
       position: fixed;
