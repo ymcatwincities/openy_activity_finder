@@ -112,7 +112,7 @@
             </div>
 
             <div class="bookmarked-items-footer">
-              <div class="footer-content" :class="{ 'ios-mobile-device': isIosMobile }">
+              <div class="footer-content">
                 <div class="left">
                   {{ 'Bookmarks are automatically cleared after 5 days.' | t }}
                 </div>
@@ -412,10 +412,6 @@ export default {
       max-width: 358px;
       font-size: 12px;
       line-height: 18px;
-
-      &.ios-mobile-device {
-        border-bottom: 70px solid $white;
-      }
 
       .left {
         max-width: 220px;

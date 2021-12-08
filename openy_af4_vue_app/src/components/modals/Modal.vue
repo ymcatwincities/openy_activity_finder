@@ -13,6 +13,7 @@
       'af-narrow': narrow,
       'af-responsive': responsive
     }"
+    modal-outer-class="af-modal-wrapper"
     dialog-class="af-modal-dialog"
     header-class="af-modal-header"
     title-class="af-modal-title"
@@ -79,6 +80,9 @@ export default {
 </script>
 
 <style lang="scss">
+[modal-outer-class='af-modal-wrapper'] {
+  z-index: 2001 !important;
+}
 .af-modal {
   // TODO: Move out to another place - MPR-163.
   // Overriding Open Y Lily customizations and Bootstrap 3/4 compatibilities.
