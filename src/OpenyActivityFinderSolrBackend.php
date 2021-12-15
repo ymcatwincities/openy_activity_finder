@@ -160,7 +160,18 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
     if ($keys) {
       $query->keys($keys);
     }
-    $query->setFulltextFields(['title']);
+    $query->setFulltextFields([
+      'title',
+      'field_session_description',
+      'class_title',
+      'field_class_description',
+      'activity_title',
+      'field_activity_description',
+      'field_category_program',
+      'field_program_description',
+      'category_title',
+      'field_category_description',
+    ]);
     $query->addCondition('status', 1);
 
     if (!empty($parameters['ages'])) {
@@ -809,6 +820,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       'af_time_of_day__DESC' => t('Sort by Start time (Z-A)'),
       'af_date_of_day__ACS' => t('Sort by Nearest Date (A-Z)'),
       'af_date_of_day__DESC' => t('Sort by Furthest Date (Z-A)'),
+      'search_api_relevance__DESC' => t('Sort by Relevance'),
     ];
   }
 
