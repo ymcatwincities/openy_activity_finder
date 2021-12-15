@@ -669,6 +669,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         ->condition('type', ['branch', 'camp', 'facility'], 'IN')
         ->condition('status', 1)
         ->sort('title', 'ASC')
+        ->addTag('af_locations')
         ->execute();
       $nids_chunked = array_chunk($nids, 20, TRUE);
       foreach ($nids_chunked as $chunked) {
