@@ -69,7 +69,7 @@
       @nextStep="nextStep('selectPath')"
     >
       <template v-if="!disableSearchBox" v-slot:search>
-        <SearchForm :value="searchKeywords" @input="onSearchInput($event)" />
+        <SearchForm v-model="searchKeywords" />
       </template>
       <template v-if="showHomeBranchBlock" v-slot:home-branch>
         <p>
@@ -312,6 +312,10 @@ export default {
       required: true
     },
     defaultSortOption: {
+      type: String,
+      required: true
+    },
+    relevanceSortOption: {
       type: String,
       required: true
     },
@@ -612,6 +616,12 @@ export default {
     },
     cartItems() {
       localStorage.setItem(this.cartItemsKey, JSON.stringify(this.cartItems))
+    },
+    searchKeywords(val) {
+      if (val) {
+        this.step = 'results'
+      }
+      this.selectedSort = val ? this.relevanceSortOption : this.defaultSortOption
     }
   },
   created() {
@@ -674,7 +684,9 @@ export default {
       this.selectedLocations = [this.homeBranchId]
       this.step = 'results'
     },
-    loadData() {
+    async loadData() {
+      // Wait for the next tick so that all watchers are run.
+      await this.$nextTick()
       if (!this.canLoadData) {
         return
       }
@@ -810,10 +822,6 @@ export default {
     },
     clearKeywords() {
       this.searchKeywords = ''
-    },
-    onSearchInput(keywords) {
-      this.searchKeywords = keywords
-      this.step = 'results'
     },
     getHomeBranchId() {
       const cookie = this.getCookie('home_branch')

@@ -219,3 +219,16 @@ function openy_activity_finder_update_8402() {
     ->set('bs_version', 3)
     ->save();
 }
+
+/**
+ * Update configs for search index.
+ */
+function openy_activity_finder_update_8403() {
+  $cim = \Drupal::service('config_import.importer');
+  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $config = \Drupal::config('search_api.index.default');
+  if (!$config->isNew()) {
+    // Import config only in case it already exists.
+    $cim->importConfigs(['search_api.index.default']);
+  }
+}

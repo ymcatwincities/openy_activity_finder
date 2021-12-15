@@ -73,6 +73,7 @@ function openy_activity_finder_theme() {
         'disable_spots_available' => FALSE,
         'sort_options' => [],
         'default_sort_option' => '',
+        'relevance_sort_option' => '',
         'filters_section_config' => [],
         'limit_by_category' => [],
         'exclude_by_category' => [],

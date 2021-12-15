@@ -168,6 +168,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#sort_options' => $sort_options,
       // TODO: make default sort option configurable.
       '#default_sort_option' => array_keys($sort_options)[0],
+      '#relevance_sort_option' => 'search_api_relevance__DESC',
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
       '#limit_by_category' => $conf['limit_by_category'],
       '#exclude_by_category' => $conf['exclude_by_category'],
