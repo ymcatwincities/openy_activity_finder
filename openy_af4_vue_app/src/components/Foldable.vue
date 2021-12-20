@@ -2,7 +2,8 @@
   <div class="foldable-component">
     <div v-b-toggle="collapseId" class="foldable-title">
       <span class="left">
-        <i class="fa fa-chevron-down" aria-hidden="true" />
+        <font-awesome-icon icon="chevron-down" />
+        <font-awesome-icon icon="chevron-up" />
         <i class="fa fa-chevron-up" aria-hidden="true" />
         <span class="title">
           <strong>{{ label }}</strong>
@@ -59,6 +60,7 @@ export default {
       display: flex;
       align-items: center;
       flex: auto;
+      line-height: 50px;
     }
 
     .counter {

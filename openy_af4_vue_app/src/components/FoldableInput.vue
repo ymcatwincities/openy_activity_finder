@@ -9,7 +9,8 @@
         </span>
       </span>
       <span class="right">
-        <i class="fa fa-chevron-down" aria-hidden="true" />
+        <font-awesome-icon icon="chevron-down" />
+        <font-awesome-icon icon="chevron-up" />
         <i class="fa fa-chevron-up" aria-hidden="true" />
       </span>
     </div>
