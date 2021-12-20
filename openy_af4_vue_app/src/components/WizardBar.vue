@@ -6,7 +6,7 @@
           <div class="controls">
             <span class="filters">
               <a :class="{ 'no-filters': !filtersCount }" role="button" @click="showFiltersModal()">
-                <font-awesome-icon icon="filter" />
+               <font-awesome-icon icon="filter" />
                 {{ filtersCount | formatPlural('1 Filter', '@count Filters') }}
               </a>
             </span>
@@ -152,7 +152,9 @@ export default {
     .filters {
       font-size: 12px;
       line-height: 18px;
-
+      .fa-filter {
+        margin-right: 8px;
+      }
       .no-filters {
         color: $af-dark-gray;
       }

@@ -4,7 +4,6 @@
       <span class="left">
         <font-awesome-icon icon="chevron-down" />
         <font-awesome-icon icon="chevron-up" />
-        <i class="fa fa-chevron-up" aria-hidden="true" />
         <span class="title">
           <strong>{{ label }}</strong>
         </span>

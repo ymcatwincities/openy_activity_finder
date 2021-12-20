@@ -78,7 +78,7 @@
                 </div>
 
                 <div v-if="item.price" class="item-detail price">
-                  <font-awesome-icon icon="money-bill" />
+                   <font-awesome-icon icon="money-bill" />
                   <span>
                     <span class="info">{{ item.price }}</span>
                   </span>
