@@ -83,6 +83,10 @@ export default {
     homeBranchId: {
       type: String,
       default: null
+    },
+    excludeByLocation: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -92,7 +96,7 @@ export default {
   },
   computed: {
     filteredLocations() {
-      if (!this.firstStep) {
+      if (!this.firstStep && !this.excludeByLocation.length) {
         return this.locations
       }
 
@@ -102,6 +106,34 @@ export default {
           filteredLocations[key] = this.locations[key]
         }
       }
+      if (!this.excludeByLocation.length) {
+        return this.locations
+      }
+      this.locations.forEach((locationGroup, key) => {
+        // Filter out excluded locations.
+        if (!this.excludeByLocation.length) {
+          filteredLocations[key] = locationGroup
+          return
+        }
+        let checkIsArray = Array.isArray(locationGroup.value)
+        let results = new Object()
+        if (!checkIsArray) {
+          let filteredLocationIndex = Object.keys(locationGroup.value).filter(key => {
+            return !this.excludeByLocation.includes(locationGroup.value[key].value.toString())
+          })
+          filteredLocationIndex.forEach(locationIndex => {
+            results[locationIndex] = locationGroup.value[locationIndex]
+          })
+        } else {
+          results = locationGroup.value.filter(item => {
+            return !this.excludeByLocation.includes(item.value.toString())
+          })
+        }
+        filteredLocations[key] = {
+          ...locationGroup,
+          value: results
+        }
+      })
       return filteredLocations
     },
     filtersSelected() {

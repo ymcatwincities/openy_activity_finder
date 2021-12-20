@@ -49,6 +49,7 @@
           :daxko="daxko"
           :bs-version="bsVersion"
           :exclude-by-category="excludeByCategory"
+          :exclude-by-location="excludeByLocation"
           @filterChange="onFilterChange($event, hideModal)"
           @clearFilters="clearFilters(hideModal)"
         />
@@ -130,6 +131,7 @@
       :facets="data.facets.locations"
       :first-step="selectedPath === 'selectLocations'"
       :home-branch-id="homeBranchId"
+      :exclude-by-location="excludeByLocation"
       @nextStep="nextStep('selectLocations')"
     />
     <SelectActivities
@@ -331,6 +333,10 @@ export default {
       type: Boolean,
       required: true
     },
+    excludeByLocation: {
+      type: Array,
+      required: true
+    },
     weeksFilter: {
       type: Boolean,
       required: true
@@ -502,7 +508,8 @@ export default {
         page: this.selectedPage,
         sort: this.selectedSort,
         keywords: this.searchKeywords,
-        exclude: this.excludeByCategory.join(',')
+        exclude: this.excludeByCategory.join(','),
+        excludeloc: this.excludeByLocation.join(',')
       }
 
       if (this.daxko && this.selectedPage > 1 && this.daxkoPages[this.selectedPage]) {
