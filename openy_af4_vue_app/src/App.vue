@@ -602,8 +602,8 @@ export default {
 
       this.canLoadData = true
 
-      // Scroll to top.
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // Scroll to view.
+      document.getElementById('activity-finder-app').scrollIntoView(true)
     },
     selectedPage() {
       // Scroll to top.
