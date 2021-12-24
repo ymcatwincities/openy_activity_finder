@@ -115,23 +115,16 @@ export default {
           filteredLocations[key] = locationGroup
           return
         }
-        let checkIsArray = Array.isArray(locationGroup.value)
-        let results = new Object()
-        if (!checkIsArray) {
-          let filteredLocationIndex = Object.keys(locationGroup.value).filter(key => {
-            return !this.excludeByLocation.includes(locationGroup.value[key].value.toString())
-          })
-          filteredLocationIndex.forEach(locationIndex => {
-            results[locationIndex] = locationGroup.value[locationIndex]
-          })
-        } else {
-          results = locationGroup.value.filter(item => {
-            return !this.excludeByLocation.includes(item.value.toString())
-          })
+        const filteredValue = locationGroup.value.filter(item => {
+          return !this.excludeByLocation.includes(item.value.toString())
+        })
+        if (!filteredValue.length) {
+          return
         }
+
         filteredLocations[key] = {
           ...locationGroup,
-          value: results
+          value: filteredValue
         }
       })
       return filteredLocations
