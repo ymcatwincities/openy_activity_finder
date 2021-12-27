@@ -84,6 +84,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       'label_display' => 'visible',
       'limit_by_category' => [],
       'exclude_by_category' => [],
+      'exclude_by_location' => [],
       'legacy_mode' => 0,
       'weeks_filter' => 0,
       'hide_home_branch_block' => 0,
@@ -168,9 +169,11 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#sort_options' => $sort_options,
       // TODO: make default sort option configurable.
       '#default_sort_option' => array_keys($sort_options)[0],
+      '#relevance_sort_option' => 'search_api_relevance__DESC',
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
       '#limit_by_category' => $conf['limit_by_category'],
       '#exclude_by_category' => $conf['exclude_by_category'],
+      '#exclude_by_location' => $conf['exclude_by_location'],
       '#legacy_mode' => (bool) $conf['legacy_mode'],
       '#weeks_filter' => (bool) $conf['weeks_filter'],
       '#hide_home_branch_block' => (bool) $conf['hide_home_branch_block'],
@@ -213,6 +216,24 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       ],
       '#size' => 100,
       '#maxlength' => 2048,
+    ];
+    $base_by_location = [
+      '#type' => 'entity_autocomplete',
+      '#description' => $this->t('Separate multiple values by comma. Search for title from Branch, Camp, Facility types.'),
+      '#target_type' => 'node',
+      '#tags' => TRUE,
+      '#selection_settings' => [
+        'target_bundles' => ['branch', 'camp', 'facility'],
+      ],
+      '#size' => 100,
+      '#maxlength' => 2048,
+    ];
+
+    $form['exclude_by_location'] = $base_by_location + [
+      '#title' => $this->t('Exclude by location'),
+      '#default_value' => $conf['exclude_by_location']
+        ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['exclude_by_location'])
+        : NULL,
     ];
     $form['limit_by_category'] = $base_by_category + [
       '#title' => $this->t('Limit by category'),
@@ -271,6 +292,9 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       : [];
     $this->configuration['exclude_by_category'] = $form_state->getValue('exclude_by_category')
       ? array_column($form_state->getValue('exclude_by_category'), 'target_id')
+      : [];
+    $this->configuration['exclude_by_location'] = $form_state->getValue('exclude_by_location')
+      ? array_column($form_state->getValue('exclude_by_location'), 'target_id')
       : [];
     $this->configuration['legacy_mode'] = $form_state->getValue('legacy_mode');
     $this->configuration['weeks_filter'] = $form_state->getValue('weeks_filter');

@@ -49,6 +49,7 @@
           :daxko="daxko"
           :bs-version="bsVersion"
           :exclude-by-category="excludeByCategory"
+          :exclude-by-location="excludeByLocation"
           @filterChange="onFilterChange($event, hideModal)"
           @clearFilters="clearFilters(hideModal)"
         />
@@ -69,7 +70,7 @@
       @nextStep="nextStep('selectPath')"
     >
       <template v-if="!disableSearchBox" v-slot:search>
-        <SearchForm :value="searchKeywords" @input="onSearchInput($event)" />
+        <SearchForm v-model="searchKeywords" />
       </template>
       <template v-if="showHomeBranchBlock" v-slot:home-branch>
         <p>
@@ -130,6 +131,7 @@
       :facets="data.facets.locations"
       :first-step="selectedPath === 'selectLocations'"
       :home-branch-id="homeBranchId"
+      :exclude-by-location="excludeByLocation"
       @nextStep="nextStep('selectLocations')"
     />
     <SelectActivities
@@ -315,6 +317,10 @@ export default {
       type: String,
       required: true
     },
+    relevanceSortOption: {
+      type: String,
+      required: true
+    },
     limitByCategory: {
       type: Array,
       required: true
@@ -325,6 +331,10 @@ export default {
     },
     legacyMode: {
       type: Boolean,
+      required: true
+    },
+    excludeByLocation: {
+      type: Array,
       required: true
     },
     weeksFilter: {
@@ -498,7 +508,8 @@ export default {
         page: this.selectedPage,
         sort: this.selectedSort,
         keywords: this.searchKeywords,
-        exclude: this.excludeByCategory.join(',')
+        exclude: this.excludeByCategory.join(','),
+        excludeloc: this.excludeByLocation.join(',')
       }
 
       if (this.daxko && this.selectedPage > 1 && this.daxkoPages[this.selectedPage]) {
@@ -591,8 +602,8 @@ export default {
 
       this.canLoadData = true
 
-      // Scroll to top.
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // Scroll to view.
+      document.getElementById('activity-finder-app').scrollIntoView(true)
     },
     selectedPage() {
       // Scroll to top.
@@ -612,6 +623,12 @@ export default {
     },
     cartItems() {
       localStorage.setItem(this.cartItemsKey, JSON.stringify(this.cartItems))
+    },
+    searchKeywords(val) {
+      if (val) {
+        this.step = 'results'
+      }
+      this.selectedSort = val ? this.relevanceSortOption : this.defaultSortOption
     }
   },
   created() {
@@ -674,7 +691,9 @@ export default {
       this.selectedLocations = [this.homeBranchId]
       this.step = 'results'
     },
-    loadData() {
+    async loadData() {
+      // Wait for the next tick so that all watchers are run.
+      await this.$nextTick()
       if (!this.canLoadData) {
         return
       }
@@ -810,10 +829,6 @@ export default {
     },
     clearKeywords() {
       this.searchKeywords = ''
-    },
-    onSearchInput(keywords) {
-      this.searchKeywords = keywords
-      this.step = 'results'
     },
     getHomeBranchId() {
       const cookie = this.getCookie('home_branch')

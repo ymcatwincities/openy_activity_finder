@@ -1,7 +1,7 @@
 <template>
   <div class="locations-filter-component">
     <Foldable
-      v-for="(item_type, index) in locations"
+      v-for="(item_type, index) in filteredLocations"
       :key="id + '-location-type-' + index"
       :label="item_type.label"
       :collapse-id="id + '-toggle-' + index"
@@ -46,11 +46,42 @@ export default {
     facets: {
       type: Array,
       required: true
+    },
+    excludeByLocation: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
       selectedLocations: this.value
+    }
+  },
+  computed: {
+    filteredLocations() {
+      if (!this.excludeByLocation.length) {
+        return this.locations
+      }
+      const filteredLocations = {}
+      this.locations.forEach((locationGroup, key) => {
+        // Filter out excluded locations.
+        if (!this.excludeByLocation.length) {
+          filteredLocations[key] = locationGroup
+          return
+        }
+        const filteredValue = locationGroup.value.filter(item => {
+          return !this.excludeByLocation.includes(item.value.toString())
+        })
+        if (!filteredValue.length) {
+          return
+        }
+
+        filteredLocations[key] = {
+          ...locationGroup,
+          value: filteredValue
+        }
+      })
+      return filteredLocations
     }
   },
   watch: {

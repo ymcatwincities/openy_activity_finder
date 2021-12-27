@@ -2,18 +2,23 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_activity_category
-    - field.storage.node.field_category_program
+    - field.storage.node.field_activity_description
     - field.storage.node.field_class_activity
     - field.storage.node.field_session_class
+    - field.storage.node.field_class_description
+    - field.storage.node.field_session_time
+    - field.storage.paragraph.field_session_time_date
+    - field.storage.paragraph.field_session_time_days
+    - field.storage.node.field_session_description
     - field.storage.node.field_session_location
     - field.storage.node.field_session_max_age
     - field.storage.node.field_session_mbr_price
     - field.storage.node.field_session_min_age
     - field.storage.node.field_session_nmbr_price
-    - field.storage.node.field_session_time
-    - field.storage.paragraph.field_session_time_date
-    - field.storage.paragraph.field_session_time_days
+    - field.storage.node.field_activity_category
+    - field.storage.node.field_category_program
+    - field.storage.node.field_program_description
+    - field.storage.node.field_category_description
     - search_api.server.solr
   module:
     - search_api_solr
@@ -26,19 +31,16 @@ third_party_settings:
     finalize: false
     commit_before_finalize: false
     commit_after_finalize: false
-    multilingual:
-      limit_to_content_language: false
-      include_language_independent: true
     highlighter:
       maxAnalyzedChars: 51200
       fragmenter: gap
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
       regex:
         slop: 0.5
         pattern: blank
         maxAnalyzedChars: 10000
-      usePhraseHighlighter: true
-      highlightMultiTerm: true
-      preserveMulti: false
       highlight:
         mergeContiguous: false
         requireFieldMatch: false
@@ -55,6 +57,9 @@ third_party_settings:
       maxntp: 2000
       boost: false
       interestingTerms: none
+    term_modifiers:
+      slop: 3
+      fuzzy: 1
     advanced:
       index_prefix: ''
       collection: ''
@@ -64,10 +69,25 @@ name: Default
 description: ''
 read_only: false
 field_settings:
+  activity_title:
+    label: 'Activity Title'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:field_class_activity:entity:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_class_activity
+        - field.storage.node.field_session_class
+      module:
+        - node
   af_ages_min_max:
     label: 'Ages Min Max'
     property_path: search_api_af_ages_min_max
     type: string
+  af_date_of_day:
+    label: 'Date of day'
+    property_path: search_api_af_date_of_day
+    type: date
   af_parts_of_day:
     label: 'Parts of day'
     property_path: search_api_af_parts_of_day
@@ -76,14 +96,37 @@ field_settings:
     label: 'Time of day'
     property_path: search_api_af_time_of_day
     type: date
-  af_date_of_day:
-    label: 'Date of day'
-    property_path: search_api_af_date_of_day
-    type: date
   af_weekdays_parts_of_day:
     label: 'Weekdays and Parts of day'
     property_path: search_api_af_weekdays_parts_of_day
     type: string
+  af_weeks:
+    label: Weeks
+    property_path: search_api_af_weeks
+    type: string
+  category_title:
+    label: 'Program Subcategory Title'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:field_class_activity:entity:field_class_activity:entity:field_activity_category:entity:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_activity_category
+        - field.storage.node.field_class_activity
+        - field.storage.node.field_session_class
+      module:
+        - node
+  class_title:
+    label: 'Class Title'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:title'
+    type: text
+    boost: 0.8
+    dependencies:
+      config:
+        - field.storage.node.field_session_class
+      module:
+        - node
   field_activity_category:
     label: 'Program Subcategory'
     datasource_id: 'entity:node'
@@ -91,13 +134,40 @@ field_settings:
     type: string
     dependencies:
       config:
-        - field.storage.node.field_session_class
-        - field.storage.node.field_class_activity
         - field.storage.node.field_activity_category
+        - field.storage.node.field_class_activity
+        - field.storage.node.field_session_class
+      module:
+        - node
+  field_activity_description:
+    label: 'Activity Description'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:field_class_activity:entity:field_activity_description'
+    type: text
+    boost: 0.5
+    dependencies:
+      config:
+        - field.storage.node.field_activity_description
+        - field.storage.node.field_class_activity
+        - field.storage.node.field_session_class
+      module:
+        - node
+  field_category_description:
+    label: 'Program Subcategory Description'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:field_class_activity:entity:field_class_activity:entity:field_activity_category:entity:field_category_description'
+    type: text
+    boost: 0.5
+    dependencies:
+      config:
+        - field.storage.node.field_activity_category
+        - field.storage.node.field_category_description
+        - field.storage.node.field_class_activity
+        - field.storage.node.field_session_class
       module:
         - node
   field_category_program:
-    label: 'Program Type'
+    label: 'Program Title'
     datasource_id: 'entity:node'
     property_path: 'field_session_class:entity:field_class_activity:entity:field_activity_category:entity:field_category_program:entity:title'
     type: string
@@ -109,20 +179,42 @@ field_settings:
         - field.storage.node.field_session_class
       module:
         - node
-  field_session_class:
-    label: Class
+  field_class_description:
+    label: 'Class Description'
     datasource_id: 'entity:node'
-    property_path: 'field_session_class:entity:title'
-    type: string
+    property_path: 'field_session_class:entity:field_class_description'
+    type: text
+    boost: 0.5
     dependencies:
       config:
+        - field.storage.node.field_class_description
         - field.storage.node.field_session_class
       module:
         - node
-  af_weeks:
-    label: Weeks
-    property_path: search_api_af_weeks
-    type: string
+  field_program_description:
+    label: 'Program Description'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:field_class_activity:entity:field_activity_category:entity:field_category_program:entity:field_program_description'
+    type: text
+    boost: 0.5
+    dependencies:
+      config:
+        - field.storage.node.field_activity_category
+        - field.storage.node.field_category_program
+        - field.storage.node.field_class_activity
+        - field.storage.node.field_program_description
+        - field.storage.node.field_session_class
+      module:
+        - node
+  field_session_description:
+    label: Description
+    datasource_id: 'entity:node'
+    property_path: field_session_description
+    type: text
+    boost: 0.9
+    dependencies:
+      config:
+        - field.storage.node.field_session_description
   field_session_location:
     label: Location
     datasource_id: 'entity:node'
@@ -240,6 +332,16 @@ field_settings:
     dependencies:
       module:
         - node
+  uid_1:
+    label: 'Class » Content » Authored by'
+    datasource_id: 'entity:node'
+    property_path: 'field_session_class:entity:uid'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_session_class
+      module:
+        - node
 datasource_settings:
   'entity:node':
     bundles:
@@ -258,11 +360,11 @@ processor_settings:
       preprocess_query: -30
   entity_status: {  }
   language_with_fallback: {  }
-  openy_af_week: {  }
   openy_af_ages_min_max: {  }
+  openy_af_date_of_day: {  }
   openy_af_parts_of_day: {  }
   openy_af_time_of_day: {  }
-  openy_af_date_of_day: {  }
+  openy_af_week: {  }
   openy_af_weekdays_parts_of_day: {  }
   rendered_item: {  }
   solr_date_range: {  }
@@ -272,4 +374,5 @@ tracker_settings:
 options:
   index_directly: false
   cron_limit: 50
+  track_changes_in_references: true
 server: solr
