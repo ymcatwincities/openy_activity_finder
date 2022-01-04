@@ -138,6 +138,9 @@ export default {
       this.$emit('nextStep')
     },
     facetCount(value) {
+      if (typeof(this.facets) === 'undefined') {
+        return 0
+      }
       let facet = this.facets.find(x => x.filter === value)
       return facet && facet.count ? facet.count : 0
     },
