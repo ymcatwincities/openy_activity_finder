@@ -186,6 +186,7 @@
           :daxko="daxko"
           :bs-version="bsVersion"
           :exclude-by-category="excludeByCategory"
+          :exclude-by-location="excludeByLocation"
           filters-mode="instant"
           @filterChange="onFilterChange($event)"
           @clearFilters="clearFilters"
