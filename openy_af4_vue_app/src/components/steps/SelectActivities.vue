@@ -18,6 +18,7 @@
           :counter="subFiltersCount(index)"
           :counter-options="optionsCount(index)"
           accordion="accordion-activities"
+          :collapsible="Object.keys(filteredActivities).length !== 1"
           :handle-sticky="handleSticky"
         >
           <div class="options">
