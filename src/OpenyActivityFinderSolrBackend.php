@@ -450,7 +450,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         'location_name' => '',
         'location_address' => '',
         'location_phone' => '',
-        'spots_available' => $entity->field_availability->value ?? '',
+        'spots_available' => !$entity->field_availability->isEmpty() ? $entity->field_availability->value : '',
         'status' => $availability_status,
         'note' => $availability_note,
         'learn_more' => !empty($learn_more) ? $learn_more : '',
