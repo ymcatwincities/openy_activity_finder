@@ -232,3 +232,30 @@ function openy_activity_finder_update_8403() {
     $cim->importConfigs(['search_api.index.default']);
   }
 }
+
+/**
+ * Update configs for search index.
+ */
+function openy_activity_finder_update_8404() {
+  _af_config_import();
+}
+
+/**
+ * Update configs for search index. Configs should be sent in an array where the
+ * key is the directory and the value is an array of config files.
+ */
+function _af_config_import($import = ['optional' => ['search_api.index.default']]) {
+  $cim = \Drupal::service('config_import.importer');
+  // Loop through keys as directories...
+  foreach ($import as $dir => $configs) {
+    $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/'. $dir);
+    // Now process each config to be imported.
+    foreach ($configs as $name) {
+      $config = \Drupal::config($name);
+      if (!$config->isNew()) {
+        // Import config only in the case that it already exists.
+        $cim->importConfigs([$name]);
+      }
+    }
+  }
+}
