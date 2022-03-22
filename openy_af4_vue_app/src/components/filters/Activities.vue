@@ -78,16 +78,21 @@ export default {
 
       const filteredActivities = {}
       this.activities.forEach((activityGroup, key) => {
-        // Filter out excluded categories.
-        if (!this.excludeByCategory.length && !this.limitByCategory.length) {
-          filteredActivities[key] = activityGroup
-          return
-        }
-
         const filteredValue = activityGroup.value.filter(item => {
-          return !this.excludeByCategory.includes(item.value.toString()) &&
-            this.limitByCategory.includes(item.value.toString())
+          let r = false
+          // Items must pass both tests, so we intentionally do not ELSE these.
+          // If there are excludes, the item must NOT be excluded.
+          if (this.excludeByCategory.length) {
+            r = !this.excludeByCategory.includes(item.value.toString())
+          }
+          // If there are limits, ONLY items in the limit list are included.
+          if (this.limitByCategory.length) {
+            r = this.limitByCategory.includes(item.value.toString())
+          }
+          return r
         })
+        // If there are no filtered values then the activityGroup is empty,
+        // and we should not add it to the filteredActivities array.
         if (!filteredValue.length) {
           return
         }
