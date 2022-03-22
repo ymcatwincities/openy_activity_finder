@@ -85,6 +85,10 @@ export default {
       type: Boolean,
       default: true
     },
+    limitByCategory: {
+      type: Array,
+      required: true
+    },
     excludeByCategory: {
       type: Array,
       required: true
@@ -97,7 +101,7 @@ export default {
   },
   computed: {
     filteredActivities() {
-      if (!this.firstStep && !this.excludeByCategory.length) {
+      if (!this.firstStep && !this.excludeByCategory.length && !this.limitByCategory.length) {
         return this.activities
       }
 
@@ -109,13 +113,14 @@ export default {
         }
 
         // Filter out excluded categories.
-        if (!this.excludeByCategory.length) {
+        if (!this.excludeByCategory.length && !this.limitByCategory.length) {
           filteredActivities[key] = activityGroup
           return
         }
 
         const filteredValue = activityGroup.value.filter(item => {
-          return !this.excludeByCategory.includes(item.value.toString())
+          return !this.excludeByCategory.includes(item.value.toString()) &&
+            this.limitByCategory.includes(item.value.toString())
         })
         if (!filteredValue.length) {
           return

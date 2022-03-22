@@ -141,6 +141,7 @@
       :facets="data.facets.field_activity_category"
       :first-step="selectedPath === 'selectActivities'"
       :multiple="!daxko"
+      :limit-by-category="limitByCategory"
       :exclude-by-category="excludeByCategory"
       @nextStep="nextStep('selectActivities')"
     />
