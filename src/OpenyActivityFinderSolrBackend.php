@@ -240,6 +240,24 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       $query->addCondition('field_category_program', $program_types, 'IN');
     }
 
+    // Limit categories.
+    $limit_nids = [];
+    if (!empty($parameters['limit'])) {
+      $limit_nids = explode(',', $parameters['limit']);
+    }
+    $limit_nids_config = explode(',', $this->config->get('limit'));
+    $limit_nids = array_merge($limit_nids, $limit_nids_config);
+    $limit_categories = [];
+    foreach ($limit_nids as $nid) {
+      if (empty($category_program_info[$nid]['title'])) {
+        continue;
+      }
+      $limit_categories[] = $nid;
+    }
+    if ($limit_categories) {
+      $query->addCondition('field_activity_category', $limit_categories, 'IN');
+    }
+
     // Ensure to exclude categories.
     $exclude_nids = [];
     if (!empty($parameters['exclude'])) {

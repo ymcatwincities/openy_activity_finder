@@ -512,6 +512,7 @@ export default {
         page: this.selectedPage,
         sort: this.selectedSort,
         keywords: this.searchKeywords,
+        limit: this.limitByCategory.join(','),
         exclude: this.excludeByCategory.join(','),
         excludeloc: this.excludeByLocation.join(',')
       }
@@ -860,6 +861,7 @@ export default {
         .request({
           params: {
             locations: this.homeBranchId,
+            limit: this.searchParams.limit,
             exclude: this.searchParams.exclude
           }
         })
