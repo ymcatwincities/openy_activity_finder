@@ -51,7 +51,7 @@ export default {
 .foldable-component {
   .foldable-title {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 50px;
     display: flex;
     justify-content: space-between;
 
