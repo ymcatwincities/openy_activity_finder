@@ -39,7 +39,7 @@
         </div>
 
         <div v-if="item.dates" class="item-detail dates">
-          <i class="fa fa-calendar"></i>
+          <font-awesome-icon icon="calendar" />
           <span>
             <span class="info">{{ item.dates }}</span>
             <br />
@@ -48,7 +48,7 @@
         </div>
 
         <div class="item-detail schedule">
-          <i class="fa fa-clock fa-clock-o"></i>
+          <font-awesome-icon icon="clock" />
           <span class="schedule-items">
             <span v-for="(schedule, index) in item.schedule" :key="index" class="schedule-item">
               <span class="info">{{ schedule.time }}</span>
@@ -103,7 +103,7 @@
         <div class="row">
           <div class="col-sm-4">
             <div v-if="item.dates" class="item-detail dates">
-              <i class="fa fa-calendar"></i>
+              <font-awesome-icon icon="calendar" />
               <span>
                 <span class="info">{{ item.dates }}</span>
                 <br />
@@ -112,7 +112,7 @@
             </div>
 
             <div class="item-detail schedule">
-              <i class="fa fa-clock fa-clock-o"></i>
+              <font-awesome-icon icon="clock" />
               <span class="schedule-items">
                 <span v-for="(schedule, index) in item.schedule" :key="index" class="schedule-item">
                   <span class="info">{{ schedule.time }}</span>
@@ -145,7 +145,7 @@
 
           <div class="col-sm-4">
             <div v-if="item.price" class="item-detail price">
-              <i class="fa fa-money-bill fa-money"></i>
+              <font-awesome-icon icon="money-bill" />
               <span>
                 <span class="info">{{ item.price }}</span>
               </span>
