@@ -106,6 +106,7 @@ export default {
           filteredLocations[key] = this.locations[key]
         }
       }
+
       if (!this.excludeByLocation.length) {
         return this.locations
       }

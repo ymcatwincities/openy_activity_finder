@@ -34,3 +34,10 @@ function hook_activity_finder_program_process_results_alter(array &$data, NodeIn
 function hook_activity_finder_program_more_info_alter(&$data) {
 
 }
+
+/**
+ * Alter location list.
+ */
+function hook_activity_finder_location_list_alter(array &$data) {
+
+}
