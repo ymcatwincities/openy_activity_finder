@@ -12,5 +12,5 @@ hb_modal_text2: "The options you've selected do not match any activities availab
 hb_modal_text3: "Please select one of the options below to proceed:"
 hb_modal_text4: "View available locations"
 hb_modal_text5: "Adjust my filters"
-disable_program_search_log: 0
-disable_cache_debug_log: 0
+disable_program_search_log: 1
+disable_cache_debug_log: 1
