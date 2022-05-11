@@ -150,6 +150,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
     $sort_options = $backend->getSortOptions();
 
+    $locations = $backend->getLocations();
+    \Drupal::moduleHandler()->alter('activity_finder_location_list', $locations);
     return [
       '#theme' => 'openy_activity_finder_4_block',
       '#backend_service' => $backend_service_id,
@@ -163,7 +165,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#categories' => $backend->getCategories(),
       '#categories_type' => $backend->getCategoriesType(),
       '#activities' => $activities,
-      '#locations' => $backend->getLocations(),
+      '#locations' => $locations,
       '#disable_search_box' => (bool) $activity_finder_settings->get('disable_search_box'),
       '#disable_spots_available' => (bool) $activity_finder_settings->get('disable_spots_available'),
       '#sort_options' => $sort_options,

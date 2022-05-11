@@ -59,6 +59,7 @@
           :activities="activities"
           :facets="data.facets.field_activity_category"
           :multiple="!daxko"
+          :limit-by-category="limitByCategory"
           :exclude-by-category="excludeByCategory"
         />
       </Fieldset>
@@ -193,6 +194,10 @@ export default {
     daxko: {
       type: Boolean,
       default: false
+    },
+    limitByCategory: {
+      type: Array,
+      required: true
     },
     excludeByCategory: {
       type: Array,

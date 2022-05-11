@@ -1,6 +1,6 @@
 {
   "name": "activity_finder_4",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build --target lib --formats umd-min --name activity_finder_4 src/main.js",
@@ -8,11 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.24.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/vue-fontawesome": "^2.0.6",
+    "axios": "^0.26.0",
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.19.3",
     "vue": "^3.2.26",
+    "core-js": "^3.20.3",
     "vue-router": "^3.5.3"
   },
   "devDependencies": {

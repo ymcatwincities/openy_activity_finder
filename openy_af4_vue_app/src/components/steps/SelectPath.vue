@@ -224,6 +224,17 @@ export default {
       margin-bottom: 0;
     }
 
+    svg {
+      width: 50px;
+      text-align: center;
+      font-size: 20px;
+      @include media-breakpoint-up('lg') {
+        display: block;
+        margin: 30px auto;
+        font-size: 40px;
+      }
+    }
+
     .fa {
       width: 50px;
       text-align: center;

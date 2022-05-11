@@ -18,6 +18,7 @@
           :counter="subFiltersCount(index)"
           :counter-options="optionsCount(index)"
           accordion="accordion-activities"
+          :collapsible="Object.keys(filteredActivities).length !== 1"
           :handle-sticky="handleSticky"
         >
           <div class="options">
@@ -84,6 +85,10 @@ export default {
       type: Boolean,
       default: true
     },
+    limitByCategory: {
+      type: Array,
+      required: true
+    },
     excludeByCategory: {
       type: Array,
       required: true
@@ -96,7 +101,7 @@ export default {
   },
   computed: {
     filteredActivities() {
-      if (!this.firstStep && !this.excludeByCategory.length) {
+      if (!this.firstStep && !this.excludeByCategory.length && !this.limitByCategory.length) {
         return this.activities
       }
 
@@ -107,15 +112,21 @@ export default {
           return
         }
 
-        // Filter out excluded categories.
-        if (!this.excludeByCategory.length) {
-          filteredActivities[key] = activityGroup
-          return
-        }
-
         const filteredValue = activityGroup.value.filter(item => {
-          return !this.excludeByCategory.includes(item.value.toString())
+          let r = false
+          // Items must pass both tests, so we intentionally do not ELSE these.
+          // If there are excludes, the item must NOT be excluded.
+          if (this.excludeByCategory.length) {
+            r = !this.excludeByCategory.includes(item.value.toString())
+          }
+          // If there are limits, ONLY items in the limit list are included.
+          if (this.limitByCategory.length) {
+            r = this.limitByCategory.includes(item.value.toString())
+          }
+          return r
         })
+        // If there are no filtered values then the activityGroup is empty,
+        // and we should not add it to the filteredActivities array.
         if (!filteredValue.length) {
           return
         }
