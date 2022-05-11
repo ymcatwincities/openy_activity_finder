@@ -4,6 +4,7 @@ namespace Drupal\openy_activity_finder\Controller;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Site\Settings;
@@ -40,12 +41,23 @@ class ActivityFinderController extends ControllerBase {
   protected $time;
 
   /**
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
+
+  /**
    * Creates a new ActivityFinderController.
    */
-  public function __construct(OpenyActivityFinderBackendInterface $backend, CacheBackendInterface $cacheBackend, TimeInterface $time) {
+  public function __construct(
+    OpenyActivityFinderBackendInterface $backend,
+    CacheBackendInterface $cacheBackend,
+    TimeInterface $time,
+    ImmutableConfig $config
+  ) {
     $this->backend = $backend;
     $this->cacheBackend = $cacheBackend;
     $this->time = $time;
+    $this->config = $config;
   }
 
   /**
@@ -57,7 +69,8 @@ class ActivityFinderController extends ControllerBase {
     return new static(
       $container->get($config->get('backend')),
       $container->get('cache.default'),
-      $container->get('datetime.time')
+      $container->get('datetime.time'),
+      $config
     );
   }
 
@@ -89,8 +102,15 @@ class ActivityFinderController extends ControllerBase {
     unset($record_cache_key['hash_ip_agent']);
     $cid = md5(json_encode($record_cache_key));
 
-    $log = ProgramSearchLog::create($record);
-    $log->save();
+    if (!$this->config->get('disable_program_search_log')) {
+      $log = ProgramSearchLog::create($record);
+      $log->save();
+      $log_id = $log->id();
+    }
+    else {
+      $log_id = 0;
+    }
+
 
     $parameters = $request->query->all();
 
@@ -105,7 +125,7 @@ class ActivityFinderController extends ControllerBase {
       $data = $cache->data;
     }
     else {
-      $data = $this->backend->runProgramSearch($parameters, $log->id());
+      $data = $this->backend->runProgramSearch($parameters, $log_id);
 
       /* @var $expanderSectionsConfig \Drupal\Core\Config\Config */
       $expanderSectionsConfig = $this->config('openy_activity_finder.settings');
@@ -120,7 +140,9 @@ class ActivityFinderController extends ControllerBase {
       $this->cacheBackend->set($cid, $data, $expire, [OpenyActivityFinderSolrBackend::ACTIVITY_FINDER_CACHE_TAG]);
       $debugMsg .= " Setting new cache, cid: $cid, expiration: $expire";
     }
-    \Drupal::logger('openy_activity_finder')->debug($debugMsg);
+    if (!$this->config->get('disable_cache_debug_log')) {
+      \Drupal::logger('openy_activity_finder')->debug($debugMsg);
+    }
     return new JsonResponse($data);
   }
 

@@ -2,8 +2,8 @@
   <div class="foldable-component">
     <div v-b-toggle="collapseId" class="foldable-title">
       <span class="left">
-        <i class="fa fa-chevron-down" aria-hidden="true" />
-        <i class="fa fa-chevron-up" aria-hidden="true" />
+        <font-awesome-icon icon="chevron-down" />
+        <font-awesome-icon icon="chevron-up" />
         <span class="title">
           <strong>{{ label }}</strong>
         </span>
@@ -51,7 +51,7 @@ export default {
 .foldable-component {
   .foldable-title {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 50px;
     display: flex;
     justify-content: space-between;
 
@@ -59,6 +59,7 @@ export default {
       display: flex;
       align-items: center;
       flex: auto;
+      line-height: 50px;
     }
 
     .counter {

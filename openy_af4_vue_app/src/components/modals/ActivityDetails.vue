@@ -36,7 +36,7 @@
             <div class="right">
               <div class="info-section">
                 <div v-if="item.dates" class="item-detail dates">
-                  <i class="fa fa-calendar"></i>
+                  <font-awesome-icon icon="calendar" />
                   <span>
                     <span class="info">{{ item.dates }}</span>
                     <br />
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="item-detail schedule">
-                  <i class="fa fa-clock fa-clock-o"></i>
+                  <font-awesome-icon icon="clock" />
                   <span class="schedule-items">
                     <span
                       v-for="(schedule, index) in item.schedule"
@@ -78,7 +78,7 @@
                 </div>
 
                 <div v-if="item.price" class="item-detail price">
-                  <i class="fa fa-money-bill fa-money"></i>
+                   <font-awesome-icon icon="money-bill" />
                   <span>
                     <span class="info">{{ item.price }}</span>
                   </span>
@@ -115,7 +115,7 @@
                     title="Add bookmark"
                     @click="bookmarkItem(age, index)"
                   >
-                    <i class="fa fa-bookmark"></i>
+                    <font-awesome-icon icon="bookmark" />
                   </a>
                   <a
                     v-else-if="!legacyMode"
@@ -125,7 +125,7 @@
                     title="Remove bookmark"
                     @click="unbookmarkItem(age)"
                   >
-                    <i class="fa fa-bookmark"></i>
+                    <font-awesome-icon icon="bookmark" />
                   </a>
                 </template>
                 <template v-else-if="buttonsState[index] === 'sentToRegister'">
@@ -146,7 +146,7 @@
                     title="Add bookmark"
                     @click="bookmarkItem(age, index)"
                   >
-                    <i class="fa fa-bookmark"></i>
+                    <font-awesome-icon icon="bookmark" />
                   </a>
                   <a
                     v-else-if="!legacyMode"
@@ -156,7 +156,7 @@
                     title="Remove bookmark"
                     @click="unbookmarkItem(age)"
                   >
-                    <i class="fa fa-bookmark"></i>
+                    <font-awesome-icon icon="bookmark" />
                   </a>
                 </template>
                 <template v-else-if="buttonsState[index] === 'itemBookmarked'">
@@ -466,7 +466,7 @@ export default {
         line-height: 15px;
       }
 
-      .fa {
+      .fa, .svg-inline--fa {
         font-size: 20px;
         color: $af-dark-gray;
         margin-right: 10px;
@@ -501,6 +501,7 @@ export default {
 
       .bookmark {
         display: inline-block;
+        line-height: 46px;
         width: 50px;
         height: 50px;
         border-radius: 5px;
@@ -508,7 +509,7 @@ export default {
         margin-left: 10px;
         border: 2px solid $af-blue;
 
-        .fa {
+        .fa, .svg-inline--fa {
           color: $af-blue;
           font-size: 18px;
           line-height: 46px;
@@ -519,7 +520,7 @@ export default {
         border: none;
         background-color: $af-green;
 
-        .fa {
+        .fa, .svg-inline--fa {
           color: $white;
           line-height: 50px;
         }
@@ -539,7 +540,7 @@ export default {
         padding: 0 15px 0 20px;
         white-space: normal;
 
-        .fa {
+        .fa, .svg-inline--fa {
           font-size: 20px;
         }
       }

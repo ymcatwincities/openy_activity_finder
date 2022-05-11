@@ -48,6 +48,7 @@
           :filters-section-config="filtersSectionConfig"
           :daxko="daxko"
           :bs-version="bsVersion"
+          :limit-by-category="limitByCategory"
           :exclude-by-category="excludeByCategory"
           :exclude-by-location="excludeByLocation"
           @filterChange="onFilterChange($event, hideModal)"
@@ -141,6 +142,7 @@
       :facets="data.facets.field_activity_category"
       :first-step="selectedPath === 'selectActivities'"
       :multiple="!daxko"
+      :limit-by-category="limitByCategory"
       :exclude-by-category="excludeByCategory"
       @nextStep="nextStep('selectActivities')"
     />
@@ -185,6 +187,7 @@
           :filters-section-config="filtersSectionConfig"
           :daxko="daxko"
           :bs-version="bsVersion"
+          :limit-by-category="limitByCategory"
           :exclude-by-category="excludeByCategory"
           :exclude-by-location="excludeByLocation"
           filters-mode="instant"
@@ -509,6 +512,7 @@ export default {
         page: this.selectedPage,
         sort: this.selectedSort,
         keywords: this.searchKeywords,
+        limit: this.limitByCategory.join(','),
         exclude: this.excludeByCategory.join(','),
         excludeloc: this.excludeByLocation.join(',')
       }
@@ -857,6 +861,7 @@ export default {
         .request({
           params: {
             locations: this.homeBranchId,
+            limit: this.searchParams.limit,
             exclude: this.searchParams.exclude
           }
         })

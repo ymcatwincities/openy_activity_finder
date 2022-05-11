@@ -229,7 +229,7 @@ field_settings:
     label: 'Max Age'
     datasource_id: 'entity:node'
     property_path: field_session_max_age
-    type: integer
+    type: string
     dependencies:
       config:
         - field.storage.node.field_session_max_age
@@ -245,7 +245,7 @@ field_settings:
     label: 'Min Age'
     datasource_id: 'entity:node'
     property_path: field_session_min_age
-    type: integer
+    type: string
     dependencies:
       config:
         - field.storage.node.field_session_min_age
