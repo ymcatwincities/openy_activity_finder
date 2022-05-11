@@ -15,7 +15,7 @@
     "lodash": "^4.17.13",
     "moment": "^2.29.2",
     "query-string": "^6.5.0",
-    "v-calendar": "^0.9.7",
+    "v-calendar": "^2.3.4",
     "vue-bootstrap-typeahead": "^0.2.6"
   },
   "devDependencies": {
