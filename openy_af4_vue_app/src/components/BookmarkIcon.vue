@@ -2,7 +2,7 @@
   <div class="bookmark-toggle">
     <a role="button" title="Bookmarked items" @click="onClick">
       <span v-if="counter > 0" class="counter">{{ counter }}</span>
-      <i class="fa fa-bookmark"></i>
+      <font-awesome-icon icon="bookmark" />
     </a>
   </div>
 </template>
@@ -38,6 +38,7 @@ export default {
 }
 
 .bookmark-toggle {
+  line-height: 50px;
   position: fixed;
   top: 50%;
   margin-top: -25px;
@@ -73,7 +74,7 @@ export default {
     min-width: 24px;
   }
 
-  .fa {
+  .fa, .svg-inline--fa {
     color: $white;
     font-size: 18px;
     line-height: 50px;

@@ -1,7 +1,7 @@
 <template>
   <Modal id="activity-finder-bookmarked-items" v-model="visible" flyout>
     <template v-slot:modal-title>
-      <i class="fa fa-bookmark"></i>
+      <font-awesome-icon icon="bookmark" />
       <span>{{ 'Bookmarked items' | t }}</span>
     </template>
     <template>
@@ -24,7 +24,7 @@
               <div class="row">
                 <div class="col-8 col-xs-8">
                   <div class="item-detail dates">
-                    <i class="fa fa-calendar"></i>
+                    <font-awesome-icon icon="calendar" />
                     <span>
                       <span class="info">{{ item.item.dates }}</span>
                       <br />
@@ -33,7 +33,7 @@
                   </div>
 
                   <div class="item-detail schedule">
-                    <i class="fa fa-clock fa-clock-o"></i>
+                    <font-awesome-icon icon="clock" />
                     <span class="schedule-items">
                       <span
                         v-for="(schedule, schedule_index) in item.item.schedule"
@@ -157,10 +157,6 @@ export default {
       required: true
     },
     ages: {
-      type: Array,
-      required: true
-    },
-    selectedAges: {
       type: Array,
       required: true
     },
@@ -311,7 +307,7 @@ export default {
           line-height: 15px;
         }
 
-        .fa {
+        .fa, .svg-inline--fa {
           font-size: 20px;
           color: $af-dark-gray;
           margin-right: 10px;
@@ -361,6 +357,7 @@ export default {
         }
 
         .remove {
+          line-height: 46px;
           display: inline-block;
           width: 50px;
           height: 50px;
@@ -369,7 +366,7 @@ export default {
           text-align: center;
           margin-left: 10px;
 
-          .fa {
+          .fa, .svg-inline--fa {
             font-size: 18px;
             line-height: 46px;
           }

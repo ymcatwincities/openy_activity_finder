@@ -9,13 +9,13 @@
     "build": "webpack --config webpack.build.js"
   },
   "dependencies": {
-    "axios": "^0.24.0",
+    "axios": "^0.26.0",
     "bootstrap-vue": "^2.0.0-rc.20",
-    "history": "^4.9.0",
+    "history": "^5.2.0",
     "lodash": "^4.17.13",
-    "moment": "^2.24.0",
     "query-string": "^7.1.0",
-    "v-calendar": "^0.9.7",
+    "moment": "^2.29.2",
+    "v-calendar": "^2.3.4",
     "vue-bootstrap-typeahead": "^0.2.6"
   },
   "devDependencies": {

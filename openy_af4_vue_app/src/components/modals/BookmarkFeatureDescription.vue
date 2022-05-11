@@ -2,7 +2,7 @@
   <div class="bookmark-feature-description">
     <div class="top">
       <span class="bookmark-icon">
-        <i class="fa fa-bookmark"></i>
+        <font-awesome-icon icon="bookmark" />
       </span>
       <p class="title">{{ 'Now you can bookmark activities!' | t }}</p>
       <p>
@@ -43,6 +43,7 @@ export default {
   }
 
   .bookmark-icon {
+    line-height: 50px;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -50,7 +51,7 @@ export default {
     border-radius: 5px;
     margin-bottom: 20px;
 
-    .fa {
+    .fa, .svg-inline--fa {
       color: $af-blue;
       font-size: 18px;
       line-height: 50px;

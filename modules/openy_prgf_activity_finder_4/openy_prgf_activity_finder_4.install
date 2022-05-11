@@ -9,7 +9,7 @@
  * Update configs with new labels/descriptions.
  */
 function openy_prgf_activity_finder_4_update_8400() {
-  $config_dir = drupal_get_path('module', 'openy_prgf_activity_finder_4') . '/config/install/';
+  $config_dir = \Drupal::service('extension.list.module')->getPath('openy_prgf_activity_finder_4') . '/config/install/';
   $configs = [
     'paragraphs.paragraphs_type.activity_finder_4' => [
       'label',

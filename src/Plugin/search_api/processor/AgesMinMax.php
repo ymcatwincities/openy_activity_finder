@@ -2,10 +2,12 @@
 
 namespace Drupal\openy_activity_finder\Plugin\search_api\processor;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api\Processor\ProcessorPluginBase;
 use Drupal\search_api\Processor\ProcessorProperty;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Adds the Ages Min Max to the indexed data.
@@ -22,6 +24,60 @@ use Drupal\search_api\Processor\ProcessorProperty;
  * )
  */
 class AgesMinMax extends ProcessorPluginBase {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    /** @var static $processor */
+    $plugin = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+
+    $plugin->setConfigFactory($container->get('config.factory'));
+
+    return $plugin;
+  }
+
+  /**
+   * Retrieves the config factory service.
+   *
+   * @return \Drupal\Core\Config\ConfigFactoryInterface
+   *   The config factory.
+   */
+  protected function getConfigFactory() {
+    return $this->configFactory ?: \Drupal::configFactory();
+  }
+
+  /**
+   * Sets the config factory service.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   *
+   * @return $this
+   */
+  protected function setConfigFactory(ConfigFactoryInterface $config_factory) {
+    $this->configFactory = $config_factory;
+    return $this;
+  }
+
+  /**
+   * Retrieves the AF backend service.
+   *
+   * @return \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface
+   *   The AF backend service.
+   */
+  protected function getBackendService() {
+    $config = $this->getConfigFactory()->get('openy_activity_finder.settings');
+    $backend_service_id = $config->get('backend');
+    return \Drupal::service($backend_service_id);
+  }
 
   /**
    * {@inheritdoc}
@@ -64,7 +120,7 @@ class AgesMinMax extends ProcessorPluginBase {
         $range = [$min_age];
       }
       else {
-        $range = range($min_age, $max_age, 6);
+        $range = $this->getAgesRange($min_age, $max_age);
       }
       $fields = $this->getFieldsHelper()
         ->filterForPropertyPath($item->getFields(), NULL, 'search_api_af_ages_min_max');
@@ -74,6 +130,28 @@ class AgesMinMax extends ProcessorPluginBase {
         }
       }
     }
+  }
+
+  /**
+   * Determines range of ages to index.
+   *
+   * @param int $min_age
+   *   The min age of the range.
+   * @param int $max_age
+   *   The max age of the range.
+   *
+   * @return array
+   *   The array of values to index.
+   */
+  private function getAgesRange(int $min_age, int $max_age) {
+    $backend = $this->getBackendService();
+    $ages = $backend->getAges();
+    // Get only count of months.
+    $ages = array_column($ages, 'value');
+
+    return array_values(array_filter($ages, function($value) use ($min_age, $max_age) {
+      return $value >= $min_age && $value <= $max_age;
+    }));
   }
 
 }

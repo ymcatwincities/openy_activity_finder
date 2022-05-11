@@ -45,7 +45,7 @@ function openy_activity_finder_update_dependencies() {
 * Update configs.
 */
 function openy_activity_finder_update_8001() {
-  $openy_activity_finder_dir = drupal_get_path('module', 'openy_activity_finder');
+  $openy_activity_finder_dir = \Drupal::service('extension.list.module')->getPath('openy_activity_finder');
   $cim = \Drupal::service('config_import.importer');
   $cim->setDirectory($openy_activity_finder_dir . '/config/install');
   $cim->importConfigs(['openy_activity_finder.settings']);
@@ -63,7 +63,7 @@ function openy_activity_finder_update_8001() {
  */
 function openy_activity_finder_update_8002() {
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/optional');
   $config = \Drupal::config('search_api.index.default');
   if (!$config->isNew()) {
     // Import config only in case it already exist.
@@ -77,7 +77,7 @@ function openy_activity_finder_update_8002() {
 function openy_activity_finder_update_8003() {
   \Drupal::service('module_installer')->install(['openy']);
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/install');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/install');
   $cim->importConfigs(['openy_activity_finder.settings']);
 }
 
@@ -96,7 +96,7 @@ function openy_activity_finder_update_8004(&$sandbox) {
  */
 function openy_activity_finder_update_8005() {
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/optional');
   $config = \Drupal::config('search_api.index.default');
   if (!$config->isNew()) {
     // Import config only in case it already exist.
@@ -152,7 +152,7 @@ function openy_activity_finder_update_8007(&$sandbox) {
  */
 function openy_activity_finder_update_8008() {
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/optional');
   $config = \Drupal::config('search_api.index.default');
   if (!$config->isNew()) {
     // Import config only in case it already exist.
@@ -165,7 +165,7 @@ function openy_activity_finder_update_8008() {
  */
 function openy_activity_finder_update_8009() {
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/optional');
   $config = \Drupal::config('search_api.index.default');
   if (!$config->isNew()) {
     // Import config only in case it already exist.
@@ -179,7 +179,7 @@ function openy_activity_finder_update_8009() {
 function openy_activity_finder_update_8400() {
   // Import config for rest endpoint.
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/install');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/install');
   $cim->importConfigs(['rest.resource.openy_activity_finder_session_data']);
   // Add permissions to anonymous and authenticated roles.
   $permissions = [
@@ -202,7 +202,7 @@ function openy_activity_finder_update_8400() {
  */
 function openy_activity_finder_update_8401() {
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/optional');
   $config = \Drupal::config('search_api.index.default');
   if (!$config->isNew()) {
     // Import config only in case it already exists.
@@ -225,10 +225,37 @@ function openy_activity_finder_update_8402() {
  */
 function openy_activity_finder_update_8403() {
   $cim = \Drupal::service('config_import.importer');
-  $cim->setDirectory(drupal_get_path('module', 'openy_activity_finder') . '/config/optional');
+  $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/optional');
   $config = \Drupal::config('search_api.index.default');
   if (!$config->isNew()) {
     // Import config only in case it already exists.
     $cim->importConfigs(['search_api.index.default']);
+  }
+}
+
+/**
+ * Update configs for search index.
+ */
+function openy_activity_finder_update_8404() {
+  _af_config_import();
+}
+
+/**
+ * Update configs for search index. Configs should be sent in an array where the
+ * key is the directory and the value is an array of config files.
+ */
+function _af_config_import($import = ['optional' => ['search_api.index.default']]) {
+  $cim = \Drupal::service('config_import.importer');
+  // Loop through keys as directories...
+  foreach ($import as $dir => $configs) {
+    $cim->setDirectory(\Drupal::service('extension.list.module')->getPath('openy_activity_finder') . '/config/'. $dir);
+    // Now process each config to be imported.
+    foreach ($configs as $name) {
+      $config = \Drupal::config($name);
+      if (!$config->isNew()) {
+        // Import config only in the case that it already exists.
+        $cim->importConfigs([$name]);
+      }
+    }
   }
 }
