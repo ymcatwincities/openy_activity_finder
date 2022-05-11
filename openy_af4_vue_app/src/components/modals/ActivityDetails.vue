@@ -109,7 +109,7 @@
                   </a>
                   <a
                     v-if="!isBookmarked(age) && !legacyMode"
-                    key="bookmark"
+                    key="bookmarked_not_legacy"
                     role="button"
                     class="bookmark"
                     title="Add bookmark"
@@ -119,7 +119,7 @@
                   </a>
                   <a
                     v-else-if="!legacyMode"
-                    key="bookmark"
+                    key="bookmark_not_legacy"
                     role="button"
                     class="bookmark bookmarked"
                     title="Remove bookmark"
@@ -140,7 +140,7 @@
                   </a>
                   <a
                     v-if="!isBookmarked(age) && !legacyMode"
-                    key="bookmark"
+                    key="not_bookmarked_not_legacy"
                     role="button"
                     class="bookmark"
                     title="Add bookmark"
@@ -150,7 +150,7 @@
                   </a>
                   <a
                     v-else-if="!legacyMode"
-                    key="bookmark"
+                    key="bookmark_not_legacy"
                     role="button"
                     class="bookmark bookmarked"
                     title="Remove bookmark"

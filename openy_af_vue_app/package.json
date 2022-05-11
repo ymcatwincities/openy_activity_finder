@@ -11,12 +11,12 @@
   "dependencies": {
     "axios": "^0.26.1",
     "bootstrap-vue": "^2.0.2",
-    "history": "^4.10.1",
+    "history": "^5.2.0",
     "lodash": "^4.17.13",
+    "query-string": "^7.1.0",
     "moment": "^2.29.2",
-    "query-string": "^6.8.3",
     "set-value": ">=4.1.0",
-    "v-calendar": "^0.9.7",
+    "v-calendar": "^2.3.4",
     "vue-bootstrap-typeahead": "^0.2.6"
   },
   "devDependencies": {
