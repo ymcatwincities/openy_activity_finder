@@ -240,6 +240,24 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
       $query->addCondition('field_category_program', $program_types, 'IN');
     }
 
+    // Limit categories.
+    $limit_nids = [];
+    if (!empty($parameters['limit'])) {
+      $limit_nids = explode(',', $parameters['limit']);
+    }
+    $limit_nids_config = explode(',', $this->config->get('limit'));
+    $limit_nids = array_merge($limit_nids, $limit_nids_config);
+    $limit_categories = [];
+    foreach ($limit_nids as $nid) {
+      if (empty($category_program_info[$nid]['title'])) {
+        continue;
+      }
+      $limit_categories[] = $nid;
+    }
+    if ($limit_categories) {
+      $query->addCondition('field_activity_category', $limit_categories, 'IN');
+    }
+
     // Ensure to exclude categories.
     $exclude_nids = [];
     if (!empty($parameters['exclude'])) {
@@ -542,70 +560,70 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         'field' => 'field_session_min_age',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'field_session_max_age' => [
         'field' => 'field_session_max_age',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'field_category_program' => [
         'field' => 'field_category_program',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'field_activity_category' => [
         'field' => 'field_activity_category',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'locations' => [
         'field' => 'field_session_location',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'days_of_week' => [
         'field' => 'field_session_time_days',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'af_parts_of_day' => [
         'field' => 'af_parts_of_day',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'af_ages_min_max' => [
         'field' => 'af_ages_min_max',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'af_weeks' => [
         'field' => 'af_weeks',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
       'af_weekdays_parts_of_day' => [
         'field' => 'af_weekdays_parts_of_day',
         'limit' => 0,
         'operator' => 'AND',
-        'min_count' => 0,
+        'min_count' => 1,
         'missing' => TRUE,
       ],
     ];
@@ -862,7 +880,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
           $ages_y[$i] = $ages[$i] . \Drupal::translation()->formatPlural($ages[$i], ' month', ' months' . $plus);
         }
         else {
-          if ($ages[$i] == 0 && $ages[$i + 1]) {
+          if ($ages[$i] == 0 && isset($ages[$i + 1])) {
             $ages_y[$i] = $ages[$i];
           }
         }

@@ -9,8 +9,8 @@
         </span>
       </span>
       <span class="right">
-        <i class="fa fa-chevron-down" aria-hidden="true" />
-        <i class="fa fa-chevron-up" aria-hidden="true" />
+        <font-awesome-icon icon="chevron-down" />
+        <font-awesome-icon icon="chevron-up" />
       </span>
     </div>
     <b-collapse :id="collapseId" role="tabpanel" class="foldable-content">
