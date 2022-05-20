@@ -5,7 +5,7 @@
         {{ option }}
       </option>
     </select>
-    <i class="fa fa-chevron-down"></i>
+    <font-awesome-icon icon="chevron-down" />
   </div>
 </template>
 
@@ -70,11 +70,11 @@ export default {
     }
   }
 
-  .fa {
+  .fa, .svg-inline--fa {
     position: absolute;
     right: 0;
     font-size: 12px;
-    padding: 0 14px;
+    margin: 0 14px;
   }
 }
 </style>

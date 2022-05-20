@@ -518,6 +518,13 @@
         }
       }
 
+      if (typeof this.$route.query.sort != 'undefined') {
+        var sortGet = decodeURIComponent(this.$route.query.sort);
+        if (sortGet) {
+          this.sort = sortGet;
+        }
+      }
+
       this.runAjaxRequest();
 
       component.afPageRef = 'OpenY' in window && typeof window.OpenY.field_prgf_af_page_ref !== 'undefined' && typeof window.OpenY.field_prgf_af_page_ref[0] !== 'undefined' ? window.OpenY.field_prgf_af_page_ref[0]['url'] : '';

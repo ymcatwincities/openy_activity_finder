@@ -161,3 +161,39 @@ document.addEventListener('openy_activity_finder_event', (e) => {
   ...
 })
 ```
+
+### Add custom component in between of results
+
+ it allows flexibility in terms of results rendering for the developer:
+```
+          <ResultsList
+            :results="data.table"
+            :ages="ages"
+            :selected-ages="selectedAges"
+            :legacy-mode="legacyMode"
+            :disable-spots-available="disableSpotsAvailable"
+            @showActivityDetailsModal="showActivityDetailsModal($event)"
+          />
+```
+can be changed to this:
+```
+          <ResultsList
+            :results="data.table.slice(0, 2)"
+            :ages="ages"
+            :selected-ages="selectedAges"
+            :legacy-mode="legacyMode"
+            :disable-spots-available="disableSpotsAvailable"
+            @showActivityDetailsModal="showActivityDetailsModal($event)"
+          />
+          <YGBWAds />
+          <ResultsList
+            :results="data.table.slice(2)"
+            :ages="ages"
+            :selected-ages="selectedAges"
+            :legacy-mode="legacyMode"
+            :disable-spots-available="disableSpotsAvailable"
+            @showActivityDetailsModal="showActivityDetailsModal($event)"
+          />
+```
+where YGBWAds is custom component to render custom content in between the results.
+See https://github.com/ymcatwincities/openy_activity_finder/pull/148

@@ -287,6 +287,22 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('Check this if you want default state for whole this group is "Collapsed"'),
     ];
 
+    $form['logging'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Logging settings'),
+      '#open' => TRUE,
+    ];
+    $form['logging']['disable_program_search_log'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable program search log.'),
+      '#default_value' => $config->get('disable_program_search_log') ?? FALSE,
+    ];
+    $form['logging']['disable_cache_debug_log'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable cache debug log.'),
+      '#default_value' => $config->get('disable_cache_debug_log') ?? FALSE,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -313,6 +329,8 @@ class SettingsForm extends ConfigFormBase {
     $config->set('schedule_collapse_group', $form_state->getValue('schedule_collapse_group'))->save();
     $config->set('category_collapse_group', $form_state->getValue('category_collapse_group'))->save();
     $config->set('locations_collapse_group', $form_state->getValue('locations_collapse_group'))->save();
+    $config->set('disable_program_search_log', $form_state->getValue('disable_program_search_log'))->save();
+    $config->set('disable_cache_debug_log', $form_state->getValue('disable_cache_debug_log'))->save();
     $this->cache->deleteAll();
 
     parent::submitForm($form, $form_state);
