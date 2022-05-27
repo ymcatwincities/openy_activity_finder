@@ -110,11 +110,10 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       $image_desktop = $storage->load('prgf_gallery')->buildUrl($image->getFileUri());
     }
 
+    $limit_by_category = $conf['limit_by_category'];
+
     if ($backend_service_id == "openy_daxko2.openy_activity_finder_backend") {
       $limit_by_category = $conf['limit_by_category_daxko'] ? explode(', ', $conf['limit_by_category_daxko']) : [];
-    }
-    else {
-      $limit_by_category = $conf['limit_by_category'];
     }
 
     $activities = $backend->getCategories();
