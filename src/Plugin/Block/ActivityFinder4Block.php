@@ -82,6 +82,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   public function defaultConfiguration() {
     return [
       'label_display' => 'visible',
+      'limit_by_category_daxko' => [],
       'limit_by_category' => [],
       'exclude_by_category' => [],
       'exclude_by_location' => [],
@@ -96,10 +97,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function build() {
-    $activity_finder_settings = $this->configFactory->get('openy_activity_finder.settings');
-    $backend_service_id = $activity_finder_settings->get('backend');
-    /** @var \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface $backend */
-    $backend = \Drupal::service($backend_service_id);
+    list($activity_finder_settings, $backend_service_id, $backend) = $this->getBackend();
     $conf = $this->getConfiguration();
 
     $image_mobile = '';
@@ -110,6 +108,12 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       $storage = $this->entityTypeManager->getStorage('image_style');
       $image_mobile = $storage->load('prgf_banner')->buildUrl($image->getFileUri());
       $image_desktop = $storage->load('prgf_gallery')->buildUrl($image->getFileUri());
+    }
+
+    $limit_by_category = $conf['limit_by_category'];
+
+    if ($backend_service_id == "openy_daxko2.openy_activity_finder_backend") {
+      $limit_by_category = $conf['limit_by_category_daxko'] ? explode(', ', $conf['limit_by_category_daxko']) : [];
     }
 
     $activities = $backend->getCategories();
@@ -126,7 +130,8 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     foreach ($activities as $indexProgram => $program) {
       if (isset($program['value'])) {
         foreach ($program['value'] as $indexSubProgram => $subProgram) {
-          if (!in_array($subProgram['value'], $activeSubPrograms)) {
+          if (!in_array($subProgram['value'], $activeSubPrograms) ||
+            ($limit_by_category && !in_array($subProgram['value'], $limit_by_category))) {
             unset($activities[$indexProgram]['value'][$indexSubProgram]);
           }
         }
@@ -173,7 +178,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
       '#default_sort_option' => array_keys($sort_options)[0],
       '#relevance_sort_option' => 'search_api_relevance__DESC',
       '#filters_section_config' => $backend->getFiltersSectionConfig(),
-      '#limit_by_category' => $conf['limit_by_category'],
+      '#limit_by_category' => $limit_by_category,
       '#exclude_by_category' => $conf['exclude_by_category'],
       '#exclude_by_location' => $conf['exclude_by_location'],
       '#legacy_mode' => (bool) $conf['legacy_mode'],
@@ -206,49 +211,62 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function blockForm($form, FormStateInterface $form_state) {
+    list($activity_finder_settings, $backend_service_id, $backend) = $this->getBackend();
     $conf = $this->getConfiguration();
 
-    $base_by_category = [
-      '#type' => 'entity_autocomplete',
-      '#description' => $this->t('Separate multiple values by comma.'),
-      '#target_type' => 'node',
-      '#tags' => TRUE,
-      '#selection_settings' => [
-        'target_bundles' => ['program_subcategory'],
-      ],
-      '#size' => 100,
-      '#maxlength' => 2048,
-    ];
-    $base_by_location = [
-      '#type' => 'entity_autocomplete',
-      '#description' => $this->t('Separate multiple values by comma. Search for title from Branch, Camp, Facility types.'),
-      '#target_type' => 'node',
-      '#tags' => TRUE,
-      '#selection_settings' => [
-        'target_bundles' => ['branch', 'camp', 'facility'],
-      ],
-      '#size' => 100,
-      '#maxlength' => 2048,
-    ];
+    // Store Daxko limit fields separately since they're strings and not references.
+    if ($backend_service_id == 'openy_daxko2.openy_activity_finder_backend') {
+      $form['limit_by_category_daxko'] = [
+        '#type' => 'textfield',
+        '#description' => $this->t('Separate multiple values by a comma and a space, like "ABC123, DEF234".'),
+        '#title' => $this->t('Limit by category (Daxko)'),
+        '#default_value' => $conf['limit_by_category_daxko'],
+      ];
+    }
+    else {
+      $base_by_category = [
+        '#type' => 'entity_autocomplete',
+        '#description' => $this->t('Separate multiple values by comma.'),
+        '#target_type' => 'node',
+        '#tags' => TRUE,
+        '#selection_settings' => [
+          'target_bundles' => ['program_subcategory'],
+        ],
+        '#size' => 100,
+        '#maxlength' => 2048,
+      ];
+      $base_by_location = [
+        '#type' => 'entity_autocomplete',
+        '#description' => $this->t('Separate multiple values by comma. Search for title from Branch, Camp, Facility types.'),
+        '#target_type' => 'node',
+        '#tags' => TRUE,
+        '#selection_settings' => [
+          'target_bundles' => ['branch', 'camp', 'facility'],
+        ],
+        '#size' => 100,
+        '#maxlength' => 2048,
+      ];
 
-    $form['exclude_by_location'] = $base_by_location + [
-      '#title' => $this->t('Exclude by location'),
-      '#default_value' => $conf['exclude_by_location']
-        ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['exclude_by_location'])
-        : NULL,
-    ];
-    $form['limit_by_category'] = $base_by_category + [
-      '#title' => $this->t('Limit by category'),
-      '#default_value' => $conf['limit_by_category']
-        ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['limit_by_category'])
-        : NULL,
-    ];
-    $form['exclude_by_category'] = $base_by_category + [
-      '#title' => $this->t('Exclude by category'),
-      '#default_value' => $conf['exclude_by_category']
-        ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['exclude_by_category'])
-        : NULL,
-    ];
+      $form['exclude_by_location'] = $base_by_location + [
+          '#title' => $this->t('Exclude by location'),
+          '#default_value' => $conf['exclude_by_location']
+            ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['exclude_by_location'])
+            : NULL,
+        ];
+      $form['limit_by_category'] = $base_by_category + [
+          '#title' => $this->t('Limit by category'),
+          '#default_value' => $conf['limit_by_category']
+            ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['limit_by_category'])
+            : NULL,
+        ];
+
+      $form['exclude_by_category'] = $base_by_category + [
+          '#title' => $this->t('Exclude by category'),
+          '#default_value' => $conf['exclude_by_category']
+            ? $this->entityTypeManager->getStorage('node')->loadMultiple($conf['exclude_by_category'])
+            : NULL,
+        ];
+    }
 
     $form['legacy_mode'] = [
       '#type' => 'checkbox',
@@ -289,6 +307,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
+    $this->configuration['limit_by_category_daxko'] = $form_state->getValue('limit_by_category_daxko');
     $this->configuration['limit_by_category'] = $form_state->getValue('limit_by_category')
       ? array_column($form_state->getValue('limit_by_category'), 'target_id')
       : [];
@@ -302,6 +321,18 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
     $this->configuration['weeks_filter'] = $form_state->getValue('weeks_filter');
     $this->configuration['hide_home_branch_block'] = $form_state->getValue('hide_home_branch_block');
     $this->configuration['background_image'] = $this->getEntityBrowserValue($form_state, 'background_image');
+  }
+
+  /**
+   * @return array
+   */
+  public function getBackend(): array
+  {
+    $activity_finder_settings = $this->configFactory->get('openy_activity_finder.settings');
+    $backend_service_id = $activity_finder_settings->get('backend');
+    /** @var \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface $backend */
+    $backend = \Drupal::service($backend_service_id);
+    return array($activity_finder_settings, $backend_service_id, $backend);
   }
 
 }
