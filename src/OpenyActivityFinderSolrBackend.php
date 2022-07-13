@@ -242,10 +242,13 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
 
     // Limit categories.
     $limit_nids = [];
+    $limit_nids_config = [];
     if (!empty($parameters['limit'])) {
       $limit_nids = explode(',', $parameters['limit']);
     }
-    $limit_nids_config = explode(',', $this->config->get('limit'));
+    if (!empty($this->config->get('limit'))) {
+      $limit_nids_config = explode(',', $this->config->get('limit'));
+    }
     $limit_nids = array_merge($limit_nids, $limit_nids_config);
     $limit_categories = [];
     foreach ($limit_nids as $nid) {
