@@ -2,6 +2,7 @@
 
 namespace Drupal\openy_activity_finder\Plugin\search_api\processor;
 
+use Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
@@ -28,7 +29,7 @@ class AgesMinMax extends ProcessorPluginBase {
   /**
    * The config factory.
    *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   * @var ConfigFactoryInterface
    */
   protected $configFactory;
 
@@ -47,7 +48,7 @@ class AgesMinMax extends ProcessorPluginBase {
   /**
    * Retrieves the config factory service.
    *
-   * @return \Drupal\Core\Config\ConfigFactoryInterface
+   * @return ConfigFactoryInterface
    *   The config factory.
    */
   protected function getConfigFactory() {
@@ -57,7 +58,7 @@ class AgesMinMax extends ProcessorPluginBase {
   /**
    * Sets the config factory service.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   * @param ConfigFactoryInterface $config_factory
    *   The config factory.
    *
    * @return $this
@@ -70,7 +71,7 @@ class AgesMinMax extends ProcessorPluginBase {
   /**
    * Retrieves the AF backend service.
    *
-   * @return \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface
+   * @return OpenyActivityFinderBackendInterface
    *   The AF backend service.
    */
   protected function getBackendService() {

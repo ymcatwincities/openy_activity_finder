@@ -2,6 +2,8 @@
 
 namespace Drupal\openy_activity_finder\Plugin\Block;
 
+use Drupal\media\MediaInterface;
+use Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\ConfigFactory;
@@ -28,14 +30,14 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   /**
    * Config Factory definition.
    *
-   * @var \Drupal\Core\Config\ConfigFactory
+   * @var ConfigFactory
    */
   protected $configFactory;
 
   /**
    * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -48,9 +50,9 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactory $config_factory
+   * @param ConfigFactory $config_factory
    *   The Config Factory.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    */
   public function __construct(array $configuration,
@@ -102,7 +104,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
     $image_mobile = '';
     $image_desktop = '';
-    /** @var \Drupal\media\MediaInterface $media */
+    /** @var MediaInterface $media */
     if (!empty($conf['background_image']) && $media = static::loadEntityBrowserEntity($conf['background_image'])) {
       $image = $media->field_media_image->entity;
       $storage = $this->entityTypeManager->getStorage('image_style');
@@ -330,7 +332,7 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
   {
     $activity_finder_settings = $this->configFactory->get('openy_activity_finder.settings');
     $backend_service_id = $activity_finder_settings->get('backend');
-    /** @var \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface $backend */
+    /** @var OpenyActivityFinderBackendInterface $backend */
     $backend = \Drupal::service($backend_service_id);
     return array($activity_finder_settings, $backend_service_id, $backend);
   }

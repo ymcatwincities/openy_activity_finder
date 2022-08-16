@@ -2,6 +2,7 @@
 
 namespace Drupal\openy_activity_finder;
 
+use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -12,7 +13,7 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
   /**
    * Activity Finder configuration.
    *
-   * @var \Drupal\Core\Config\Config
+   * @var Config
    */
   protected $config;
 
@@ -36,7 +37,7 @@ abstract class OpenyActivityFinderBackend implements OpenyActivityFinderBackendI
   /**
    * OpenyActivityFinderBackend constructor.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   * @param ConfigFactoryInterface $config_factory
    *   The config factory.
    */
   public function __construct(ConfigFactoryInterface $config_factory) {

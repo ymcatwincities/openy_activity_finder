@@ -2,6 +2,8 @@
 
 namespace Drupal\openy_activity_finder;
 
+use Drupal\search_api\Item\Item;
+use Drupal\search_api\Query\Query;
 use DateTimeInterface;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -34,49 +36,49 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   /**
    * Cache default.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
+   * @var CacheBackendInterface
    */
   protected $cache;
 
   /**
    * The Database connection.
    *
-   * @var \Drupal\Core\Database\Connection
+   * @var Connection
    */
   protected $database;
 
   /**
    * The EntityTypeManager.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
    * The date formatter service.
    *
-   * @var \Drupal\Core\Datetime\DateFormatterInterface
+   * @var DateFormatterInterface
    */
   protected $dateFormatter;
 
   /**
    * Time manager needed for calculating expire for caches.
    *
-   * @var \Drupal\Component\Datetime\TimeInterface
+   * @var TimeInterface
    */
   protected $time;
 
   /**
    * Logger channel.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   * @var LoggerChannelInterface
    */
   protected $loggerChannel;
 
   /**
    * Module Handler.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   * @var ModuleHandlerInterface
    */
   protected $moduleHandler;
 
@@ -326,7 +328,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   /**
    * Process results function.
    *
-   * @param \Drupal\search_api\Query\ResultSet $results
+   * @param ResultSet $results
    *   Search results to process.
    * @param string $log_id
    *   Id of the Search Log needed for tracking Register / Details actions.
@@ -339,7 +341,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   public function processResults(ResultSet $results, $log_id) {
     $data = [];
     $locations_info = $this->getLocationsInfo();
-    /** @var \Drupal\search_api\Item\Item $result_item */
+    /** @var Item $result_item */
     foreach ($results->getResultItems() as $result_item) {
       try {
         $entity = $result_item->getOriginalObject()->getValue();
@@ -399,7 +401,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
         $link = $sub_category->field_learn_more->getValue();
         if (!empty($link[0]['uri'])) {
           $learn_more_view = $sub_category->field_learn_more->view();
-          $learn_more = render($learn_more_view)->__toString();
+          $learn_more = \Drupal::service('renderer')->render($learn_more_view)->__toString();
         }
       }
 
@@ -493,7 +495,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
   /**
    * Get facets.
    *
-   * @param \Drupal\search_api\Query\ResultSet $results
+   * @param ResultSet $results
    *   Search results.
    *
    * @return mixed
@@ -924,7 +926,7 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
    * @return array
    *   Data array with structure similar to search results.
    *
-   * @throws \Drupal\search_api\SearchApiException
+   * @throws SearchApiException
    */
   public function getSessions($session_ids) {
     // Make a request to Search API to get sessions data.
@@ -941,15 +943,15 @@ class OpenyActivityFinderSolrBackend extends OpenyActivityFinderBackend {
    * @param array $session_ids
    *   Array session nids to get data.
    *
-   * @return \Drupal\search_api\Query\ResultSet
+   * @return ResultSet
    *   Search results set.
    *
-   * @throws \Drupal\search_api\SearchApiException
+   * @throws SearchApiException
    */
   private function doSessionsSearchRequest($session_ids) {
     $index_id = $this->config->get('index') ? $this->config->get('index') : 'default';
     $index = Index::load($index_id);
-    /** @var \Drupal\search_api\Query\Query $query */
+    /** @var Query $query */
     $query = $index->query();
     $parse_mode = \Drupal::service('plugin.manager.search_api.parse_mode')->createInstance('direct');
     $query->getParseMode()->setConjunction('OR');
