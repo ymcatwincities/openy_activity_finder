@@ -145,11 +145,11 @@ class ActivityFinder4Block extends BlockBase implements ContainerFactoryPluginIn
 
     // Sort activity groups and activities in alphabetical order.
     usort($activities, function ($a, $b) {
-      return $a['label'] > $b['label'];
+      return $a['label'] <=> $b['label'];
     });
     foreach ($activities as &$activity) {
       usort($activity['value'], function ($a, $b) {
-        return $a['label'] > $b['label'];
+        return $a['label'] <=> $b['label'];
       });
     }
 
