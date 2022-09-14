@@ -70,7 +70,8 @@ export default {
     }
   }
 
-  .fa, .svg-inline--fa {
+  .fa,
+  .svg-inline--fa {
     position: absolute;
     right: 0;
     font-size: 12px;

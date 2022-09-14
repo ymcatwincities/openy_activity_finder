@@ -6,7 +6,7 @@
           <div class="controls">
             <span class="filters">
               <a :class="{ 'no-filters': !filtersCount }" role="button" @click="showFiltersModal()">
-               <font-awesome-icon icon="filter" />
+                <font-awesome-icon icon="filter" />
                 {{ filtersCount | formatPlural('1 Filter', '@count Filters') }}
               </a>
             </span>
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-
 import FiltersModal from '@/components/modals/Filters.vue'
 
 export default {

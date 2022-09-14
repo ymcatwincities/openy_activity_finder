@@ -78,7 +78,7 @@
                 </div>
 
                 <div v-if="item.price" class="item-detail price">
-                   <font-awesome-icon icon="money-bill" />
+                  <font-awesome-icon icon="money-bill" />
                   <span>
                     <span class="info">{{ item.price }}</span>
                   </span>
@@ -466,7 +466,8 @@ export default {
         line-height: 15px;
       }
 
-      .fa, .svg-inline--fa {
+      .fa,
+      .svg-inline--fa {
         font-size: 20px;
         color: $af-dark-gray;
         margin-right: 10px;
@@ -509,7 +510,8 @@ export default {
         margin-left: 10px;
         border: 2px solid $af-blue;
 
-        .fa, .svg-inline--fa {
+        .fa,
+        .svg-inline--fa {
           color: $af-blue;
           font-size: 18px;
           line-height: 46px;
@@ -520,7 +522,8 @@ export default {
         border: none;
         background-color: $af-green;
 
-        .fa, .svg-inline--fa {
+        .fa,
+        .svg-inline--fa {
           color: $white;
           line-height: 50px;
         }
@@ -540,7 +543,8 @@ export default {
         padding: 0 15px 0 20px;
         white-space: normal;
 
-        .fa, .svg-inline--fa {
+        .fa,
+        .svg-inline--fa {
           font-size: 20px;
         }
       }

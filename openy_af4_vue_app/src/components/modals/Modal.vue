@@ -195,7 +195,8 @@ export default {
       font-size: 18px;
       line-height: 27px;
 
-      .fa, .svg-inline--fa {
+      .fa,
+      .svg-inline--fa {
         width: 50px;
         margin-left: -10px;
         text-align: center;

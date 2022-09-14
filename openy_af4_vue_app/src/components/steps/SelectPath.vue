@@ -21,12 +21,7 @@
         </div>
       </div>
       <div class="row paths">
-        <div
-          v-for="path in paths"
-          :key="path.id"
-          :class="pathClasses"
-          @click="onClick(path.id)"
-        >
+        <div v-for="path in paths" :key="path.id" :class="pathClasses" @click="onClick(path.id)">
           <button type="button" class="path btn">
             <i class="fa" :class="path.icon" aria-hidden="true"></i>
             <span class="text-uppercase">{{ path.name }}</span>
