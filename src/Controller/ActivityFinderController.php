@@ -26,22 +26,22 @@ class ActivityFinderController extends ControllerBase {
   const CACHE_LIFETIME = 300;
 
   /**
-   * @var \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface
+   * @var OpenyActivityFinderBackendInterface
    */
   protected $backend;
 
   /**
-   * @var \Drupal\Core\Cache\CacheBackendInterface
+   * @var CacheBackendInterface
    */
   protected $cacheBackend;
 
   /**
-   * @var \Drupal\Component\Datetime\TimeInterface
+   * @var TimeInterface
    */
   protected $time;
 
   /**
-   * @var \Drupal\Core\Config\ImmutableConfig
+   * @var ImmutableConfig
    */
   protected $config;
 
@@ -192,8 +192,8 @@ class ActivityFinderController extends ControllerBase {
   /**
    * Callback to retrieve programs full information.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @param Request $request
+   * @return JsonResponse
    */
   public function ajaxProgramsMoreInfo(Request $request) {
     $parameters = $request->query->all();

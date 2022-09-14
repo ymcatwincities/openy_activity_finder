@@ -2,6 +2,7 @@
 
 namespace Drupal\openy_activity_finder\Plugin\rest\resource;
 
+use Drupal\search_api\SearchApiException;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface;
 use Drupal\rest\Plugin\ResourceBase;
@@ -26,14 +27,14 @@ class SessionData extends ResourceBase {
   /**
    * The request stack.
    *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
+   * @var RequestStack
    */
   protected $requestStack;
 
   /**
    * Backend.
    *
-   * @var \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface
+   * @var OpenyActivityFinderBackendInterface
    */
   protected $backend;
 
@@ -48,11 +49,11 @@ class SessionData extends ResourceBase {
    *   The plugin implementation definition.
    * @param array $serializer_formats
    *   The available serialization formats.
-   * @param \Psr\Log\LoggerInterface $logger
+   * @param LoggerInterface $logger
    *   A logger instance.
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   * @param RequestStack $request_stack
    *   Request Stack.
-   * @param \Drupal\openy_activity_finder\OpenyActivityFinderBackendInterface $backend
+   * @param OpenyActivityFinderBackendInterface $backend
    *   Backend.
    */
   public function __construct(
@@ -98,10 +99,10 @@ class SessionData extends ResourceBase {
   /**
    * Handles GET request.
    *
-   * @return \Drupal\rest\ResourceResponse
+   * @return ResourceResponse
    *   Response.
    *
-   * @throws \Drupal\search_api\SearchApiException
+   * @throws SearchApiException
    */
   public function get() {
     $disable_cache = new CacheableMetadata();

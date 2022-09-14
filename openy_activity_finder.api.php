@@ -19,7 +19,7 @@ function hook_activity_finder_program_search_results_alter(&$data) {
  *
  * @param array $data
  *   The array of processed result item for program search.
- * @param \Drupal\node\NodeInterface $entity
+ * @param NodeInterface $entity
  *   The node that has just been processed.
  *
  * @see Drupal\openy_activity_finder\OpenyActivityFinderSolrBackend
