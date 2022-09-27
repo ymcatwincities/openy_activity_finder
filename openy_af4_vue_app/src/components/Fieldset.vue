@@ -16,8 +16,8 @@
           {{ counterOptions | formatPlural('1 Result', '@count Results') }}
         </span>
         <span v-if="collapsible && !counter" class="icon">
-            <font-awesome-icon icon="plus" />
-            <font-awesome-icon icon="minus" />
+          <font-awesome-icon icon="plus" />
+          <font-awesome-icon icon="minus" />
         </span>
         <span v-else-if="collapsible && counter && hideCounter" class="icon">
           <font-awesome-icon icon="minus" />

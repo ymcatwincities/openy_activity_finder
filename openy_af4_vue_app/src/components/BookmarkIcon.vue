@@ -74,7 +74,8 @@ export default {
     min-width: 24px;
   }
 
-  .fa, .svg-inline--fa {
+  .fa,
+  .svg-inline--fa {
     color: $white;
     font-size: 18px;
     line-height: 50px;

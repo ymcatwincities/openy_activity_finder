@@ -307,7 +307,8 @@ export default {
           line-height: 15px;
         }
 
-        .fa, .svg-inline--fa {
+        .fa,
+        .svg-inline--fa {
           font-size: 20px;
           color: $af-dark-gray;
           margin-right: 10px;
@@ -366,7 +367,8 @@ export default {
           text-align: center;
           margin-left: 10px;
 
-          .fa, .svg-inline--fa {
+          .fa,
+          .svg-inline--fa {
             font-size: 18px;
             line-height: 46px;
           }

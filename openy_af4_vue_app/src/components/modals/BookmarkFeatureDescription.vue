@@ -51,7 +51,8 @@ export default {
     border-radius: 5px;
     margin-bottom: 20px;
 
-    .fa, .svg-inline--fa {
+    .fa,
+    .svg-inline--fa {
       color: $af-blue;
       font-size: 18px;
       line-height: 50px;
